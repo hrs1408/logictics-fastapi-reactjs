@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 
 from schemas.item_schemas import Item
@@ -18,3 +20,13 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class LoginResponse(BaseModel):
+    token: str
+    exp: datetime
