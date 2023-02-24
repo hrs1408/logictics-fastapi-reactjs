@@ -1,0 +1,175 @@
+.section-login {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding-top: 10%;
+    background: url(https://khachhang.ntlogistics.vn/static/media/login_background.11023b82.png);
+    background-size: cover;
+
+    .tab-container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 40%;
+        height: 100%;
+        background: #f1f1f1;
+        margin: 100px auto 0;
+        word-break: break-all;
+
+        .bloc-tabs {
+            display: flex;
+            position: absolute;
+            top: -40px;
+
+            .tabs {
+                text-align: center;
+                height: 40px;
+                width: 188px;
+                cursor: pointer;
+                box-sizing: content-box;
+                position: relative;
+                outline: none;
+                background-color: #ececec;
+                color: #979797;
+                width: 188px;
+                font-size: 16px;
+                line-height: 19px;
+
+                .nav-list {
+                    &:hover {
+                        color: #a9a63e;
+                    }
+                }
+            }
+
+            .active-tabs {
+                background-color: #fff;
+                border-bottom: 1px solid transparent;
+                color: #000;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    bottom: -1px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: calc(100% + 2px);
+                    height: 3px;
+                    background: #FDD700;
+
+                }
+
+                .nav-list {
+                    &:hover {}
+                }
+
+            }
+        }
+
+        .content-tabs {
+            flex-grow: 1;
+
+            .content {
+                background: white;
+                padding: 8px;
+                width: 100%;
+                height: 100%;
+                display: none;
+                border-radius: 0 0 0 5px;
+
+                .login_background {
+                    img {
+                        background-position: 50%;
+                        background-repeat: no-repeat;
+                        // background-image: url(https://khachhang.ntlogistics.vn/static/media/login.7cb654a6.jpg);
+                        width: 100%;
+                        background-size: cover;
+                        height: 100%;
+                    }
+                }
+
+                .input-wrapper {
+                    position: relative;
+                    width: 100%;
+                    min-width: 0;
+                    color: rgba(0, 0, 0, .85);
+                    font-size: 14px;
+                    line-height: 1.5715;
+                    background-color: #fff;
+                    background-image: none;
+                    border: 1px solid #d9d9d9;
+                    border-radius: 2px;
+                    transition: all .3s;
+                    display: inline-flex;
+
+                    &:hover {
+                        border-color: #40a9ff;
+                    }
+
+                    &:focus {
+                        outline-color: red;
+                    }
+
+                    .input-icon {
+                        padding: 7px;
+                        background: #fdd800;
+                        margin: 3px;
+                        font-size: 20px;
+                    }
+
+                    input {
+                        font-size: inherit;
+                        border: none;
+                        outline: red;
+                        margin-left: 5px;
+                        width: 100%;
+
+                    }
+                }
+
+                .forgot-password {
+                    color: #006cbb;
+                    line-height: 19px;
+                    font-weight: 400;
+                    font-size: 14px;
+
+                    &:hover {
+                        color: #c0a860;
+                    }
+                }
+
+                .login-submit {
+                    color: #000;
+                    border: none;
+                    font-size: 15px;
+                    width: 100%;
+                    height: 40px;
+                    border-radius: 4px;
+                    background-color: #fdd800;
+                    font-weight: 500;
+
+                    &:last-child {
+                        background-color: #000;
+                        color: #fdd800;
+                    }
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+
+
+            }
+
+            .active-content {
+                display: block;
+            }
+        }
+
+    }
+
+
+}
