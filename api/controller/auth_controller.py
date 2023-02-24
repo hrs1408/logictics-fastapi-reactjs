@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta
 from typing import Union, Any
+
 from passlib.context import CryptContext
 
 import jwt
-
 from models import User
 from schemas.user_schemas import LoginResponse
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECURITY_ALGORITHM = 'HS256'
 SECRET_KEY = '123456'
 
@@ -20,7 +20,7 @@ def generate_token(email: Union[str, Any]) -> str:
         "exp": expire, "email": email
     }
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=SECURITY_ALGORITHM)
-    return LoginResponse(token=encoded_jwt, exp=expire)
+    return LoginResponse(token=encoded_jwt, exp=expire, token_type='bearer')
 
 
 def verify_password(plain_password, hashed_password):
