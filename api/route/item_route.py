@@ -27,5 +27,5 @@ def create_item_for_user(user_id: int, item: ItemCreate, db: Session = Depends(g
 
 @items.get("/items/", response_model=list[Item], dependencies=[Depends(validate_token)])
 def get_all_item(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    listuser = get_items(db, skip=skip, limit=limit)
-    return listuser
+    list_item = get_items(db, skip=skip, limit=limit)
+    return list_item

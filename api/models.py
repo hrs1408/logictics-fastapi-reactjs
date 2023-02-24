@@ -22,6 +22,33 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), unique=True, index=True)
     hashed_password = Column(String(255))
+    type_user = Column(String(255), index=True)
     is_active = Column(Boolean, default=True)
 
     items = relationship("Item", back_populates="owner")
+    user_information = relationship("UserInformation", back_populates="user", uselist=False)
+    user_internal_information = relationship("UserInternalInformation", back_populates="user")
+
+
+class UserInformation(Base):
+    __tablename__ = "user_information"
+
+    id = Column(Integer, primary_key=True, index=True)
+    fullname = Column(String(255), index=True)
+    phone_number = Column(String(255), index=True)
+    date_of_birth = Column(String(255), index=True)
+    address = Column(String(255), index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    user = relationship("User", back_populates="user_information")
+
+
+class UserInternalInformation(Base):
+    __tablename__ = "user_internal_information"
+
+    id = Column(Integer, primary_key=True, index=True)
+    work_address = Column(String(255), index=True)
+    position = Column(String(255), index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    user = relationship("User", back_populates="user_internal_information")
