@@ -10,6 +10,7 @@ users = APIRouter(
     tags=["User"]
 )
 
+
 def get_db():
     db = None
     try:
