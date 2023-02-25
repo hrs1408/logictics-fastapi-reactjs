@@ -16,7 +16,7 @@ const Home = () => {
     return (
         <AdminLayout>
             <div className="home">
-                <div className="search-bar w-full p-4 bg-white rounded-md shadow">
+                <div className="search-bar w-full py-2 px-4 bg-white rounded-md shadow">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
@@ -26,8 +26,7 @@ const Home = () => {
                             </div>
                         </div>
                         <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
-                            <Typography sx={{minWidth: 100}}>Contact</Typography>
-                            <Typography sx={{minWidth: 100}}>Profile</Typography>
+                            <Typography sx={{minWidth: 100, fontSize: '14px'}}>Nguyễn Phan Huy Hiếu</Typography>
                             <Tooltip title="Account settings">
                                 <IconButton
                                     onClick={handleClick}

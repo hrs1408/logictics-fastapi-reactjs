@@ -1,6 +1,8 @@
 import React from "react";
-import {Button, Divider} from "@mui/material";
-import {RxDashboard} from "react-icons/rx";
+import {Divider} from "@mui/material";
+import {SIDE_BAR} from "../../constants/SideBar";
+import {Link} from "react-router-dom";
+import './admin-layout.scss'
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -14,11 +16,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
                     <img src="https://ntlogistics.vn/images/img/logo-footer.png" alt="logo" className="w-[170px] mr-4"/>
                 </div>
                 <Divider/>
-                <div className="p-4 h-full w-full flex flex-col gap-2">
+                <div className="p-4 pr-0 h-full w-full flex flex-col gap-2">
                     {
-                        Array(10).fill(0).map((item, index) => {
+                        SIDE_BAR.map((item, index) => {
                             return (
-                                <ButtonSideBar/>
+                                <div className="menu-item flex items-center justify-center w-full ">
+                                    <Link to={item.path}
+                                          className={`${index == 0 ? 'button-active w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'
+                                              : 'w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'}`}>
+                                        {item.icon} <span>{item.name}</span></Link>
+                                </div>
                             )
                         })
                     }
@@ -31,13 +38,4 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
     )
 }
 
-const ButtonSideBar = () => {
-    return (
-        <div className="menu-item flex items-center justify-center w-full ">
-            <button
-                className={'w-full text-[16px] rounded-xl hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'}>
-                <RxDashboard/> <span>Dashboard</span></button>
-        </div>
-    )
-}
 export default AdminLayout

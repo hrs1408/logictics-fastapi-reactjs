@@ -11,6 +11,7 @@ app = APIRouter(
     tags=["User"]
 )
 
+
 @app.get("/users/", response_model=list[UserSchemas], dependencies=[Depends(validate_token)])
 def get_all_user(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     list_user = get_users(db, skip=skip, limit=limit)
