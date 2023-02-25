@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS python_web_app;

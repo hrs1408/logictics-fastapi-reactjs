@@ -30,5 +30,3 @@ def validate_token(http_authorization_credentials=Depends(reusable_oauth2)) -> s
             status_code=403,
             detail=f"Could not validate credentials",
         )
-
-
