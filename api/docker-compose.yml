@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: python_web_app
+    volumes:
+      - db-data:/var/lib/mysql
+  app:
+    build: Docker/app
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/python_web_app
+
+volumes:
+  db-data:
