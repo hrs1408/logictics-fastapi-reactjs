@@ -7,7 +7,7 @@ import './register.scss'
 
 const Login = () => {
 
-  const [provinces, setProvinces] = useState([]);
+  const [provinces, setProvinces] = useState<any>([]);
 
   const fetchData = async () => {
     const res = await fetch(`https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json`);
@@ -15,6 +15,7 @@ const Login = () => {
     setProvinces(data);
     // console.log("hoang", data);
   }
+  
   console.log(provinces);
   useEffect(() => {
     fetchData();
@@ -24,7 +25,7 @@ const Login = () => {
 
 
   const [toggleState, setToggleState] = useState(1);
-  const toggleTab = (index) => {
+  const toggleTab = (index: number) => {
     setToggleState(index);
   };
 
@@ -126,7 +127,7 @@ const Login = () => {
                     <select className='w-full outline-none h-full' >
                       <option value="">Khu vực khách hàng</option>
                       {
-                        provinces?.map((item, index) => {
+                        provinces?.map((item: any, index: number) => {
                           return (
                             <option key={index} value={item.Id}>{item.Name}</option>
                           )
