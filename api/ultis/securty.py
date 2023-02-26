@@ -1,32 +1,33 @@
 from datetime import datetime
-import pandas as pd
 
 import jwt
-from fastapi import Depends, HTTPException
-from fastapi.security import HTTPBearer
+from fastapi import Depends, HTTPException, status
 from pydantic import ValidationError
 
-SECURITY_ALGORITHM = 'HS256'
-SECRET_KEY = '123456'
-
-reusable_oauth2 = HTTPBearer(
-    scheme_name='Authorization'
-)
+from config import ALGORITHM, SECRET_KEY
+from repository.jwt_repository import JWTBearer
 
 
-def validate_token(http_authorization_credentials=Depends(reusable_oauth2)) -> str:
+async def get_current_user(token: str = Depends(JWTBearer())) -> int:
     """
-    Decode JWT token to get email => return email
+    Decode JWT token to get sub => return sub
     """
     try:
-        print(http_authorization_credentials.credentials)
-        payload = jwt.decode(http_authorization_credentials.credentials, SECRET_KEY, algorithms=[SECURITY_ALGORITHM])
-        exp = pd.to_datetime(payload.get('exp'), unit='s')
-        if exp < datetime.now():
-            raise HTTPException(status_code=403, detail="Token expired")
-        return payload.get('email')
+        payload = jwt.decode(
+            token, SECRET_KEY, algorithms=[ALGORITHM]
+        )
+
+        if datetime.fromtimestamp(payload.get('exp')) < datetime.now():
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token expired",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
     except(jwt.PyJWTError, ValidationError):
         raise HTTPException(
-            status_code=403,
-            detail=f"Could not validate credentials",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
         )
+
+    return int(payload.get('sub'))
