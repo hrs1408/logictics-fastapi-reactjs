@@ -15,7 +15,8 @@ from schemas.user_schemas import UserCreateSchema, UserSchemas, LoginRequest, To
 from ultis.securty import get_current_user
 
 auth = APIRouter(
-    tags=["Authentication"]
+    tags=["Authentication"],
+    prefix="/auth"
 )
 
 # encrypt password
