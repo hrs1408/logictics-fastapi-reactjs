@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { AiOutlinePhone, AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordFill, RiLoginCircleFill, RiLockPasswordLine } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
-import './login.scss';
-import './register.scss'
+import './auth.scss';
 
 const Login = () => {
 
@@ -13,16 +12,11 @@ const Login = () => {
     const res = await fetch(`https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json`);
     const data = await res.json();
     setProvinces(data);
-    // console.log("hoang", data);
   }
-  
-  console.log(provinces);
+
   useEffect(() => {
     fetchData();
   }, []);
-
-  const options = ['Cá nhân', 'Công ty/Tổ chức'];
-
 
   const [toggleState, setToggleState] = useState(1);
   const toggleTab = (index: number) => {
@@ -59,71 +53,61 @@ const Login = () => {
               <div
                 className={toggleState === 1 ? "content  active-content" : "content"}
               >
-                <div className='grid grid-cols-12'>
-                  <div className="col-span-6">
-                    <div className="login_background">
-                      <img src="https://khachhang.ntlogistics.vn/static/media/login.7cb654a6.jpg" alt="" />
-                    </div>
+                <form className='p-[15px] ' action="">
+                  <div className="input-wrapper mt-2">
+                    <span className='input-icon'>
+                      <AiOutlineUser />
+                    </span>
+                    <input placeholder="Email" type="email" ></input>
                   </div>
-                  <div className="col-span-6">
-                    <form className='p-[15px] ' action="">
-                      <div className="input-wrapper mt-2">
-                        <span className='input-icon'>
-                          <AiOutlineUser />
-                        </span>
-                        <input placeholder="Email" type="email" ></input>
-                      </div>
-                      <div className="input-wrapper mt-6">
-                        <span className='input-icon'>
-                          <RiLockPasswordFill />
-                        </span>
-                        <input placeholder="Nhập mật khẩu" type="password" ></input>
-                      </div>
-                      <div className="text-right mt-1">
-                        <a href='' className="forgot-password ">Quên mật khẩu?</a>
-                      </div>
-                      <button type='submit' className="login-submit mt-2">
-                        ĐĂNG NHẬP
-                      </button>
-                      <hr className='mt-[25px] ' />
-                      <div className='text-center mt-2'>
-                        <span className='text-[14px]'>Bạn chưa có tài khoản?</span>
-                      </div>
-                      <div className={`${toggleState === 2 ? "tabs active-tabs" : "tabs"} login-submit cursor-pointer flex items-center justify-center mt-2`}
-                        onClick={() => toggleTab(2)}>
-                        TẠO TÀI KHOẢN
-                      </div>
-                    </form>
-                    <div className='text-center mt-2 text-[14px] font-bold'>BO version 490 - production</div>
+                  <div className="input-wrapper mt-6">
+                    <span className='input-icon'>
+                      <RiLockPasswordFill />
+                    </span>
+                    <input placeholder="Nhập mật khẩu" type="password" ></input>
                   </div>
-                </div>
+                  <div className="text-right mt-1">
+                    <a href='' className="forgot-password ">Quên mật khẩu?</a>
+                  </div>
+                  <button type='submit' className="login-submit mt-2">
+                    ĐĂNG NHẬP
+                  </button>
+                  <hr className='mt-[25px] ' />
+                  <div className='text-center mt-2'>
+                    <span className='text-[14px]'>Bạn chưa có tài khoản?</span>
+                  </div>
+                  <div className={`${toggleState === 2 ? "tabs active-tabs" : "tabs"} login-submit cursor-pointer flex items-center justify-center mt-2`}
+                    onClick={() => toggleTab(2)}>
+                    TẠO TÀI KHOẢN
+                  </div>
+                </form>
               </div>
               <div
                 className={toggleState === 2 ? "content  active-content" : "content"}
               >
-                <form className='form-register'>
+                <form className='p-[15px]'>
                   <h3 className='title-form'>Đăng ký tài khoản bằng Email</h3>
-                  <div className="item-control-input ">
+                  <div className="input-wrapper ">
                     <span className='text-[21px]'><AiOutlineUser /></span>
-                    <input className='input-register' type="text" placeholder='Tên khách hàng' />
+                    <input type="text" placeholder='Tên khách hàng' />
                   </div>
-                  <div className="item-control-input">
+                  <div className="input-wrapper">
                     <span className='text-[21px]'><AiOutlineUser /></span>
-                    <input className='input-register' type="email" placeholder='Địa chỉ Email' />
+                    <input type="email" placeholder='Địa chỉ Email' />
                   </div>
-                  <div className="item-control-input">
+                  <div className="input-wrapper">
                     <span className='text-[21px]'><AiOutlinePhone /></span>
-                    <input className='input-register' type="text" placeholder='Số điện thoại' />
+                    <input type="text" placeholder='Số điện thoại' />
                   </div>
-                  <div className="item-control-input">
+                  <div className="input-wrapper">
                     <span className='text-[21px]'><RiLockPasswordLine /></span>
-                    <input className='input-register' type="password" placeholder='Mật khẩu' />
+                    <input type="password" placeholder='Mật khẩu' />
                   </div>
-                  <div className="item-control-input">
+                  <div className="input-wrapper">
                     <span className='text-[21px]'><RiLockPasswordLine /></span>
-                    <input className='input-register' type="password" placeholder='Nhập lại mật khẩu' />
+                    <input type="password" placeholder='Nhập lại mật khẩu' />
                   </div>
-                  <div className="item-control-input">
+                  <div className="input-wrapper">
                     <select className='w-full outline-none h-full' >
                       <option value="">Khu vực khách hàng</option>
                       {
