@@ -5,7 +5,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Link, useNavigate} from "react-router-dom";
 import axiosConfig from "../../../configs/AxiosConfig";
 import {saveToken} from "../../../services/AuthService";
-import { AuthContext } from '../../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import React, {useContext} from "react";
 
 
@@ -17,7 +17,7 @@ const schema = yup.object().shape({
     password: yup.string().required('Password is required field'),
 });
 const Login = () => {
-    const { getMeForce } = useContext(AuthContext) as AuthContextType;
+    const {getMeForce} = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();
     const {
         register,
@@ -29,8 +29,8 @@ const Login = () => {
     });
 
     const handleLogin = (data: SignInType) => {
-        axiosConfig.post('/login', data).then(async res => {
-            saveToken({token: res.data.token, tokenType: res.data.tokenType, exp: res.data.exp})
+        axiosConfig.post('/auth/login', data).then(async res => {
+            saveToken(res.data);
             await getMeForce();
             navigate('/');
             reset({

@@ -3,17 +3,7 @@ from sqlalchemy.orm import relationship
 
 from database.database import Base
 
-
-class Item(Base):
-    __tablename__ = "items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(255), index=True)
-    description = Column(String(255), index=True)
-    # owner_id = Column(Integer, ForeignKey("users.id"))
-
-    # owner = relationship("User", back_populates="items")
-
+from enum import Enum
 
 class User(Base):
     __tablename__ = "users"
@@ -29,6 +19,7 @@ class User(Base):
     # items = relationship("Item", back_populates="owner")
     user_information = relationship("UserInformation", back_populates="user", uselist=False)
     user_internal_information = relationship("UserInternalInformation", back_populates="user")
+    invoices = relationship("Invoice", back_populates="owner")
 
 
 class UserInformation(Base):

@@ -3,6 +3,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import {BiSearch} from "react-icons/bi";
 import {Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import {AiOutlineUserAdd} from "react-icons/ai";
+import {TbFileInvoice} from "react-icons/tb";
 
 const Home = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -100,6 +101,19 @@ const Home = () => {
                                 Logout
                             </MenuItem>
                         </Menu>
+                    </div>
+                </div>
+                <div className="statistic mt-4">
+                    <div className={'flex gap-3'}>
+                        <div className="sum-of-invoice p-4 bg-white rounded shadow">
+                            <div className={'p-1 bg-[#EEFBE7] rounded'}>
+                                <TbFileInvoice className={'text-[#71DD37]'}/>
+                            </div>
+                            <div className={'mt-2'}>
+                                <div className={'text-[#71DD37] text-[20px] font-bold'}>1,000,000</div>
+                                <div className={'text-[#71DD37] text-[14px]'}>Tổng số hóa đơn</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
