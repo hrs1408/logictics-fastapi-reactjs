@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, date
 import jwt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Request, HTTPException, Depends, status
-from jwt import PyJWTError
 from sqlalchemy.orm import Session
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_MINUTES
 from models import User
@@ -44,7 +43,7 @@ class JWTRepository:
             decode_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             current_time = datetime.utcnow()
             return decode_token if datetime.utcfromtimestamp(decode_token["exp"]) >= current_time else None
-        except PyJWTError:
+        except jwt.PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid access token")
 
     @staticmethod
@@ -53,7 +52,7 @@ class JWTRepository:
             decoded_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             current_time = datetime.utcnow()
             return decoded_token if datetime.utcfromtimestamp(decoded_token["exp"]) >= current_time else None
-        except PyJWTError:
+        except jwt.PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid refresh token")
 
     @staticmethod
