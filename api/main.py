@@ -1,19 +1,21 @@
+from fastapi_responseschema import wrap_app_responses
 from starlette.middleware.cors import CORSMiddleware
 
 from database.database import engine
 from fastapi import FastAPI
 from route.auth_route import auth
-from route.user_route import user
+from route.user_route import users
 import models
+from schemas.schema import Route
 
 models.Base.metadata.create_all(bind=engine)
-
 
 app = FastAPI(
     title="NHAT TIN LOGISTICS",
     description="Logistics API",
     version=2,
 )
+wrap_app_responses(app, Route)
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -30,6 +32,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth)
-app.include_router(user)
-
+app.include_router(prefix="/api", router=auth)
+app.include_router(prefix="/api", router=users)
