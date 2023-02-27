@@ -10,7 +10,7 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
     return (
-        <div className="admin-layout bg-gray-100 w-screen h-screen flex">
+        <div className="admin-layout bg-gray-100 w-full flex">
             <div className="side-bar fixed h-screen w-[300px] shadow-lg left-0 top-0 bg-white">
                 <div className="logo flex p-4 rounded items-center justify-center">
                     <img src="https://ntlogistics.vn/images/img/logo-footer.png" alt="logo" className="w-[170px] mr-4"/>
@@ -31,8 +31,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
                     }
                 </div>
             </div>
-            <div className="main-content ml-[300px] w-full h-full p-4">
-                {children}
+            <div className="main-content ml-[300px] w-full h-full">
+                <p className={'p-4'}>
+                    {children}
+                </p>
+                <footer>
+                    <div className="footer w-full py-6 bg-white shadow-lg flex items-center justify-center">
+                        <p className="text-gray-500">
+                            © {new Date().getFullYear()} NT Logistics. All rights reserved.
+                        </p>
+                    </div>
+                </footer>
             </div>
         </div>
     )
