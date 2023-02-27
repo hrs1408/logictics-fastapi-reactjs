@@ -1,0 +1,98 @@
+.carousel-inner {
+    position: relative;
+
+    .carousel-bg {
+        height: 700px;
+        width: 100%;
+        background-image: url("https://cdn.ntlogistics.vn/uploads/banners/2020/04/21/bg_home_top_1.jpg");
+    }
+
+    .carousel-content {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .more-than-log {
+            text-align: center;
+            font-size: 40px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .bill-of-lading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .bill-of-lading-item {
+                margin-right: -0.25rem;
+
+                .top-slide {
+                    height: 28px;
+                    background-color: #E5E5E5;
+                    position: relative;
+                    z-index: 1;
+                    width: 162px;
+                    display: block;
+
+                }
+
+                .box-cube {
+
+                    width: 158px;
+                    height: 120px;
+                    background-color: #fafafa;
+                    padding: 25px 15px;
+                    transition: .25s ease background-color, .25s ease height;
+                    text-align: center;
+                    margin: auto;
+
+                    &:hover {
+                        background-color: #FCD804;
+                    }
+
+                    &.active-box-cube {
+                        background-color: #FCD804;
+                        height: 140px;
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    }
+                }
+            }
+
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+
+            .form-search {
+                .input-search {
+                    height: calc(2.5rem + 2px);
+                    outline: none;
+                    border-radius: 0;
+                    width: 766px;
+                    padding-left: 12px;
+
+                    &:focus {
+                        outline: 0;
+                        -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+                    }
+                }
+            }
+
+            .btn-search {
+
+                width: 140px;
+                height: 42px;
+                background-color: #fff;
+                font-weight: 500;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
