@@ -144,7 +144,7 @@ const Settings = () => {
                                     </div>
                                     <div className={'mt-4'}>
                                         <button
-                                            className={'bg-yellow-400 text-white px-4 py-2 rounded w-full'}
+                                            className={'bg-yellow-400 px-4 py-2 rounded w-full'}
                                         >
                                             Save
                                         </button>
@@ -170,7 +170,7 @@ const Settings = () => {
                                     </div>
                                     <div className={'mt-4'}>
                                         <button
-                                            className={'bg-yellow-400 text-white px-4 py-2 rounded w-full'}
+                                            className={'bg-yellow-400 px-4 py-2 rounded w-full'}
                                         >
                                             Save
                                         </button>
