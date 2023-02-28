@@ -11,13 +11,13 @@ const LineChart = () => {
         datasets: [
             {
                 label: 'Invoice',
-                data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+                data: labels.map(() => faker.datatype.number({min: 1000000, max: 100000000})),
                 borderColor: 'rgb(248,187,0)',
                 backgroundColor: 'rgba(248,187,0, 0.5)',
             },
             {
                 label: 'Revenue',
-                data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+                data: labels.map(() => faker.datatype.number({min: 1000000, max: 100000000})),
                 borderColor: 'rgb(0,0,0)',
                 backgroundColor: 'rgba(0,0,0, 0.5)',
             },
@@ -39,7 +39,7 @@ const LineChart = () => {
 
     return (
         <div>
-            <Line options={options} data={data} />
+            <Line options={options} data={data}/>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import {BiScan, BiSearch, BiX} from "react-icons/bi";
 import { Modal } from "@mui/material";
-import {TbFileInvoice} from "react-icons/tb";
+import {TbCashBanknote, TbCashBanknoteOff, TbFileInvoice} from "react-icons/tb";
 import LineChart from "../../components/Chart/LineChart";
 import {faker} from "@faker-js/faker";
 import {NumericFormat} from 'react-number-format';
@@ -98,7 +98,7 @@ const Home = () => {
                             <div className="statistic-item p-4 bg-white rounded shadow">
                                 <div className={'flex items-center gap-4'}>
                                     <div className={'p-1 bg-[#E0F7FC] rounded'}>
-                                        <TbFileInvoice className={'text-[#03C3EC] text-xl'}/>
+                                        <TbCashBanknote className={'text-[#03C3EC] text-xl'}/>
                                     </div>
                                     <div className={'text-[16px] font-bold'}>Invoice Has Been Paid</div>
                                 </div>
@@ -115,7 +115,7 @@ const Home = () => {
                             <div className="statistic-item p-4 bg-white rounded shadow">
                                 <div className={'flex items-center gap-4'}>
                                     <div className={'p-1 bg-[#FFE7E3] rounded'}>
-                                        <TbFileInvoice className={'text-[#FF3E1D] text-xl'}/>
+                                        <TbCashBanknoteOff className={'text-[#FF3E1D] text-xl'}/>
                                     </div>
                                     <div className={'text-[16px] font-bold'}>Unpaid Invoice</div>
                                 </div>

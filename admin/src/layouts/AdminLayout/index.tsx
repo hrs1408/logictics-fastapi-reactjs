@@ -14,7 +14,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
         <div className="admin-layout bg-gray-100 w-full flex">
             <div className="side-bar fixed h-screen w-[300px] shadow-lg left-0 top-0 bg-white">
                 <div className="logo flex p-4 rounded items-center justify-center">
-                    <img src="https://ntlogistics.vn/images/img/logo-footer.png" alt="logo" className="w-[170px] mr-4"/>
+                    <img src="/images/logo/1-landscape.png" alt="logo" />
                 </div>
                 <Divider/>
                 <div className="p-4 pr-0 h-full w-full flex flex-col gap-2">
