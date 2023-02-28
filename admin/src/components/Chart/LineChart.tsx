@@ -10,13 +10,13 @@ const LineChart = () => {
         labels,
         datasets: [
             {
-                label: 'Dataset 1',
+                label: 'Invoice',
                 data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
                 borderColor: 'rgb(248,187,0)',
                 backgroundColor: 'rgba(248,187,0, 0.5)',
             },
             {
-                label: 'Dataset 2',
+                label: 'Revenue',
                 data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
                 borderColor: 'rgb(0,0,0)',
                 backgroundColor: 'rgba(0,0,0, 0.5)',
@@ -32,7 +32,7 @@ const LineChart = () => {
             },
             title: {
                 display: true,
-                text: 'Chart.js Line Chart',
+                text: 'Statistics overview',
             },
         },
     };

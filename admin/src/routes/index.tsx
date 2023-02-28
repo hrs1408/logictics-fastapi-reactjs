@@ -3,6 +3,7 @@ import Login from "../pages/auth/login";
 import Home from "../pages/Home";
 import PrivateRoute from "./PrivateRoute";
 import LoggedRoute from "./LoggedRoute";
+import Settings from "../pages/Settings";
 
 const routes = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ const routes = createBrowserRouter([
             {
                 path: "/",
                 element: <Home/>
+            },
+            {
+                path: "/settings",
+                element: <Settings/>
             }
         ]
     },
