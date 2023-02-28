@@ -74,10 +74,12 @@ class AccessToken(BaseModel):
     access_token_expire: datetime
     token_type: Optional[str] = 'Bearer'
 
+
 class RefreshToken(BaseModel):
     refresh_token: str
     refresh_token_expire: datetime
     sub: Optional[str]
+
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
