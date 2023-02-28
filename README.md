@@ -1,2 +1,2 @@
-﻿# Nhat Tin Logistics
+﻿# NextGen Logistics
  # Python (FastAPI) + ReactJS
