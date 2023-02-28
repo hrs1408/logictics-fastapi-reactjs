@@ -4,13 +4,22 @@ type SignInType = {
     password: string;
 }
 
-type AuthType = {
+type SignUpType = {
     email: string;
+    full_name: string;
+    password: string;
+    confirm_password: string,
+    phone: stringh,
+    address: string,
+    type_user: string
+}
+
+type AuthType = {
     id: string;
+    email: string;
     is_active: true;
-    item: []
-    user_information: {}
-    user_internal_information: {}
+    type_user: string;
+    user_information: {};
 };
 
 type AuthContextType = {
