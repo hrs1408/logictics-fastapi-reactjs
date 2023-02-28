@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./index.scss";
+import { GrPrevious } from 'react-icons/gr'
 const ListDelivery = () => {
   return (
     <div className="container mx-auto">
@@ -77,6 +78,13 @@ const ListDelivery = () => {
           </p>
           3PL & Fulfillment
         </Link>
+      </div>
+      <div className="select mt-5">
+        <GrPrevious className="thin-arrow" />
+        <div className="mt-3 text-[18px]">
+          <b className="">Lựa chọn dịch vụ </b>
+          bạn quan tâm
+        </div>
       </div>
     </div>
   );
