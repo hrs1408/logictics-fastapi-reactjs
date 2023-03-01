@@ -1,0 +1,28 @@
+.wp-kh {
+    .text-kh {
+        position: relative;
+
+        &::before {
+            width: 100%;
+            margin: auto;
+            border-top: 1px solid #C7C7C7;
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0px;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 25%;
+            height: 9px;
+            background: #FCD804;
+            margin: auto;
+            top: 10px;
+            left: 0;
+            right: 0px;
+        }
+    }
+}
