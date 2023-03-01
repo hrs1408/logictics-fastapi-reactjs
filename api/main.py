@@ -1,4 +1,6 @@
 from fastapi_responseschema import wrap_app_responses
+from passlib.context import CryptContext
+from sqlalchemy.orm import sessionmaker
 from starlette.middleware.cors import CORSMiddleware
 
 from database.database import engine
@@ -10,6 +12,8 @@ import models
 from schemas.schema import Route
 
 models.Base.metadata.create_all(bind=engine)
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 app = FastAPI(
     title="NHAT TIN LOGISTICS",
@@ -17,6 +21,19 @@ app = FastAPI(
     version=2,
 )
 wrap_app_responses(app, Route)
+
+
+@app.on_event("startup")
+def start_up_event():
+    db = SessionLocal()
+    user = db.query(models.User).filter(models.User.email == "admin@gmail.com").first()
+    if not user:
+        admin = models.User(email="admin@gmail.com", hashed_password=pwd_context.hash("Admin@123"),
+                            type_user=models.UserType.ADMIN)
+        db.add(admin)
+        db.commit()
+        db.refresh(admin)
+
 
 origins = [
     "http://localhost.tiangolo.com",

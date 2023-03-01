@@ -33,6 +33,12 @@ class Status(str, Enum):
     REFUSE = "REFUSE"
 
 
+class UserType(str, Enum):
+    ADMIN = "ADMIN",
+    STAFF = "STAFF",
+    USER = "USER"
+
+
 class Port(Base):
     __tablename__ = "ports"
     id = Column(Integer, primary_key=True)
@@ -119,7 +125,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(255), unique=True)
     hashed_password = Column(String(255))
-    type_user = Column(String(255), nullable=True)
+    type_user = Column(String(255), default=UserType.USER, nullable=True)
     is_active = Column(Boolean, default=True, nullable=True)
     refresh_token_sub = Column(String(255), nullable=True)
 

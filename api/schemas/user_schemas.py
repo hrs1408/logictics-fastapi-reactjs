@@ -88,7 +88,7 @@ class RefreshTokenRequest(BaseModel):
 class UserSchemas(BaseModel):
     id: int
     email: str
-    is_active: bool
+    # is_active: bool
     type_user: str | None
     user_information: UserInformation | None
 
