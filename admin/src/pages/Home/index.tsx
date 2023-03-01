@@ -1,13 +1,14 @@
 import React from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import {BiScan, BiSearch, BiX} from "react-icons/bi";
-import { Modal } from "@mui/material";
+import {Modal} from "@mui/material";
 import {TbCashBanknote, TbCashBanknoteOff, TbFileInvoice} from "react-icons/tb";
 import LineChart from "../../components/Chart/LineChart";
 import {faker} from "@faker-js/faker";
 import {NumericFormat} from 'react-number-format';
 import {QrScanner} from '@yudiel/react-qr-scanner';
 import SearchBar from "../../components/SearchBar";
+import axiosConfig from "../../configs/AxiosConfig";
 
 
 const Home = () => {
@@ -21,10 +22,13 @@ const Home = () => {
     }
 
     const handleScan = (data: any) => {
-        if (data) {
-            console.log('Result: ', data)
+        const data_request = {
+            "invoice_id": data,
+            "port_id": 2,
         }
-        setOpenQr(false)
+        if (data) {
+            axiosConfig.post('/voyages', data_request).then(r => console.log(r.data))
+        }
     }
 
     return (

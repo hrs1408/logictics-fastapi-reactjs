@@ -69,7 +69,7 @@ instance.interceptors.response.use(
         if (
             error.response.statusCode === 401 &&
             !config._retry &&
-            window.location.pathname != '/login'
+            window.location.pathname !== '/login'
         ) {
             config._retry = true;
 
