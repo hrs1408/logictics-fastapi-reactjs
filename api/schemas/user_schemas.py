@@ -11,7 +11,6 @@ class UserCreateSchema(BaseModel):
     confirm_password: str
     phone: constr(regex=r'^0\d{3}[- ]?\d{3}[- ]?\d{4}$')
     address: str
-    type_user: str
 
     @root_validator()
     def verify_password_match(cls, values):
@@ -96,7 +95,7 @@ class RefreshTokenRequest(BaseModel):
 class UserSchemas(BaseModel):
     id: int
     email: str
-    is_active: bool
+    # is_active: bool
     type_user: str | None
     user_information: UserInformation | None
     user_internal_information: UserInternalInfor | None
