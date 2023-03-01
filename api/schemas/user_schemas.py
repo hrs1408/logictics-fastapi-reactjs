@@ -47,10 +47,18 @@ class UserInformation(UserInformationBase):
         orm_mode = True
 
 
-class UserInternalInformation(BaseModel):
+class UserInternalInformationBase(BaseModel):
+    work_address: str | None
+    position: str | None
+
+
+class UserInternalInformationCreate(UserInternalInformationBase):
+    pass
+
+
+class UserInternalInfor(UserInternalInformationBase):
     id: int
-    work_address: str
-    position: str
+    user_id: int
 
     class Config:
         orm_mode = True
@@ -91,8 +99,7 @@ class UserSchemas(BaseModel):
     # is_active: bool
     type_user: str | None
     user_information: UserInformation | None
-
-    # user_internal_information: dict = {}
+    user_internal_information: UserInternalInfor | None
 
     class Config:
         orm_mode = True

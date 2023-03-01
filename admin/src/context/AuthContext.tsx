@@ -15,9 +15,8 @@ const AuthProvider: React.FC<IAuthProvider> = ({ children }) => {
         getMeApi,
         {
             retry: 1,
-            onSuccess: ({ result }) => {
-                console.log(result)
-                setAuth(result);
+            onSuccess: ({ data}) => {
+                setAuth(data);
             },
         }
     );

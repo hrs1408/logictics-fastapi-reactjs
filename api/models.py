@@ -43,6 +43,7 @@ class Port(Base):
     __tablename__ = "ports"
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
+    code = Column(String(255))
     voyages = relationship("Voyage", back_populates="port")
 
 
@@ -130,7 +131,7 @@ class User(Base):
     refresh_token_sub = Column(String(255), nullable=True)
 
     user_information = relationship("UserInformation", back_populates="user", uselist=False)
-    user_internal_information = relationship("UserInternalInformation", back_populates="user")
+    user_internal_information = relationship("UserInternalInformation", back_populates="user", uselist=False)
     shippers = relationship("Voyage", back_populates="shipper")
 
 

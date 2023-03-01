@@ -7,6 +7,7 @@ from database.database import engine
 from fastapi import FastAPI
 from route.auth_route import auth
 from route.invoice_route import invoice
+from route.port_route import ports
 from route.user_route import users
 import models
 from schemas.schema import Route
@@ -16,7 +17,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 app = FastAPI(
-    title="NHAT TIN LOGISTICS",
+    title="NEXTGEN LOGISTICS",
     description="Logistics API",
     version=2,
 )
@@ -53,3 +54,4 @@ app.add_middleware(
 app.include_router(prefix="/api", router=auth)
 app.include_router(prefix="/api", router=users)
 app.include_router(prefix="/api", router=invoice)
+app.include_router(prefix="/api", router=ports)
