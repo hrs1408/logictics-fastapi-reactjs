@@ -24,6 +24,7 @@ class BaseRepository():
     def update(db: Session, model: Generic[T]):
         db.commit()
         db.refresh(model)
+        return model
 
     @staticmethod
     def delete(db: Session, model: Generic[T]):
