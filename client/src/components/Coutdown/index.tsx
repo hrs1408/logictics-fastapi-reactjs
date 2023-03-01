@@ -16,7 +16,7 @@ const Coutdown = () => {
                             <span className="counter-number" >400</span>
                         </div>
                         <br />
-                        <span className='font-bold'>
+                        <span className='font-bold text-[22px] '>
                             Bưu cục
                             <br />
                             & Điểm nhận trả
@@ -33,7 +33,7 @@ const Coutdown = () => {
                             <span className="counter-number" >450</span>
                         </div>
                         <br />
-                        <span className='font-bold'>
+                        <span className='font-bold text-[22px]'>
                             Phương tiện
                             <br />
                             đa tải trọng
@@ -51,7 +51,7 @@ const Coutdown = () => {
                             <span> m<sup>2</sup></span>
                         </div>
                         <br />
-                        <span className='font-bold'>
+                        <span className='font-bold text-[22px]'>
                             Diện tích
                             <br />
                             kho bãi
@@ -68,7 +68,7 @@ const Coutdown = () => {
                             <span className="counter-number" >4.300</span>
                         </div>
                         <br />
-                        <span className='font-bold'>
+                        <span className='font-bold text-[22px]'>
                             Nhân viên
                             <br />
                             chính thức
@@ -85,7 +85,7 @@ const Coutdown = () => {
                             <span className="counter-number" >36.000</span>
                         </div>
                         <br />
-                        <span className='font-bold'>
+                        <span className='font-bold text-[22px]'>
                             Đối tác
                             <br />
                             Doanh nghiệp
@@ -102,7 +102,7 @@ const Coutdown = () => {
                             <span className="counter-number" >100.00</span>
                         </div>
                         <br />
-                        <span className='font-bold'>
+                        <span className='font-bold text-[22px]'>
                             Khách hàng
                             <br />
                             Cá nhân
