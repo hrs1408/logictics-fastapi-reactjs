@@ -11,7 +11,7 @@ from schemas.schema import Route
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="NHAT TIN LOGISTICS",
+    title="NEXTGEN LOGISTICS",
     description="Logistics API",
     version=2,
 )

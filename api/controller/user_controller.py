@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from models import User, UserInformation
-from schemas.user_schemas import UserCreateSchema, UserInformationCreate
+from models import User, UserInformation, UserInternalInformation
+from schemas.user_schemas import UserCreateSchema, UserInformationCreate, UserInternalInformationCreate
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -44,3 +44,19 @@ def update_user_information(db: Session, user_info: UserInformationCreate, user_
         db.refresh(db_user_information_exit)
         return db_user_information_exit
 
+
+def update_user_internal_information(db: Session, user_inter_infor: UserInternalInformationCreate, user_id: int):
+    db_user_inter_infor_exit = db.query(UserInternalInformation).filter(
+        UserInternalInformation.user_id == user_id).first()
+    if db_user_inter_infor_exit is None:
+        db_user_inter_information = UserInternalInformationCreate(**user_inter_infor.dict(), user_id=user_id)
+        db.add(db_user_inter_information)
+        db.commit()
+        db.refresh(db_user_inter_information)
+        return db_user_inter_information
+    else:
+        db_user_inter_infor_exit.work_address = user_inter_infor.work_address
+        db_user_inter_infor_exit.position = user_inter_infor.position
+        db.commit()
+        db.refresh(db_user_inter_infor_exit)
+        return db_user_inter_infor_exit
