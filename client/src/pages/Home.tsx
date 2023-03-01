@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Banner from "../components/Banner";
 import Carousel from "../components/Carousel";
 import Coutdown from "../components/Coutdown";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ListDelivery from "../components/ListDelivery";
 import Login from "../components/Login";
@@ -14,6 +15,7 @@ const Home: FC = () => {
       <ListDelivery />
       <Banner />
       <Coutdown />
+      <Footer />
     </div>
   );
 };
