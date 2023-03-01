@@ -17,7 +17,6 @@
     &:first-child {
         &::before {
             border-left: 0;
-
         }
     }
 
@@ -25,4 +24,14 @@
         background: #FCD804;
     }
 
+}
+
+.select {
+    text-align: -webkit-center;
+
+    .thin-arrow {
+        transform: rotate(90deg);
+        font-size: 26px;
+
+    }
 }
