@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from models import User, UserInformation
-from schemas.user_schemas import UserCreateSchema, UserInformationCreate
+from models import User, UserInformation, UserInternalInformation
+from schemas.user_schemas import UserCreateSchema, UserInformationCreate, UserInternalInformationCreate
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -25,22 +25,3 @@ def create_user(db: Session, user: UserCreateSchema):
     db.commit()
     db.refresh(db_user)
     return db_user
-
-
-def update_user_information(db: Session, user_info: UserInformationCreate, user_id: int):
-    db_user_information_exit = db.query(UserInformation).filter(UserInformation.user_id == user_id).first()
-    if db_user_information_exit is None:
-        db_user_information = UserInformationCreate(**user_info.dict(), user_id=user_id)
-        db.add(db_user_information)
-        db.commit()
-        db.refresh(db_user_information)
-        return db_user_information
-    else:
-        db_user_information_exit.fullname = user_info.fullname
-        db_user_information_exit.phone_number = user_info.phone_number
-        db_user_information_exit.date_of_birth = user_info.date_of_birth
-        db_user_information_exit.address = user_info.address
-        db.commit()
-        db.refresh(db_user_information_exit)
-        return db_user_information_exit
-
