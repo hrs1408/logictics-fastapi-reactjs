@@ -25,38 +25,3 @@ def create_user(db: Session, user: UserCreateSchema):
     db.commit()
     db.refresh(db_user)
     return db_user
-
-
-def update_user_information(db: Session, user_info: UserInformationCreate, user_id: int):
-    db_user_information_exit = db.query(UserInformation).filter(UserInformation.user_id == user_id).first()
-    if db_user_information_exit is None:
-        db_user_information = UserInformationCreate(**user_info.dict(), user_id=user_id)
-        db.add(db_user_information)
-        db.commit()
-        db.refresh(db_user_information)
-        return db_user_information
-    else:
-        db_user_information_exit.fullname = user_info.fullname
-        db_user_information_exit.phone_number = user_info.phone_number
-        db_user_information_exit.date_of_birth = user_info.date_of_birth
-        db_user_information_exit.address = user_info.address
-        db.commit()
-        db.refresh(db_user_information_exit)
-        return db_user_information_exit
-
-
-def update_user_internal_information(db: Session, user_inter_infor: UserInternalInformationCreate, user_id: int):
-    db_user_inter_infor_exit = db.query(UserInternalInformation).filter(
-        UserInternalInformation.user_id == user_id).first()
-    if db_user_inter_infor_exit is None:
-        db_user_inter_information = UserInternalInformationCreate(**user_inter_infor.dict(), user_id=user_id)
-        db.add(db_user_inter_information)
-        db.commit()
-        db.refresh(db_user_inter_information)
-        return db_user_inter_information
-    else:
-        db_user_inter_infor_exit.work_address = user_inter_infor.work_address
-        db_user_inter_infor_exit.position = user_inter_infor.position
-        db.commit()
-        db.refresh(db_user_inter_infor_exit)
-        return db_user_inter_infor_exit

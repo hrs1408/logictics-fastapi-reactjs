@@ -31,6 +31,7 @@ class Port(Base):
     __tablename__ = "ports"
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
+    code = Column(String(255))
     voyages = relationship("Voyage", back_populates="port")
 
 

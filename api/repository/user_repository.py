@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from models import User, UserInternalInformation
+from models import User, UserInternalInformation, UserInformation
 from repository.base_repository import BaseRepository
 
 
@@ -15,7 +15,10 @@ class UserRepository(BaseRepository):
 
 
 class UserInfoRepository(BaseRepository):
-    pass
+
+    @staticmethod
+    def find_by_user_id(db: Session, user_id: int) -> User | None:
+        return db.query(UserInformation).filter(UserInformation.user_id == user_id).first()
 
 
 class UserInternalInformationRepository(BaseRepository):

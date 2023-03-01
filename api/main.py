@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from database.database import engine
 from fastapi import FastAPI
 from route.auth_route import auth
+from route.port_route import ports
 from route.user_route import users
 import models
 from schemas.schema import Route
@@ -34,3 +35,4 @@ app.add_middleware(
 
 app.include_router(prefix="/api", router=auth)
 app.include_router(prefix="/api", router=users)
+app.include_router(prefix="/api", router=ports)
