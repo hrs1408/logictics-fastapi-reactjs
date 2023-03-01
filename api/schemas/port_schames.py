@@ -10,7 +10,7 @@ class PortCreate(PortBase):
     pass
 
 
-class Port(PortBase):
+class PortSchema(PortBase):
     id: int
 
     class Config:

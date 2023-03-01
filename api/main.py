@@ -10,6 +10,7 @@ from route.invoice_route import invoice
 from route.port_route import ports
 from route.user_route import users
 import models
+from route.voyage_route import voyages
 from schemas.schema import Route
 
 models.Base.metadata.create_all(bind=engine)
@@ -55,3 +56,4 @@ app.include_router(prefix="/api", router=auth)
 app.include_router(prefix="/api", router=users)
 app.include_router(prefix="/api", router=invoice)
 app.include_router(prefix="/api", router=ports)
+app.include_router(prefix="/api", router=voyages)

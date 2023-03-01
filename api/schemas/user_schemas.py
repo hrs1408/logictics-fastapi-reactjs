@@ -11,7 +11,6 @@ class UserCreateSchema(BaseModel):
     confirm_password: str
     phone: constr(regex=r'^0\d{3}[- ]?\d{3}[- ]?\d{4}$')
     address: str
-    type_user: str
 
     @root_validator()
     def verify_password_match(cls, values):

@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, root_validator
 
-from models import ShippingType, TransportEquipment, Payments, KindOfGoods
+from models import ShippingType, TransportEquipment, Payments, KindOfGoods, Status
 from schemas.user_schemas import UserSchemas
 
 
@@ -57,6 +57,11 @@ class CreateInvoiceSchema(BaseModel):
             raise ValueError("Maximum cargo weight 50,000 kg")
         return values
 
+
+class InvoiceChangeStatusSchema(BaseModel):
+    status: Status
+
+
 class InvoiceSchema(BaseModel):
     id: int
 
@@ -106,7 +111,7 @@ class InvoiceSchema(BaseModel):
     transport_equipment: Optional[str]
     # Yêu cầu khác
     requirement_other: Optional[str]
-    status: str
+    status: Status
 
     class Config:
         orm_mode = True
