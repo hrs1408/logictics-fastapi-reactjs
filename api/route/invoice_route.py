@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, Params, paginate
-
 from config import get_db
 from models import Invoice
 from repository.invoice_repository import InvoiceRepository
 from repository.jwt_repository import JWTBearer
 from schemas.invoice_schemas import InvoiceSchema, CreateInvoiceSchema
 from schemas.schema import ResponseSchema
+from objectmapper import ObjectMapper
 
 invoice = APIRouter(
     tags=['Invoice'],
@@ -23,7 +23,9 @@ def get_all_invoice(params: Params = Depends(), db=Depends(get_db)):
 
 @invoice.post("/")
 def create_invoice(request: CreateInvoiceSchema, db=Depends(get_db)):
-    return request
+    # invoice = Invoice(request)
+
+    return invoice
     # data = request
     # invoice = InvoiceRepository.insert(request)
     # return ResponseSchema.from_api_route(data=request)
