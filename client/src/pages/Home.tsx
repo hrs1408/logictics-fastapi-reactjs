@@ -4,6 +4,9 @@ import Carousel from "../components/Carousel";
 import Coutdown from "../components/Coutdown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Hotline from "../components/Hotline";
+import Iframe from "../components/Iframe";
+import Informationabout from "../components/InformationAbout";
 import ListDelivery from "../components/ListDelivery";
 import Login from "../components/Login";
 
@@ -14,7 +17,10 @@ const Home: FC = () => {
       <Carousel />
       <ListDelivery />
       <Banner />
+      <Informationabout />
       <Coutdown />
+      <Iframe />
+      <Hotline />
       <Footer />
     </div>
   );

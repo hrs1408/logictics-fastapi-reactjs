@@ -9,7 +9,7 @@ import "./index.scss";
 const Footer = () => {
   return (
     <>
-      <div className="container mx-auto grid grid-cols-7 mt-20 ">
+      <div className="container mx-auto grid grid-cols-7 mt-10 ">
         <div className="col-span-2">
           <div className="contact-footer">
             <Link to={"/"}>

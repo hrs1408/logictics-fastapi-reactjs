@@ -1,0 +1,25 @@
+.hotline-footer {
+    background: url(https://ntlogistics.vn/images/bg-hotline-footer.jpg) no-repeat center center;
+    background-size: cover;
+
+    .location {
+        display: flex;
+        background-color: #fff;
+        height: 67px;
+        width: 250px;
+        align-items: center;
+        border-radius: 0.25rem;
+        font-size: 16px;
+        justify-content: center;
+        gap: 10px;
+        &:last-child {
+           
+            background-color: #FCD804;
+        }
+        &:hover {
+            color: #2e3553;
+            opacity: 0.8;
+        }
+       
+    }
+}

@@ -8,6 +8,7 @@ const Banner = () => {
                 <img src="https://ntlogistics.vn/images/img/banner.png" alt="" />
             </Link>
         </div>
+        
     )
 }
 
