@@ -1,6 +1,7 @@
 type ResponseSuccessType<T> = Response & {
     message: string;
     data: T;
+    items: T[];
 };
 
 type TokenResponseType = {

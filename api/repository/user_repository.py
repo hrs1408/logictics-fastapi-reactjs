@@ -14,6 +14,8 @@ class UserRepository(BaseRepository):
         return db.query(User).filter(User.refresh_token_sub == sub).first()
 
 
+
+
 class UserInfoRepository(BaseRepository):
 
     @staticmethod

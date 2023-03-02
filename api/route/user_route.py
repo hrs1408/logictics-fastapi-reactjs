@@ -24,7 +24,7 @@ def get_all_user(params: Params = Depends(), db: Session = Depends(get_db)):
 
 @users.get("/users/{user_id}")
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
-    db_user = UserRepository.find_by_id(db, user_id=user_id)
+    db_user = UserRepository.find_by_id(db, User, id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
