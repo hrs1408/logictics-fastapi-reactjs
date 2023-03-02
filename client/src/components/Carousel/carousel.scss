@@ -96,3 +96,41 @@
         }
     }
 }
+
+@media screen and (max-width: 600px) {
+    .carousel-inner {
+        .carousel-content {
+            .bill-of-lading {
+                .bill-of-lading-item {
+                    .top-slide {
+                        width: 152px;
+                    }
+
+                    .box-cube {
+                        width: 148px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 500px) {
+    .carousel-inner {
+        .carousel-content {
+            .bill-of-lading {
+                .bill-of-lading-item {
+                    .top-slide {
+                        width: 132px;
+                    }
+
+                    .box-cube {
+                        width: 128px;
+                        p {
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

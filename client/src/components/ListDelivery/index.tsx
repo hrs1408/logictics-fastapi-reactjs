@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./index.scss";
+import "./delivery.scss";
 import { GrPrevious } from 'react-icons/gr'
 const ListDelivery = () => {
   return (
     <div className="container mx-auto">
-      <div className="grid grid-cols-8">
+      <div className="grid grid-cols-8 delivery">
         <Link to={"/"} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img

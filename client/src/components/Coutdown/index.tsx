@@ -1,11 +1,11 @@
 import React from 'react'
-import './index.scss'
+import './coutdown.scss'
 // import { HiOutlineBuildingOffice2 } from 'react-icons/hi'
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 const Coutdown = () => {
     return (
         <div className='container mx-auto'>
-            <div className="grid grid-cols-6  text-center justify-items-center ">
+            <div className="grid grid-cols-6 coutdown text-center justify-items-center ">
                 <div className="mt-10">
                     <div className="icon-coutdown">
                         <HiOutlineBuildingOffice2 />

@@ -9,8 +9,8 @@ import "./index.scss";
 const Footer = () => {
   return (
     <>
-      <div className="container mx-auto grid grid-cols-7 mt-10 ">
-        <div className="col-span-2">
+      <div className="container mx-auto grid grid-cols-12 mt-10 footer ">
+        <div className="col-span-3">
           <div className="contact-footer">
             <Link to={"/"}>
               <img
@@ -41,132 +41,136 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-1">
-          <div className="panel-heading">
-            <h2>Công ty</h2>
+        <div className="col-span-6">
+          <div className="flex panel gap-[30px]">
+            <div className="">
+              <div className="panel-heading">
+                <h2>Công ty</h2>
+              </div>
+              <ul className="ul-footer">
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Giới thiệu
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Nhân sự NLT
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Mạng lưới bưu cuc
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Tuyển dụng
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Tin tức
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="">
+              <div className="panel-heading">
+                <h2>Hỗ trợ khách hàng</h2>
+              </div>
+              <ul className="ul-footer">
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Câu hỏi thường gặp
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Điều khoản website
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Chính sách bảo mật
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Liên hệ
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="">
+              <div className="panel-heading">
+                <h2>Chính sách</h2>
+              </div>
+              <ul className="ul-footer">
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Khiếu nại & Đền bù
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Quy định gửi & nhận hàng
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Trách nhiệm các bên
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
+                    to={"/"}
+                  >
+                    Hàng hóa cấm gửi
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-          <ul className="ul-footer">
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Giới thiệu
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Nhân sự NLT
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Mạng lưới bưu cuc
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Tuyển dụng
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Tin tức
-              </Link>
-            </li>
-          </ul>
         </div>
-        <div className="col-span-1">
-          <div className="panel-heading">
-            <h2>Hỗ trợ khách hàng</h2>
-          </div>
-          <ul className="ul-footer">
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Câu hỏi thường gặp
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Điều khoản website
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Chính sách bảo mật
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Liên hệ
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="col-span-1">
-          <div className="panel-heading">
-            <h2>Chính sách</h2>
-          </div>
-          <ul className="ul-footer">
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Khiếu nại & Đền bù
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Quy định gửi & nhận hàng
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Trách nhiệm các bên
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                to={"/"}
-              >
-                Hàng hóa cấm gửi
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="col-span-2">
+        <div className="col-span-3">
           <div className="share-footer gap-3">
             <span className="ntl-zalo">
               <Link to={"/"}>
@@ -190,7 +194,7 @@ const Footer = () => {
               <GrSend className="text-[#a8a8a8] text-[20px]  " />
             </button>
           </form>
-          <div className="flex gap-4  mt-5">
+          <div className="share flex gap-4  mt-5">
             <Link to={"/"}>
               <img
                 src="https://ntlogistics.vn/style/images/appstore.png"
@@ -206,8 +210,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="w-full justify-center flex pb-5">
-        <p className="text-[14px] ">
+      <div className="w-full justify-center text-center flex pb-5 p-[15px]">
+        <p className="text-[14px] w-full  ">
           Copyright Ⓒ 2023 by CÔNG TY CỔ PHẦN ĐẦU TƯ THƯƠNG MẠI PHÁT TRIỂN NHẤT
           TÍN
         </p>

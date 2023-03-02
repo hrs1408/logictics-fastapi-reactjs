@@ -3,15 +3,17 @@ import TopHaader from "../TopHeader";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Header_Menu } from "../../constants/HeaderMenu";
 import { Link } from "react-router-dom";
+import Navbar from "../SideBar";
+import "./header.scss"
 const Header = () => {
   return (
     <div>
       <TopHaader />
-      <div className="bg-[#222222] py-3 ">
+      <Navbar />
+      <div className="bg-[#222222] py-3 header ">
         <div className="container mx-auto grid grid-cols-12 items-center gap-[6.5rem]">
           <div className="col-span-2">
             <Link to={"/"}>
-            
               <img src="https://ntlogistics.vn/images/img/logo.png" alt="" />
             </Link>
           </div>
