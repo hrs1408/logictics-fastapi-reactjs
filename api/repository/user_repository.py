@@ -13,9 +13,7 @@ class UserRepository(BaseRepository):
     def find_refresh_token_sub(db: Session, sub: str) -> User | None:
         return db.query(User).filter(User.refresh_token_sub == sub).first()
 
-    @staticmethod
-    def find_by_id(db: Session, user_id: int) -> User | None:
-        return db.query(User).filter(User.id == user_id).first()
+
 
 
 class UserInfoRepository(BaseRepository):
