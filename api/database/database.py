@@ -7,8 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL") if os.getenv(
-    "DATABASE_URL") else "mysql+mysqlconnector://root@localhost:3306/python_web_app"
+SQLALCHEMY_DATABASE_URL = os.environ.get('DATABASE_URL')
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,

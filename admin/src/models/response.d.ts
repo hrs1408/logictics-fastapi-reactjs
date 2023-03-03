@@ -1,11 +1,15 @@
 type ResponseSuccessType<T> = Response & {
     message: string;
-    result: T;
+    data: T;
+    items: T[];
 };
 
 type TokenResponseType = {
-    exp: string;
-    token: string;
+    accessToken: string;
+    tokenExpiresMinutes: string;
+    refreshTokenExpiresMinutes: string;
+    refreshToken: string;
+
     tokenType: string;
 };
 

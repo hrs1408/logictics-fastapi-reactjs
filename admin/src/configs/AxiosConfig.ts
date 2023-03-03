@@ -1,9 +1,11 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import Cookies from 'js-cookie';
 import {
     BASE_API,
+    REFRESH_TOKEN_KEY,
     TOKEN_KEY,
 } from '../constants/Enviroment';
+import {postRefreshTokenApi, saveToken} from '../services/AuthService';
 import {camelizeKeys} from 'humps';
 
 const instance = axios.create({
@@ -15,15 +17,29 @@ const instance = axios.create({
 
 instance.interceptors.request.use(async (config: any) => {
     const token = Cookies.get(TOKEN_KEY);
-
+    const refreshToken = Cookies.get(REFRESH_TOKEN_KEY);
     if (
         !token &&
+        refreshToken &&
         config.url &&
-        config.url.indexOf('/login') < 0
+        config.url.indexOf('/auth/refresh-token') < 0 &&
+        config.url.indexOf('/auth/login') < 0
     ) {
+        const accessToken = localStorage.getItem(TOKEN_KEY) ?? '';
+
+        if (!refreshToken) {
+            return config;
+        }
+
         try {
+            const {data} = await postRefreshTokenApi({
+                refreshToken,
+                accessToken,
+            });
+            saveToken(data);
+            /* Adding the new token to the header of the request. */
             Object.assign(config.headers as any, {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${data.accessToken}`,
             });
         } catch (e) {
         }
@@ -50,7 +66,6 @@ instance.interceptors.response.use(
     },
     async (error) => {
         const config = error.config;
-
         if (
             error.response.statusCode === 401 &&
             !config._retry &&
@@ -58,11 +73,22 @@ instance.interceptors.response.use(
         ) {
             config._retry = true;
 
+            const refreshToken = Cookies.get(REFRESH_TOKEN_KEY);
             const accessToken = localStorage.getItem(TOKEN_KEY) ?? '';
+            if (!refreshToken) {
+                window.location.href = '/login';
+                return Promise.reject(error);
+            }
 
             try {
+                const {data} = await postRefreshTokenApi({
+                    refreshToken,
+                    accessToken,
+                });
+                saveToken(data);
+
                 Object.assign(config.headers as any, {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${data.accessToken}`,
                 });
 
                 return instance(config);
