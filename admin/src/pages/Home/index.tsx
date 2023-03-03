@@ -1,18 +1,18 @@
 import React from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import {BiScan, BiSearch, BiX} from "react-icons/bi";
-import { Modal } from "@mui/material";
+import {Modal} from "@mui/material";
 import {TbCashBanknote, TbCashBanknoteOff, TbFileInvoice} from "react-icons/tb";
 import LineChart from "../../components/Chart/LineChart";
 import {faker} from "@faker-js/faker";
 import {NumericFormat} from 'react-number-format';
 import {QrScanner} from '@yudiel/react-qr-scanner';
 import SearchBar from "../../components/SearchBar";
+import axiosConfig from "../../configs/AxiosConfig";
 
 
 const Home = () => {
     const [openQr, setOpenQr] = React.useState(false);
-
     const handleOpenQr = () => setOpenQr(true);
     const handleCloseQr = () => setOpenQr(false);
 
@@ -21,10 +21,13 @@ const Home = () => {
     }
 
     const handleScan = (data: any) => {
-        if (data) {
-            console.log('Result: ', data)
+        const data_request = {
+            "invoice_id": data,
+            "port_id": 2,
         }
-        setOpenQr(false)
+        if (data) {
+            axiosConfig.post('/voyages', data_request).then(r => console.log(r.data))
+        }
     }
 
     return (
@@ -192,19 +195,6 @@ const Home = () => {
                                         })
                                     }
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="statistic mt-4">
-                    <div className={'flex gap-3'}>
-                        <div className="sum-of-invoice p-4 bg-white rounded shadow">
-                            <div className={'p-1 bg-[#EEFBE7] rounded'}>
-                                <TbFileInvoice className={'text-[#71DD37]'}/>
-                            </div>
-                            <div className={'mt-2'}>
-                                <div className={'text-[#71DD37] text-[20px] font-bold'}>1,000,000</div>
-                                <div className={'text-[#71DD37] text-[14px]'}>Tổng số hóa đơn</div>
                             </div>
                         </div>
                     </div>

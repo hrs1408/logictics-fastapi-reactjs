@@ -2,9 +2,9 @@ import uuid
 from typing import Optional
 from datetime import datetime, timedelta, date
 
-import jwt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Request, HTTPException, Depends, status
+import jwt
 from sqlalchemy.orm import Session
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_MINUTES
 from models import User

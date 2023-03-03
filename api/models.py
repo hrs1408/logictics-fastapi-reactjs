@@ -1,36 +1,49 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapper
 
 from database.database import Base
 
 from enum import Enum
 
 
-class ShippingType(Enum):
+class ShippingType(str, Enum):
     CPN = "CPN",
 
 
-class KindOfGoods(Enum):
+class KindOfGoods(str, Enum):
     DOCUMENT = "DOCUMENT",
     GOODS = "GOODS",
     COLD_GOODS = "COLD_GOODS",
     BIOLOGICAL_PRODUCT = "BIOLOGICAL_PRODUCT",
 
 
-class Payments(Enum):
+class Payments(str, Enum):
     PAYMENT_SENDER = "PAYMENT_SENDER",
     PAYMENT_RECEIVER = "PAYMENT_RECEIVER",
 
 
-class TransportEquipment(Enum):
+class TransportEquipment(str, Enum):
     MOTORBIKE = "MOTORBIKE",
     CAR = "CAR"
+
+
+class Status(str, Enum):
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+    REFUSE = "REFUSE"
+
+
+class UserType(str, Enum):
+    ADMIN = "ADMIN",
+    STAFF = "STAFF",
+    USER = "USER"
 
 
 class Port(Base):
     __tablename__ = "ports"
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
+    code = Column(String(255))
     voyages = relationship("Voyage", back_populates="port")
 
 
@@ -103,6 +116,7 @@ class Invoice(Base):
     transport_equipment = Column(String(255), default=TransportEquipment.MOTORBIKE, nullable=True)
     # Yêu cầu khác
     requirement_other = Column(String(255), nullable=True)
+    status = Column(String(255), nullable=True, default=Status.PENDING)
 
 
 class User(Base):
@@ -112,7 +126,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(255), unique=True)
     hashed_password = Column(String(255))
-    type_user = Column(String(255), nullable=True)
+    type_user = Column(String(255), default=UserType.USER, nullable=True)
     is_active = Column(Boolean, default=True, nullable=True)
     refresh_token_sub = Column(String(255), nullable=True)
 
