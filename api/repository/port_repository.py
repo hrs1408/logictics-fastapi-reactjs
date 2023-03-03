@@ -7,15 +7,15 @@ from repository.base_repository import BaseRepository
 class PortRepository(BaseRepository):
 
     @staticmethod
-    def find_by_id_port(db: Session, port_id: int) -> Port | None:
+    def find_by_id_port(db: Session, port_id: int):
         return db.query(Port).filter(Port.id == port_id).first()
 
     @staticmethod
-    def find_by_name(db: Session, name: str) -> Port | None:
+    def find_by_name(db: Session, name: str):
         return db.query(Port).filter(Port.name == name).first()
 
     @staticmethod
-    def find_by_code(db: Session, code: str) -> Port | None:
+    def find_by_code(db: Session, code: str):
         return db.query(Port).filter(Port.code == code).first()
 
     @staticmethod

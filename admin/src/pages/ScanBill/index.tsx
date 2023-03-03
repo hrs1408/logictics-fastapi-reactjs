@@ -4,7 +4,7 @@ import SearchBar from "../../components/SearchBar";
 const ScanBill = () => {
     return (
         <AdminLayout>
-            <div>
+            <div className={'h-screen'}>
                 <SearchBar/>
             </div>
         </AdminLayout>
