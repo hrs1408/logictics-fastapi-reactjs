@@ -2,9 +2,9 @@ import uuid
 from typing import Optional
 from datetime import datetime, timedelta, date
 
-import jwt
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Request, HTTPException, Depends, status
+import jwt
 from sqlalchemy.orm import Session
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_MINUTES
 from models import User
@@ -15,7 +15,7 @@ from schemas.user_schemas import TokenResponse, AccessToken, RefreshToken
 class JWTRepository:
     @staticmethod
     def create_access_token(user: User, data: Optional[dict] = None,
-                            expires_delta: Optional[timedelta] = None) -> AccessToken:
+                            expires_delta: Optional[timedelta] = None):
         to_encode = data.copy() if data else {}
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
@@ -56,7 +56,7 @@ class JWTRepository:
             raise HTTPException(status_code=401, detail="Invalid refresh token")
 
     @staticmethod
-    def update_refresh_token(db: Session, user: User) -> TokenResponse:
+    def update_refresh_token(db: Session, user: User):
         access_token = JWTRepository.create_access_token(user)
         refresh_token_sub = str(uuid.uuid4())
         refresh_token = JWTRepository.create_refresh_token({'sub': refresh_token_sub})

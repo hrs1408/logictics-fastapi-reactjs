@@ -49,7 +49,6 @@ def register(user: UserCreateSchema, db: Session = Depends(get_db)):
     new_user = User(
         email=user.email,
         hashed_password=hashed_password,
-        type_user=user.type_user,
     )
     new_user = UserRepository.insert(db, new_user)
 
