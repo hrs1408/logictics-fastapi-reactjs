@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.8"
 
 services:
   db:
@@ -8,19 +8,21 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: python_web_app
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
     volumes:
       - db-data:/var/lib/mysql
   app:
-    build: Docker/app
+    build:
+      context: .
+      dockerfile: ./Docker/app/Dockerfile
     restart: always
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/python_web_app
+      - DATABASE_URL=mysql+mysqlconnector://root:${MYSQL_ROOT_PASSWORD}@db:3306/python_web_app
 
 volumes:
   db-data:

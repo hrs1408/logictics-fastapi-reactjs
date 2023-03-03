@@ -15,12 +15,12 @@ export const SIDE_BAR = [
         path: '/users'
     },
     {
-        name: 'Bill Of Lading',
+        name: 'Create Bill Of Lading',
         icon: <TbFileInvoice/>,
-        path: '/bill-of-lading'
+        path: '/create-bill-of-lading'
     },
     {
-        name: 'bill of lading scan',
+        name: 'Bill Of Lading Scan',
         icon: <AiOutlineScan/>,
         path: '/bill-of-lading-scan'
     },
