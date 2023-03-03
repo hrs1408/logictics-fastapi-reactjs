@@ -13,11 +13,13 @@
         justify-content: center;
         gap: 10px;
         &:last-child {
+           
             background-color: #FCD804;
         }
         &:hover {
             color: #2e3553;
             opacity: 0.8;
         }
+       
     }
 }

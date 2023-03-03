@@ -1,0 +1,65 @@
+.wp-about {
+    position: relative;
+    background: url(https://ntlogistics.vn/images/bg-about.png) no-repeat right center;
+    background-size: cover;
+
+    &::before {
+        background-color: #2F302F;
+    }
+
+    .left-about {
+        background-color: #2F302F;
+    }
+
+    .about-icon {
+        background-color: #fff;
+        padding: 0.5rem;
+        font-size: 42px;
+        border-radius: 50%;
+        place-self: center;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .wp-about {
+        position: relative;
+
+        &::before {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .wp-about {
+        .left-about {
+            .text-service {
+                font-size: 24px;
+            }
+
+            .summary {
+                font-size: 15px;
+                letter-spacing: -0.02em;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .wp-about {
+        .left-about {
+            .text-service {
+                padding-right: 3rem;
+            }
+        }
+    }
+}
