@@ -3,15 +3,20 @@ import TopHaader from "../TopHeader";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { Header_Menu } from "../../constants/HeaderMenu";
 import { Link } from "react-router-dom";
+import "./header.scss";
 const Header = () => {
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setOpenDrawer((e) => !e);
+  };
   return (
     <div>
       <TopHaader />
-      <div className="bg-[#222222] py-3 ">
+      <div className="bg-[#222222] py-3 header ">
         <div className="container mx-auto grid grid-cols-12 items-center gap-[6.5rem]">
           <div className="col-span-2">
             <Link to={"/"}>
-            
               <img src="https://ntlogistics.vn/images/img/logo.png" alt="" />
             </Link>
           </div>
