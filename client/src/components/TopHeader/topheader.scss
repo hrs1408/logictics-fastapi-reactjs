@@ -11,4 +11,16 @@
         background: #000;
         content: "";
     }
+
+    &:last-child {
+        &::before {
+            height: 34px;
+            top: -8px;
+        }
+    }
+}
+@media screen and (max-width: 1200px) {
+    .topheader {
+        display: none;
+    }
 }

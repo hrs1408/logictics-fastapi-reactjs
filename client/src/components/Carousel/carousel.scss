@@ -96,3 +96,81 @@
         }
     }
 }
+
+@media screen and (max-width: 1024px) {
+    .carousel-inner {
+        .carousel-content {
+            form {
+                .form-search {
+                    .input-search {
+                        width: 600px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 790px) {
+    .carousel-inner {
+        .carousel-content {
+            form {
+                .form-search {
+                    .input-search {
+                        width: 400px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .carousel-inner {
+        .carousel-content {
+            form {
+                gap: 0px;
+                .form-search {
+                    .input-search {
+                        width: 300px;
+                    }
+                }
+                .btn-search {
+                    background-color: #FCD804;
+                }
+            }
+            .bill-of-lading {
+                .bill-of-lading-item {
+                    .top-slide {
+                        width: 152px;
+                    }
+
+                    .box-cube {
+                        width: 148px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .carousel-inner {
+        .carousel-content {
+            .bill-of-lading {
+                .bill-of-lading-item {
+                    .top-slide {
+                        width: 132px;
+                    }
+
+                    .box-cube {
+                        width: 128px;
+
+                        p {
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

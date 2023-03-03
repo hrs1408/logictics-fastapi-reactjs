@@ -8,13 +8,13 @@ import { CiLocationOn } from 'react-icons/ci'
 import { MdPlayArrow } from 'react-icons/md'
 import { RiLuggageCartLine, Ri24HoursFill } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
-import "./index.scss"
+import "./about.scss"
 const Informationabout = () => {
     return (
         <div className='w-full wp-about'>
             <div className="container mx-auto">
-                <div className="grid grid-cols-12 items-center">
-                    <div className="col-span-6 left-about z-10 text-center">
+                <div className="grid grid-cols-2 items-center about">
+                    <div className="left-about z-10 text-center p-[20px]">
                         <h1 className='text-service font-bold text-white '>
                             Tại sao nên lựa chọn
                             <span className="text-[#FCD804] ">Nhất Tín Logistics?</span>
@@ -60,7 +60,7 @@ const Informationabout = () => {
                             <MdPlayArrow className='text-[22px] ' />
                         </Link>
                     </div>
-                    <div className="col-span-6">
+                    <div className="">
                         <ul>
                             <li className='mt-[20px] pb-[15px] pl-[3rem]'>
                                 <div className="flex gap-5">
