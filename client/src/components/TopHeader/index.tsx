@@ -1,10 +1,10 @@
 import React from "react";
-import "./index.scss"
+import "./topheader.scss"
 import {Link} from 'react-router-dom';
-const TopHaader = () => {
+const TopHeader = () => {
   return (
     <>
-      <div className=" bg-[#fdd800] py-[5px] w-full">
+      <div className=" bg-[#fdd800] py-[5px] topheader w-full">
         <div className="container mx-auto grid grid-cols-12 gap-3 items-center">
           <div className="col-span-6 flex gap-1">
             <span className="top-header-right text-[14px] text-[#222] ">
@@ -32,4 +32,4 @@ const TopHaader = () => {
   );
 };
 
-export default TopHaader;
+export default TopHeader;
