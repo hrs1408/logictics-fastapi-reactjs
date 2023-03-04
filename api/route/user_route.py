@@ -1,12 +1,13 @@
 from fastapi import Depends, HTTPException, APIRouter, status
 from fastapi_pagination import Page, Params, paginate
+from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from config import get_db
-from models import User, UserInternalInformation
+from models import User, UserInternalInformation, UserType, UserInformation
 from repository.jwt_repository import JWTBearer
 from repository.user_repository import UserRepository, UserInternalInformationRepository, UserInfoRepository
 from schemas.schema import ResponseSchema
-from schemas.user_schemas import UserInformation, UserSchemas, UserInternalCreateSchema
+from schemas.user_schemas import UserInformationSchema, UserSchemas, UserInternalCreateSchema
 from schemas.user_schemas import UserInformationCreate, UserInternalInformationCreate
 from ultis.securty import get_current_user
 
@@ -14,6 +15,8 @@ users = APIRouter(
     tags=["User"],
     dependencies=[Depends(JWTBearer())]
 )
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 @users.get("/users", response_model=Page[UserSchemas])
@@ -38,7 +41,7 @@ def put_user_information(user_information: UserInformationCreate, db: Session = 
         raise HTTPException(status_code=404, detail="User not found")
     user_info = UserInfoRepository.find_by_user_id(db, sub)
     if user_info is None:
-        user_info = UserInformation(
+        user_info = UserInformationSchema(
             fullname=user_information.full_name,
             phone_number=user_information.phone,
             address=user_information.address,
@@ -75,6 +78,36 @@ def put_user_inter_infor(user_create_internal: UserInternalInformationCreate,
     return ResponseSchema.from_api_route(data=user_internal_info, status_code=status.HTTP_200_OK)
 
 
-# @users.post('/users/add-user-internal', response_model=ResponseSchema[UserSchemas])
-# def add_user_internal(user_create_internal: UserInternalCreateSchema, db=Depends(get_db),sub: int = Depends(get_current_user)):
-#     pass
+@users.post('/users/add-user-internal', response_model=ResponseSchema[UserSchemas])
+def add_user_internal(user_create_internal: UserInternalCreateSchema, db=Depends(get_db),
+                      sub: int = Depends(get_current_user)):
+    user = UserRepository.find_by_id(db, User, sub)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    elif user.type_user != UserType.ADMIN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    check_user = UserRepository.find_by_email(db, user_create_internal.email)
+    if check_user is not None:
+        raise HTTPException(status_code=400, detail="Email is already exists")
+
+    new_user = User()
+    new_user.email = user_create_internal.email
+    new_user.hashed_password = pwd_context.hash(user_create_internal.password)
+    new_user = UserRepository.insert(db, new_user)
+
+    new_user_internal = UserInternalInformation()
+    new_user_internal.user_id = new_user.id
+    new_user_internal.position = user_create_internal.position
+    new_user_internal.work_address = user_create_internal.work_address
+    UserInternalInformationRepository.insert(db, new_user_internal)
+
+    new_user_info = UserInformation()
+
+    new_user_info.user_id = new_user.id
+    new_user_info.fullname = user_create_internal.full_name
+    new_user_info.phone_number = user_create_internal.phone
+
+    UserInfoRepository.insert(db, new_user_info)
+
+    return ResponseSchema.from_api_route(data=new_user, status_code=200)
