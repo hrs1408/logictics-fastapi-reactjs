@@ -8,8 +8,8 @@ from models import UserType
 
 class UserCreateSchema(BaseModel):
     email: EmailStr
-    full_name: str = Field(max_length=40)
-    password: str = Field(min_length=6)
+    full_name: str
+    password: str
     confirm_password: str
     phone: str
     address: str
@@ -17,10 +17,11 @@ class UserCreateSchema(BaseModel):
     @root_validator()
     def verify_password_match(cls, values):
         password = values.get("password")
+        if len(password) <= 6:
+            raise ValueError("Mật khẩu phải lớn hơn 6 ký tự")
         confirm_password = values.get("confirm_password")
-
         if password != confirm_password:
-            raise ValueError("Re-enter incorrect password")
+            raise ValueError("Nhập lại mật khẩu chưa chính xác")
         return values
 
 
