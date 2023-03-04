@@ -11,7 +11,7 @@ class UserCreateSchema(BaseModel):
     full_name: str = Field(max_length=40)
     password: str = Field(min_length=6)
     confirm_password: str
-    phone: constr(regex=r'^0\d{3}[- ]?\d{3}[- ]?\d{4}$')
+    phone: str
     address: str
 
     @root_validator()
@@ -22,11 +22,6 @@ class UserCreateSchema(BaseModel):
         if password != confirm_password:
             raise ValueError("Re-enter incorrect password")
         return values
-
-    @validator('phone')
-    def normalize_phone_number(cls, v):
-        """Xóa tất cả các khoảng trắng và dấu gạch ngang trong số điện thoại."""
-        return v.replace(' ', '').replace('-', '')
 
 
 class UserInternalCreateSchema(BaseModel):
