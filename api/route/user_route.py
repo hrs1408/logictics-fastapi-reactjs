@@ -6,7 +6,7 @@ from models import User, UserInternalInformation
 from repository.jwt_repository import JWTBearer
 from repository.user_repository import UserRepository, UserInternalInformationRepository, UserInfoRepository
 from schemas.schema import ResponseSchema
-from schemas.user_schemas import UserInformation, UserSchemas
+from schemas.user_schemas import UserInformation, UserSchemas, UserInternalCreateSchema
 from schemas.user_schemas import UserInformationCreate, UserInternalInformationCreate
 from ultis.securty import get_current_user
 
@@ -73,3 +73,8 @@ def put_user_inter_infor(user_create_internal: UserInternalInformationCreate,
         user_internal_info.work_address = user_create_internal.work_address if user_create_internal.work_address else user_internal_info.work_address
         user_internal_info = UserInternalInformationRepository.update(db, user_internal_info)
     return ResponseSchema.from_api_route(data=user_internal_info, status_code=status.HTTP_200_OK)
+
+
+# @users.post('/users/add-user-internal', response_model=ResponseSchema[UserSchemas])
+# def add_user_internal(user_create_internal: UserInternalCreateSchema, db=Depends(get_db),sub: int = Depends(get_current_user)):
+#     pass
