@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi_pagination import Page, Params, paginate
+from passlib.context import CryptContext
+
 from config import get_db
 from models import Invoice, User, Status, UserType
 from repository.invoice_repository import InvoiceRepository

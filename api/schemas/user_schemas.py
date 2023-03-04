@@ -51,7 +51,7 @@ class UserInformationCreate(UserInformationBase):
     pass
 
 
-class UserInformation(UserInformationBase):
+class UserInformationSchema(UserInformationBase):
     id: int
     user_id: int
 
@@ -110,7 +110,7 @@ class UserSchemas(BaseModel):
     email: str
     # is_active: bool
     type_user: Optional[str]
-    user_information: Optional[UserInformation]
+    user_information: Optional[UserInformationSchema]
     user_internal_information: Optional[UserInternalInfor]
 
     class Config:
