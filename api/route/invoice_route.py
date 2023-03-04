@@ -77,3 +77,6 @@ def delete_by_id(invoice_id: int, db=Depends(get_db), sub: int = Depends(get_cur
     InvoiceRepository.delete(db, db_invoice)
 
     return ResponseSchema.from_api_route(status_code=status.HTTP_204_NO_CONTENT, data=None)
+
+# @invoice.post('/change-status', response_model=ResponseSchema)
+# def

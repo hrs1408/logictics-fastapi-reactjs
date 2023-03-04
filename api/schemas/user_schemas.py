@@ -3,6 +3,8 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field, root_validator, validator, constr
 
+from models import UserType
+
 
 class UserCreateSchema(BaseModel):
     email: EmailStr
@@ -25,6 +27,17 @@ class UserCreateSchema(BaseModel):
     def normalize_phone_number(cls, v):
         """Xóa tất cả các khoảng trắng và dấu gạch ngang trong số điện thoại."""
         return v.replace(' ', '').replace('-', '')
+
+
+class UserInternalCreateSchema(BaseModel):
+    full_name: str = Field(max_length=40)
+    password: str = Field(min_length=6)
+    work_address: str
+    position: str
+    email: EmailStr
+    password: str
+    phone: str
+    type_user: UserType
 
 
 class UserInformationBase(BaseModel):
