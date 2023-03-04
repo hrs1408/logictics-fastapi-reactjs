@@ -8,7 +8,7 @@ import Hotline from "../components/Hotline";
 import Iframe from "../components/Iframe";
 import Informationabout from "../components/InformationAbout";
 import ListDelivery from "../components/ListDelivery";
-import Login from "../components/Login";
+import Login from "../components/Auth";
 
 const Home: FC = () => {
   return (
