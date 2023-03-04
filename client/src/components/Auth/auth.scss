@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    padding-top: 10%;
+    padding-top: 5%;
     background: url(https://khachhang.ntlogistics.vn/static/media/login_background.11023b82.png);
     background-size: cover;
     // text-align: -webkit-center;
@@ -14,7 +14,7 @@
         width: 30%;
         height: 100%;
         background: #f1f1f1;
-        margin: 100px auto 0;
+        margin: 0 auto;
         word-break: break-all;
         background-color: transparent;
 
@@ -73,6 +73,7 @@
         }
 
         .content-tabs {
+
             // flex-grow: 1;
             .content {
                 background: white;
@@ -88,7 +89,7 @@
                     align-items: center;
                     width: 100%;
                     min-width: 0;
-                    padding: 4px 7px;
+                    padding: 4px;
                     color: rgba(0, 0, 0, .85);
                     font-size: 14px;
                     line-height: 1.5715;
@@ -118,6 +119,8 @@
                         background: #fdd800;
                         border-radius: 6px;
                         font-size: 20px;
+                        margin-right: 5px;
+
 
                     }
 
