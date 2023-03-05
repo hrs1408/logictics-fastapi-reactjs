@@ -3,16 +3,16 @@ import SearchBar from '../../components/SearchBar'
 import React from 'react'
 import { Modal } from '@mui/material'
 import Input from '../../components/Input'
-import { useCreateUser, useUsers } from '../../services/UserService'
 import EnhancedTable from '../../components/Table/users'
 import { FormProvider, useForm } from 'react-hook-form'
 import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import toast from 'react-hot-toast'
+import { useCreateUser, useUsers } from '../../services/UserService'
 
 const CreateUserSchema = object().shape({
   fullName: string().required('Vui lòng nhập họ tên'),
-  password: string(),
+  password: string().required('Vui lòng nhập mật khẩu'),
   workAddress: string().required('Vui lòng nhập địa chỉ'),
   position: string().default(''),
   email: string().required('Vui lòng nhập email'),
