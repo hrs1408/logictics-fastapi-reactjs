@@ -1,14 +1,14 @@
-import AdminLayout from "../../layouts/AdminLayout";
-import SearchBar from "../../components/SearchBar";
+import AdminLayout from '../../layouts/AdminLayout'
+import SearchBar from '../../components/SearchBar'
 
 const ScanBill = () => {
-    return (
-        <AdminLayout>
-            <div className={'h-screen'}>
-                <SearchBar/>
-            </div>
-        </AdminLayout>
-    );
-};
+  return (
+    <AdminLayout>
+      <div className={'h-screen'}>
+        <SearchBar />
+      </div>
+    </AdminLayout>
+  )
+}
 
-export default ScanBill;
+export default ScanBill
