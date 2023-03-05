@@ -2,7 +2,7 @@ $main: #f8bb00;
 $sec: #ffffff;
 $little-cursor: #000000;
 
-#outer{
+#outer {
   margin: auto;
   margin-top: 15%;
   background: $main;
@@ -11,32 +11,34 @@ $little-cursor: #000000;
   border-radius: 15px;
 }
 
-#middle{
+#middle {
   height: 60px;
   width: 60px;
-  margin:auto;
+  margin: auto;
   position: relative;
-  top:20px;
+  top: 20px;
   border-radius: 50%;
-  background-image: linear-gradient(150deg, transparent 50%, $sec 50%),linear-gradient(90deg, $sec 50%, $little-cursor 50%);
+  background-image: linear-gradient(150deg, transparent 50%, $sec 50%), linear-gradient(90deg, $sec 50%, $little-cursor 50%);
   -webkit-animation: rotation 1200ms infinite linear;
   transform-origin: 50% 50%;
   animation-timing-function: ease;
 }
-#inner{
+
+#inner {
   background: $main;
   height: 48px;
   width: 48px;
-  margin:auto;
+  margin: auto;
   position: relative;
-  top:6px;
+  top: 6px;
   border-radius: 50%;
 }
+
 @keyframes rotation {
   from {
     -webkit-transform: rotate(270deg);
   }
-  to{
+  to {
     -webkit-transform: rotate(630deg);
   }
 }
