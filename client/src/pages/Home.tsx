@@ -9,11 +9,12 @@ import Iframe from "../components/Iframe";
 import Informationabout from "../components/InformationAbout";
 import ListDelivery from "../components/ListDelivery";
 import Login from "../components/Auth";
+import HomeUser from "../Layout/HomeUser";
 
 const Home: FC = () => {
   return (
     <div>
-      <Header />
+      {/* <Header />
       <Carousel />
       <ListDelivery />
       <Banner />
@@ -21,8 +22,8 @@ const Home: FC = () => {
       <Coutdown />
       <Iframe />
       <Hotline />
-      <Footer />
-     
+      <Footer /> */}
+      {/* <HomeUser /> */}
     </div>
   );
 };
