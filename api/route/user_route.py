@@ -2,15 +2,15 @@ from typing import Optional
 
 from fastapi import Depends, HTTPException, APIRouter, status
 from fastapi_pagination import Page, Params, paginate
-from sqlalchemy import or_
 from sqlalchemy.orm import Session
+
 from config import get_db
 from models import User, UserInternalInformation
 from repository.jwt_repository import JWTBearer
 from repository.user_repository import UserRepository, UserInternalInformationRepository, UserInfoRepository
 from schemas.schema import ResponseSchema
-from schemas.user_schemas import UserInformation, UserSchemas
 from schemas.user_schemas import UserInformationCreate, UserInternalInformationCreate
+from schemas.user_schemas import UserSchemas
 from ultis.securty import get_current_user
 
 users = APIRouter(
