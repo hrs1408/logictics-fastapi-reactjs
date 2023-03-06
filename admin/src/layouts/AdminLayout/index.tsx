@@ -23,8 +23,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
                             return (
                                 <div key={index} className="menu-item flex items-center justify-center w-full ">
                                     <Link to={item.path}
-                                          className={`${path === item.path ? 'button-active w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'
-                                              : 'w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'}`}>
+                                          className={`${path === item.path ? 'button-active w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 py-3 px-6 flex items-center justify-start gap-4'
+                                              : 'button-sidebar w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 py-3 px-6 flex items-center justify-start gap-4'}`}>
                                         {item.icon} <span>{item.name}</span></Link>
                                 </div>
                             )

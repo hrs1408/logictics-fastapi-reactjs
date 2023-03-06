@@ -74,7 +74,7 @@ const Settings = () => {
                             aria-label="Vertical tabs example"
                             sx={{width: '20%'}}
                         >
-                            <Tab label="Change information" {...a11yProps(0)}
+                            <Tab label="Thay đổi thông tin" {...a11yProps(0)}
                                  sx={
                                      setTab
                                          ? {
@@ -90,7 +90,7 @@ const Settings = () => {
                                          : {padding: 0, fontSize: 12, borderRadius: 2}
                                  }
                             />
-                            <Tab label="change password" {...a11yProps(1)}
+                            <Tab label="Thay đổi mật khẩu" {...a11yProps(1)}
                                  sx={
                                      setTab
                                          ? {
@@ -108,12 +108,12 @@ const Settings = () => {
                         </Tabs>
                         <TabPanel value={value} index={0}>
                             <div className={'px-10 py-8 bg-white rounded w-full shadow'}>
-                                <p className={'text-lg font-bold'}>Change the account information</p>
+                                <p className={'text-lg font-bold'}>Thay đổi thông tin tài khoản</p>
                                 <form>
                                     <div className={'grid grid-cols-2 mt-6 gap-4'}>
                                         <div className={'flex flex-col gap-4'}>
                                             <div className={'flex flex-col gap-2'}>
-                                                <Input label={'Full Name'}/>
+                                                <Input label={'Tên đầy đủ'}/>
                                             </div>
                                         </div>
                                         <div className={'flex flex-col gap-4'}>
@@ -123,30 +123,30 @@ const Settings = () => {
                                         </div>
                                         <div className={'flex flex-col gap-4'}>
                                             <div className={'flex flex-col gap-2'}>
-                                                <Input label={'Phone Number'}/>
+                                                <Input label={'Số điện thoại'}/>
                                             </div>
                                         </div>
                                         <div className={'flex flex-col gap-4'}>
                                             <div className={'flex flex-col gap-2'}>
-                                                <Input label={'ID Card'}/>
+                                                <Input label={'Số CMND'}/>
                                             </div>
                                         </div>
                                         <div className={'flex flex-col gap-4'}>
                                             <div className={'flex flex-col gap-2'}>
-                                                <Input label={'Address'}/>
+                                                <Input label={'Địa chỉ'}/>
                                             </div>
                                         </div>
                                         <div className={'flex flex-col gap-4'}>
                                             <div className={'flex flex-col gap-2'}>
-                                                <Input label={'Date Of Birth'} type={'date'}/>
+                                                <Input label={'Ngày sinh'} type={'date'}/>
                                             </div>
                                         </div>
                                     </div>
                                     <div className={'mt-4'}>
                                         <button
-                                            className={'bg-yellow-400 px-4 py-2 rounded w-full'}
+                                            className={'bg-yellow-400 px-4 py-2 rounded w-full font-bold'}
                                         >
-                                            Save
+                                            Lưu
                                         </button>
                                     </div>
                                 </form>
@@ -170,9 +170,9 @@ const Settings = () => {
                                     </div>
                                     <div className={'mt-4'}>
                                         <button
-                                            className={'bg-yellow-400 px-4 py-2 rounded w-full'}
+                                            className={'bg-yellow-400 px-4 py-2 rounded w-full font-bold'}
                                         >
-                                            Save
+                                            Lưu
                                         </button>
                                     </div>
                                 </form>

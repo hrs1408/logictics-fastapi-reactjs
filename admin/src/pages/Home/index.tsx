@@ -41,7 +41,7 @@ const Home = () => {
                             <div className="input-search flex items-center gap-4">
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center gap-2">
-                                        <input type="text" placeholder={'Search invoice...'}
+                                        <input type="text" placeholder={'Tìm kiếm vận đơn...'}
                                                className={'w-[500px] outline-none p-2 border rounded'}/>
                                         <button
                                             className="text-black bg-yellow-400 text-[20px] p-2 rounded-md hover:opacity-80 transition">
@@ -74,10 +74,10 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <select name="" id="" className={'p-2 outline-none border rounded'}>
-                                    <option value="">All</option>
-                                    <option value="">7 days ago</option>
-                                    <option value="">15 days ago</option>
-                                    <option value="">30 days ago</option>
+                                    <option value="">Tất cả</option>
+                                    <option value="">7 ngày trước</option>
+                                    <option value="">15 ngày trước</option>
+                                    <option value="">30 ngày trước</option>
                                 </select>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ const Home = () => {
                                     <div className={'p-1 bg-[#EEFBE7] rounded'}>
                                         <TbFileInvoice className={'text-[#71DD37] text-xl'}/>
                                     </div>
-                                    <div className={'text-[16px] font-bold'}>Total Invoice COD</div>
+                                    <div className={'text-[16px] font-bold'}>Tổng đơn COD</div>
                                 </div>
                                 <div>
                                     <div className={'text-[30px] font-bold text-center py-6'}>
@@ -104,7 +104,7 @@ const Home = () => {
                                     <div className={'p-1 bg-[#E0F7FC] rounded'}>
                                         <TbCashBanknote className={'text-[#03C3EC] text-xl'}/>
                                     </div>
-                                    <div className={'text-[16px] font-bold'}>Invoice Has Been Paid</div>
+                                    <div className={'text-[16px] font-bold'}>Đơn hàng đã thanh toán</div>
                                 </div>
                                 <div>
                                     <div className={'text-[30px] font-bold text-center py-6'}>
@@ -121,7 +121,7 @@ const Home = () => {
                                     <div className={'p-1 bg-[#FFE7E3] rounded'}>
                                         <TbCashBanknoteOff className={'text-[#FF3E1D] text-xl'}/>
                                     </div>
-                                    <div className={'text-[16px] font-bold'}>Unpaid Invoice</div>
+                                    <div className={'text-[16px] font-bold'}>Đơn hàng chưa thanh toán</div>
                                 </div>
                                 <div>
                                     <div className={'text-[30px] font-bold text-center py-6'}>
@@ -142,7 +142,7 @@ const Home = () => {
                         <div className={'bg-yellow-400 flex justify-between rounded shadow my-4 p-4 py-6'}>
                             <img src="/images/cash.png" alt="" className={'w-[100px]'}/>
                             <div>
-                                <p className={'text-[18px] text-right font-bold'}>Total collection (VND)</p>
+                                <p className={'text-[18px] text-right font-bold'}>Tổng doanh thu (VND)</p>
                                 <p className={'flex justify-center gap-2 text-[26px]'}>
                                     <span>
                                         <NumericFormat value={faker.datatype.number({min: 1000, max: 9999}) * 1000}
@@ -158,7 +158,7 @@ const Home = () => {
                         <div className={'bg-yellow-400 flex justify-between rounded shadow my-4 p-4 py-6'}>
                             <img src="/images/shiping.png" alt="" className={'w-[100px]'}/>
                             <div>
-                                <p className={'text-[18px] text-right font-bold'}>Shipping fee (VND)</p>
+                                <p className={'text-[18px] text-right font-bold'}>Phí vận chuyển (VND)</p>
                                 <p className={'flex justify-center gap-2 text-[26px]'}>
                                     <span>
                                         <NumericFormat value={faker.datatype.number({min: 1000, max: 9999}) * 1000}
@@ -174,7 +174,7 @@ const Home = () => {
                         <div className="sum-cod">
                             <div className={'bg-white rounded shadow my-4 p-4 py-6'}>
                                 <p className={'text-[18px] font-bold'}>
-                                    Total COD Amount By Month
+                                    Tổng doanh thu theo tháng
                                 </p>
                                 <div className="list my-4">
                                     {

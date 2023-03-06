@@ -23,9 +23,9 @@ const Users = () => {
             <div className={'h-screen'}>
                 <SearchBar/>
                 <div className={'flex items-center justify-between p-4 rounded bg-white mt-4 shadow'}>
-                    <p className={'text-xl font-bold'}>List User</p>
+                    <p className={'text-xl font-bold'}>Danh sách người dùng</p>
                     <button className={'bg-yellow-400 px-4 py-2 rounded shadow'} onClick={handleOpen}>
-                        Add User
+                        Thêm người dùng
                     </button>
                     <Modal
                         open={open}
@@ -34,30 +34,30 @@ const Users = () => {
                         <div
                             className={'w-1/2  p-8 bg-white rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'}>
                             <div className={'flex flex-col'}>
-                                <p className={'text-2xl font-bold'}>Add User</p>
+                                <p className={'text-2xl font-bold'}>Thêm người dùng</p>
                                 <div className={'w-full grid grid-cols-2 gap-4 mt-4'}>
-                                    <Input label={'Full name'} type={'text'}/>
+                                    <Input label={'Tên đâỳ đủ'} type={'text'}/>
                                     <Input label={'Email'} type={'text'}/>
-                                    <Input label={'Password'} type={'password'}/>
-                                    <Input label={'Confirm Password'} type={'password'}/>
+                                    <Input label={'Mật khẩu'} type={'password'}/>
+                                    <Input label={'Nhập lại mật khẩu'} type={'password'}/>
                                     <div className={'flex flex-col '}>
-                                        <label className={'font-bold'}>Role</label>
+                                        <label className={'font-bold'}>Phân quyền</label>
                                         <select className={'w-full px-4 py-3 mt-2 border rounded-md outline-none'}>
                                             <option value="ADMIN">Admin</option>
                                             <option value="USER">User</option>
                                         </select>
                                     </div>
-                                    <Input label={'Address'} type={'text'}/>
+                                    <Input label={'Địa chỉ'} type={'text'}/>
                                 </div>
                                 <div className={'flex items-center mt-8 gap-2 justify-end w-full'}>
                                     <button
                                         className={'bg-yellow-400 px-4 py-2 rounded shadow hover:opacity-80 transition'}>
-                                        Add
+                                        Thêm
                                     </button>
                                     <button
                                         className={'bg-gray-400 px-4 py-2 rounded shadow hover:opacity-80 transition'}
                                         onClick={handleClose}>
-                                        Cancel
+                                        Huỷ bỏ
                                     </button>
                                 </div>
                             </div>

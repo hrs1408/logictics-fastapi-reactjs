@@ -5,27 +5,27 @@ import {IoSettingsOutline} from "react-icons/io5";
 
 export const SIDE_BAR = [
     {
-        name: 'Dashboard',
+        name: 'Tổng Quan',
         icon: <RxDashboard/>,
         path: '/'
     },
     {
-        name: 'Users',
+        name: 'Người dùng',
         icon: <AiOutlineUser/>,
         path: '/users'
     },
     {
-        name: 'Create Bill Of Lading',
+        name: 'Tạo vận đơn',
         icon: <TbFileInvoice/>,
         path: '/create-bill-of-lading'
     },
     {
-        name: 'Bill Of Lading Scan',
+        name: 'Quét vận đơn',
         icon: <AiOutlineScan/>,
         path: '/bill-of-lading-scan'
     },
     {
-        name: 'Settings',
+        name: 'Cài đặt',
         icon: <IoSettingsOutline/>,
         path: '/settings'
     }

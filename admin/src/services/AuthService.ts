@@ -1,7 +1,6 @@
 import axiosConfig from '../configs/AxiosConfig';
 import Cookies from 'js-cookie';
 import {REFRESH_TOKEN_KEY, TOKEN_KEY} from '../constants/Enviroment';
-import axios from 'axios';
 
 export const postRegisterApi = (
     data: SignUpType

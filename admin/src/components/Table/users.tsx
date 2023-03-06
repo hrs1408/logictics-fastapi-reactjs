@@ -18,9 +18,8 @@ import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import {visuallyHidden} from '@mui/utils';
-import {BiFilter} from "react-icons/bi";
+import {BiEditAlt, BiFilter} from "react-icons/bi";
 import {MdDeleteOutline} from "react-icons/md";
-import {useEffect} from "react";
 
 
 interface Data {
@@ -29,6 +28,7 @@ interface Data {
     work_address: string;
     email: string;
     fullname: string;
+    id: number;
 }
 
 
@@ -84,28 +84,34 @@ const headCells: readonly HeadCell[] = [
     },
     {
         id: 'fullname',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
-        label: 'Full Name',
+        label: 'Tên đầy đủ',
     },
     {
         id: 'work_address',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
-        label: 'Work Address',
+        label: 'Địa chỉ làm việc',
     },
     {
         id: 'type_user',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
-        label: 'Type User',
+        label: 'Phân quyền',
     },
     {
         id: 'position',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
-        label: 'Position',
+        label: 'Vị trí làm việc',
     },
+    {
+        id: 'id',
+        numeric: false,
+        disablePadding: false,
+        label: '',
+    }
 ];
 
 interface EnhancedTableProps {
@@ -142,7 +148,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
+                        align={'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -225,7 +231,8 @@ function createData(user: UserTypes): Data {
         position: user.userInternalInformation?.position,
         work_address: user.userInternalInformation?.workAddress,
         email: user.email,
-        type_user: user.typeUser
+        type_user: user.typeUser,
+        id: user.id,
     };
 }
 
@@ -298,6 +305,14 @@ const EnhancedTable: React.FC<listUser> = ({listUser}) => {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+    const handleEdit = (id: number) => {
+        console.log(id)
+    }
+
+    const handleDelete = (id: number) => {
+        console.log(id)
+    }
+
     return (
         <Box sx={{width: '100%'}}>
             <Paper sx={{width: '100%', mb: 2}}>
@@ -326,7 +341,6 @@ const EnhancedTable: React.FC<listUser> = ({listUser}) => {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.email)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -347,13 +361,26 @@ const EnhancedTable: React.FC<listUser> = ({listUser}) => {
                                                 id={labelId}
                                                 scope="row"
                                                 padding="none"
+                                                onClick={(event) => handleClick(event, row.email)}
                                             >
                                                 {row.email}
                                             </TableCell>
-                                            <TableCell align="right">{row.fullname}</TableCell>
-                                            <TableCell align="right">{row.work_address}</TableCell>
-                                            <TableCell align="right">{row.type_user}</TableCell>
-                                            <TableCell align="right">{row.position}</TableCell>
+                                            <TableCell align="left">{row.fullname}</TableCell>
+                                            <TableCell align="left">{row.work_address}</TableCell>
+                                            <TableCell align="left">{row.type_user}</TableCell>
+                                            <TableCell align="left">{row.position}</TableCell>
+                                            <TableCell align="left" sx={{display: 'flex', gap: '10px'}}>
+                                                <IconButton onClick={() => {
+                                                    handleEdit(row.id)
+                                                }}>
+                                                    <BiEditAlt/>
+                                                </IconButton>
+                                                <IconButton onClick={() => {
+                                                    handleDelete(row.id)
+                                                }}>
+                                                    <MdDeleteOutline/>
+                                                </IconButton>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -381,7 +408,7 @@ const EnhancedTable: React.FC<listUser> = ({listUser}) => {
             </Paper>
             <FormControlLabel
                 control={<Switch checked={dense} onChange={handleChangeDense}/>}
-                label="Dense padding"
+                label="Thu nhỏ"
             />
         </Box>
     );

@@ -20,7 +20,7 @@ const SearchBar = () => {
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                         <button className="text-black text-[20px] py-2 rounded-md"><BiSearch/></button>
-                        <input type="text" placeholder={'Search...'}
+                        <input type="text" placeholder={'Tìm kiếm...'}
                                className="rounded-md px-4 py-2 w-full outline-none"/>
                     </div>
                 </div>
