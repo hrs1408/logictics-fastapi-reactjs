@@ -1,13 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Login from './components/Login';
-
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import { routes } from "./routes";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <>
+      <Provider store={store}>
+        <RouterProvider router={routes} />
+      </Provider>
+    </>
   );
 }
 

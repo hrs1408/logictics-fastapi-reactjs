@@ -42,7 +42,7 @@ def register(user: UserCreateSchema, db: Session = Depends(get_db)):
     is_valid_email = UserRepository.find_by_email(db, user.email)
 
     if is_valid_email is not None:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=400, detail="Email đã tồn tại")
 
     hashed_password = pwd_context.hash(user.password)
 

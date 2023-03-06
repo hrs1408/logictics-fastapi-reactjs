@@ -1,24 +1,33 @@
-type UserTypes = {
-    id: number;
-    email: string;
-    typeUser: string;
-
-    userInformation: UserInformationTypes;
-    userInternalInformation: UserInternalInformationTypes;
+type UserType = {
+  id: number
+  email: string
+  typeUser: string
+  userInformation?: userInformation
+  userInternalInformation?: userInternalInformation
 }
 
-type UserInformationTypes = {
-    id: number;
-    fullname: string;
-    phoneNumber: string;
-    address: string;
-    dateOfBirth: string;
-    userId: number;
+type UserInformationType = {
+  fullname: string
+  phoneNumber: string
+  dateOfBirth: string
+  address: string
+  id: number
+  userId: number
 }
 
-type UserInternalInformationTypes = {
-    id: number;
-    workAddress: string;
-    position: string;
-    userId: number;
+type UserInternalInformationType = {
+  workAddress: string
+  position: string
+  id: number
+  userId: number
+}
+
+type CreateUserType = {
+  fullName: string
+  password: string
+  workAddress: string
+  position: string
+  email: string
+  phone: string
+  typeUser: 'ADMIN' | 'STAFF' | 'USER'
 }
