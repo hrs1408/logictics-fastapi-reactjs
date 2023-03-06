@@ -24,7 +24,7 @@ def get_all(params: Params = Depends(), db: Session = Depends(get_db)):
     return paginate(db_ports, params)
 
 
-@ports.post("/")
+@ports.post("/", response_model=ResponseSchema[PortSchema])
 def create_new_port(port: PortCreate, db: Session = Depends(get_db), sub: int = Depends(get_current_user)):
     user = UserRepository.find_by_id(db, User, sub)
     if user.type_user != UserType.ADMIN:
@@ -79,11 +79,11 @@ def update_port(port_id: int, port: PortCreate, db: Session = Depends(get_db)):
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 
 
-@ports.delete("/{port_id}")
+@ports.delete("/{port_id}", response_model=ResponseSchema)
 def delete_port(port_id: int, db: Session = Depends(get_db)):
     db_port = PortRepository.find_by_id_port(db, port_id)
     if db_port is None:
         raise HTTPException(status_code=404, detail="Port not found")
 
     PortRepository.delete(db, db_port)
-    return ResponseSchema.from_api_route(status_code=status.HTTP_204_NO_CONTENT)
+    return ResponseSchema.from_api_route(status_code=status.HTTP_204_NO_CONTENT, data=None)

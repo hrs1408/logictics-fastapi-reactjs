@@ -28,10 +28,10 @@ class UserCreateSchema(BaseModel):
 
 
 class UserInformationBase(BaseModel):
-    fullname: str | None
-    phone_number: str | None
-    date_of_birth: str | None
-    address: str | None
+    fullname: Optional[str]
+    phone_number: Optional[str]
+    date_of_birth: Optional[str]
+    address: Optional[str]
 
 
 class UserInformationCreate(UserInformationBase):
@@ -47,8 +47,8 @@ class UserInformation(UserInformationBase):
 
 
 class UserInternalInformationBase(BaseModel):
-    work_address: str | None
-    position: str | None
+    work_address: Optional[str]
+    position: Optional[str]
 
 
 class UserInternalInformationCreate(UserInternalInformationBase):
@@ -96,9 +96,9 @@ class UserSchemas(BaseModel):
     id: int
     email: str
     # is_active: bool
-    type_user: str | None
-    user_information: UserInformation | None
-    user_internal_information: UserInternalInfor | None
+    type_user: Optional[str]
+    user_information: Optional[UserInformation]
+    user_internal_information: Optional[UserInternalInfor]
 
     class Config:
         orm_mode = True

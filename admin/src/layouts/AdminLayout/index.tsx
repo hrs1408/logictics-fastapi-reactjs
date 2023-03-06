@@ -21,7 +21,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
                     {
                         SIDE_BAR.map((item, index) => {
                             return (
-                                <div className="menu-item flex items-center justify-center w-full ">
+                                <div key={index} className="menu-item flex items-center justify-center w-full ">
                                     <Link to={item.path}
                                           className={`${path === item.path ? 'button-active w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'
                                               : 'w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'}`}>
@@ -33,13 +33,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({children}) => {
                 </div>
             </div>
             <div className="main-content ml-[300px] w-full h-full">
-                <p className={'p-4'}>
+                <div className={'p-4'}>
                     {children}
-                </p>
+                </div>
                 <footer>
                     <div className="footer w-full py-6 bg-white shadow-lg flex items-center justify-center">
                         <p className="text-gray-500">
-                            © {new Date().getFullYear()} NT Logistics. All rights reserved.
+                            © {new Date().getFullYear()} NextGen Solution. All rights reserved.
                         </p>
                     </div>
                 </footer>
