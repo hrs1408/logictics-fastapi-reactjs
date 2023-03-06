@@ -22,11 +22,8 @@ import { BiEditAlt, BiFilter } from 'react-icons/bi'
 import { MdDeleteOutline } from 'react-icons/md'
 
 interface Data {
-  position: string
-  type_user: string
-  work_address: string
-  email: string
-  fullname: string
+  name: string
+  code: string
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -77,34 +74,16 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'email',
+    id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Email',
+    label: 'Tên kho hàng',
   },
   {
-    id: 'fullname',
+    id: 'code',
     numeric: false,
     disablePadding: false,
-    label: 'Tên đầy đủ',
-  },
-  {
-    id: 'work_address',
-    numeric: false,
-    disablePadding: false,
-    label: 'Địa chỉ làm việc',
-  },
-  {
-    id: 'type_user',
-    numeric: false,
-    disablePadding: false,
-    label: 'Phân quyền',
-  },
-  {
-    id: 'position',
-    numeric: false,
-    disablePadding: false,
-    label: 'Vị trí làm việc',
+    label: 'Mã kho hàng',
   },
 ]
 
@@ -211,7 +190,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          Users
+          Ports
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -231,24 +210,21 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   )
 }
 
-function createData(user: UserType): Data {
+function createData(port: PortType): Data {
   return {
-    fullname: user.userInformation?.fullname,
-    position: user.userInternalInformation?.position,
-    work_address: user.userInternalInformation?.workAddress,
-    email: user.email,
-    type_user: user.typeUser,
+    name: port.name,
+    code: port.code,
   }
 }
 
-interface listUser {
-  listUser: UserType[]
+interface listPort {
+  listPort: PortType[]
 }
 
-const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
-  const rows = listUser.map(user => createData(user))
+const EnhancedPortTable: React.FC<listPort> = ({ listPort }) => {
+  const rows = listPort.map(port => createData(port))
   const [order, setOrder] = React.useState<Order>('asc')
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('position')
+  const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
   const [selected, setSelected] = React.useState<readonly string[]>([])
   const [page, setPage] = React.useState(0)
   const [dense, setDense] = React.useState(false)
@@ -265,7 +241,7 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map(n => n.email)
+      const newSelected = rows.map(n => n.name)
       setSelected(newSelected)
       return
     }
@@ -342,7 +318,7 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.email)
+                  const isItemSelected = isSelected(row.name)
                   const labelId = `enhanced-table-checkbox-${index}`
 
                   return (
@@ -351,7 +327,7 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.email}
+                      key={row.name}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -368,14 +344,11 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
                         id={labelId}
                         scope="row"
                         padding="none"
-                        onClick={event => handleClick(event, row.email)}
+                        onClick={event => handleClick(event, row.name)}
                       >
-                        {row.email}
+                        {row.name}
                       </TableCell>
-                      <TableCell align="left">{row.fullname}</TableCell>
-                      <TableCell align="left">{row.work_address}</TableCell>
-                      <TableCell align="left">{row.type_user}</TableCell>
-                      <TableCell align="left">{row.position}</TableCell>
+                      <TableCell align="left">{row.code}</TableCell>
                     </TableRow>
                   )
                 })}
@@ -409,4 +382,4 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
   )
 }
 
-export default EnhancedUserTable
+export default EnhancedPortTable

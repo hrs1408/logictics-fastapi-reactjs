@@ -147,7 +147,7 @@ const CreateBill = () => {
       <div>
         <SearchBar />
         <div className="title-bar p-4 mt-4 rounded shadow bg-white flex items-center justify-between">
-          <p className={'font-bold text-[28px]'}>Create Bill Of Landing</p>
+          <p className={'font-bold text-[28px]'}>Tạo vận đơn</p>
           <button
             className={
               'bg-yellow-400 px-4 py-2 rounded flex items-center gap-2'
@@ -179,16 +179,16 @@ const CreateBill = () => {
                 className={'text-[24px] font-bold p-4 flex items-center gap-2'}
               >
                 <RiUserReceived2Line />
-                Sender
+                Người gửi
               </p>
               <Divider />
               <div className={'p-4'}>
-                <Input label={'Full Name'} name="senderFullName" />
-                <Input label={'Phone Number'} name="senderPhone" />
-                <Input label={'Address'} name="senderAddress" />
+                <Input label={'Tên đầy đủ'} name="senderFullName" />
+                <Input label={'Số điện thoại'} name="senderPhone" />
+                <Input label={'Địa chỉ'} name="senderAddress" />
                 <div className={'grid grid-cols-3 gap-2'}>
                   <div>
-                    <p className={'text-[16px] font-bold pb-4'}>Province</p>
+                    <p className={'text-[16px] font-bold pb-4'}>Tỉnh</p>
                     <select
                       {...register('senderProvince')}
                       value={senderProvince.province?.Name}
@@ -219,7 +219,9 @@ const CreateBill = () => {
                     </select>
                   </div>
                   <div>
-                    <p className={'text-[16px] font-bold pb-4'}>District</p>
+                    <p className={'text-[16px] font-bold pb-4'}>
+                      Huyện / Thành Phố
+                    </p>
                     <select
                       {...register('senderDistrict')}
                       value={senderProvince.district?.Name}
@@ -251,7 +253,7 @@ const CreateBill = () => {
                     </select>
                   </div>
                   <div>
-                    <p className={'text-[16px] font-bold pb-4'}>Ward</p>
+                    <p className={'text-[16px] font-bold pb-4'}>Phường / Xã</p>
                     <select
                       {...register('senderWard')}
                       value={senderProvince.ward?.Name}
@@ -287,16 +289,16 @@ const CreateBill = () => {
                 className={'text-[24px] font-bold p-4 flex items-center gap-2'}
               >
                 <RiUserShared2Line />
-                Receiver
+                Người nhận
               </p>
               <Divider />
               <div className={'p-4'}>
-                <Input label={'Full Name'} name="receiverFullName" />
-                <Input label={'Phone Number'} name="receiverPhone" />
-                <Input label={'Address'} name="receiverAddress" />
+                <Input label={'Tên đầy đủ'} name="receiverFullName" />
+                <Input label={'Số điện thoại'} name="receiverPhone" />
+                <Input label={'Địa chỉ'} name="receiverAddress" />
                 <div className={'grid grid-cols-3 gap-2'}>
                   <div>
-                    <p className={'text-[16px] font-bold pb-4'}>Province</p>
+                    <p className={'text-[16px] font-bold pb-4'}>Tỉnh</p>
                     <select
                       {...register('receiverProvince')}
                       value={receiverProvince.province?.Name}
@@ -327,7 +329,9 @@ const CreateBill = () => {
                     </select>
                   </div>
                   <div>
-                    <p className={'text-[16px] font-bold pb-4'}>District</p>
+                    <p className={'text-[16px] font-bold pb-4'}>
+                      Huyện / Thành Phố
+                    </p>
                     <select
                       {...register('receiverDistrict')}
                       value={receiverProvince.district?.Name}
@@ -359,7 +363,7 @@ const CreateBill = () => {
                     </select>
                   </div>
                   <div>
-                    <p className={'text-[16px] font-bold pb-4'}>Ward</p>
+                    <p className={'text-[16px] font-bold pb-4'}>Phường / Xã</p>
                     <select
                       {...register('receiverWard')}
                       value={receiverProvince.ward?.Name}
@@ -395,32 +399,46 @@ const CreateBill = () => {
                 className={'text-[24px] font-bold p-4 flex items-center gap-2'}
               >
                 <BsBoxSeam />
-                Service Information - Goods
+                Thông tin dịch vụ - Hàng hóa
               </p>
               <Divider />
               <div className={'p-4'}>
                 <div className={'grid grid-cols-3 gap-2'}>
-                  <Input label={'Mass'} name="weight" />
-                  <Input label={'Number Of Package'} name="quantity" />
-                  <Input label={'Price Of Goods'} name="price" />
+                  <Input label={'Khối lượng'} name="weight" />
+                  <Input label={'Số kiện'} name="quantity" />
+                  <Input label={'Giá trị hàng hóa'} name="price" />
                   <div className={'col-span-3'}>
                     <p className={'text-[16px] font-bold pb-4'}>Size</p>
                     <div className={'grid grid-cols-3 gap-2'}>
-                      <Input label={'Length'} placeholder={'D'} name="length" />
-                      <Input label={'Width'} placeholder={'R'} name="width" />
-                      <Input label={'Height'} placeholder={'C'} name="height" />
+                      <Input
+                        label={'Chiều dài'}
+                        placeholder={'D'}
+                        name="length"
+                      />
+                      <Input
+                        label={'Chiều rộng'}
+                        placeholder={'R'}
+                        name="width"
+                      />
+                      <Input
+                        label={'Chiều cao'}
+                        placeholder={'C'}
+                        name="height"
+                      />
                     </div>
                   </div>
-                  <Input label={'COD Moneys'} name="cod" />
+                  <Input label={'Tiền thu hộ (COD)'} name="cod" />
                   <div className={'col-span-2'}>
-                    <p className={'text-[16px] font-bold pb-2'}>Commodities</p>
+                    <p className={'text-[16px] font-bold pb-2'}>
+                      Loại hàng hóa
+                    </p>
                     <select
                       {...register('kindOfGoods')}
                       className={
                         'w-full px-4 py-3 mb-4 border rounded-md outline-none'
                       }
                     >
-                      <option value="">Chọn kiểu hàng hóa</option>
+                      <option value="">Chọn loại hàng hóa</option>
                       <option value="DOCUMENT">Tài liệu</option>
                       <option value="GOODS">Hàng Hóa</option>
                       <option value="COLD_GOODS">Hàng Lạnh</option>
@@ -429,7 +447,7 @@ const CreateBill = () => {
                   </div>
                   <div className={'col-span-3'}>
                     <p className={'text-[16px] font-bold pb-2'}>
-                      Commodity content:
+                      Nội dung hàng hóa:
                     </p>
                     <textarea
                       {...register('goodsContent')}
@@ -445,8 +463,15 @@ const CreateBill = () => {
                         type="checkbox"
                         onChange={() => setIsShowCost(!isShowCost)}
                         checked={isShowCost!}
+                        id={'cost'}
+                        className={'cursor-pointer'}
                       />
-                      <label className={'ml-2 font-bold'}>Costs Incurred</label>
+                      <label
+                        htmlFor={'cost'}
+                        className={'ml-2 font-bold cursor-pointer'}
+                      >
+                        Chi phí phát sinh
+                      </label>
                     </div>
                     {isShowCost && (
                       <div className="grid grid-cols-2 gap-5">
@@ -469,12 +494,14 @@ const CreateBill = () => {
                 className={'text-[24px] font-bold p-4 flex items-center gap-2'}
               >
                 <HiOutlineCash />
-                Billing Information
+                Thông tin thanh toán
               </span>
               <Divider />
               <div className={'p-4'}>
                 <div className={'col-span-2'}>
-                  <p className={'text-[16px] font-bold pb-2'}>Payments</p>
+                  <p className={'text-[16px] font-bold pb-2'}>
+                    Hình thức thanh toán
+                  </p>
                   <select
                     {...register('payments')}
                     className={
@@ -488,7 +515,7 @@ const CreateBill = () => {
                 </div>
                 <div className={'flex flex-col'}>
                   <span className={'text-[16px] font-bold pb-2'}>
-                    Requirements upon delivery
+                    Yêu cầu khi giao hàng
                   </span>
                   <div className={'mb-2'}>
                     <input
@@ -498,7 +525,7 @@ const CreateBill = () => {
                       id={'1'}
                     />
                     <label htmlFor={'1'} className={'ml-2'}>
-                      Do not show the goods
+                      Không cho xem hàng
                     </label>
                   </div>
                   <div className={'mb-2'}>
@@ -509,7 +536,7 @@ const CreateBill = () => {
                       value="true"
                     />
                     <label htmlFor={'2'} className={'ml-2'}>
-                      Show the goods
+                      Cho xem hàng
                     </label>
                   </div>
                   <div>
@@ -524,7 +551,7 @@ const CreateBill = () => {
                 </div>
                 <div className={'flex flex-col'}>
                   <p className={'text-[16px] font-bold pb-2'}>
-                    Request pick up
+                    Yêu cầu lấy hàng
                   </p>
                   <div className={'mb-2'}>
                     <input
@@ -535,7 +562,7 @@ const CreateBill = () => {
                       {...register('transportEquipment')}
                     />
                     <label htmlFor={'3'} className={'ml-2'}>
-                      Motorbike
+                      Xe máy
                     </label>
                   </div>
                   <div className={'mb-2'}>
@@ -547,7 +574,7 @@ const CreateBill = () => {
                       {...register('transportEquipment')}
                     />
                     <label htmlFor={'4'} className={'ml-2'}>
-                      Car
+                      Ô tô
                     </label>
                   </div>
                 </div>
@@ -560,7 +587,7 @@ const CreateBill = () => {
               >
                 <p className={'flex items-center gap-2 justify-center'}>
                   <MdOutlineCreateNewFolder />
-                  Create Bill
+                  Tạo vận đơn
                 </p>
               </button>
             </div>

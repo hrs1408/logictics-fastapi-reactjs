@@ -3,7 +3,7 @@ import SearchBar from '../../components/SearchBar'
 import React from 'react'
 import { Modal } from '@mui/material'
 import Input from '../../components/Input'
-import EnhancedTable from '../../components/Table/users'
+import EnhancedUserTable from '../../components/Table/users'
 import { FormProvider, useForm } from 'react-hook-form'
 import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
@@ -64,14 +64,14 @@ const Users = () => {
             'flex items-center justify-between p-4 rounded bg-white mt-4 shadow'
           }
         >
-          <p className={'text-xl font-bold'}>List User</p>
+          <p className={'text-xl font-bold'}>Danh sách người dùng</p>
           <button
             className={'bg-yellow-400 px-4 py-2 rounded shadow'}
             onClick={() => {
               setOpen(!open)
             }}
           >
-            Add User
+            Thêm người dùng
           </button>
           <Modal
             open={open}
@@ -171,7 +171,7 @@ const Users = () => {
           </Modal>
         </div>
         <div className={'users-table mt-4'}>
-          <EnhancedTable listUser={users?.data ?? []} />
+          <EnhancedUserTable listUser={users?.data ?? []} />
         </div>
       </div>
     </AdminLayout>
