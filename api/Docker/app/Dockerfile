@@ -6,6 +6,12 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip uninstall jwt -y
+
+RUN pip uninstall Pyjwt -y
+
+RUN pip install Pyjwt
+
 COPY ../../ /app
 
 EXPOSE 8000
