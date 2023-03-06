@@ -19,5 +19,5 @@ class PortRepository(BaseRepository):
         return db.query(Port).filter(Port.code == code).first()
 
     @staticmethod
-    def get_all_port(db: Session, skip: int, limit: int) -> list[Port]:
+    def get_all_port(db: Session, skip: int, limit: int):
         return db.query(Port).offset(skip).limit(limit).all()
