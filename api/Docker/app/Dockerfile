@@ -8,9 +8,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip uninstall jwt -y
 
-RUN pip uninstall pyjwt -y
+RUN pip uninstall Pyjwt -y
 
-RUN pip install pyjwt
+RUN pip install Pyjwt
 
 COPY ../../ /app
 
