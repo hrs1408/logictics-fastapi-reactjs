@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { SIDEBAR_OPETATION } from '../constants/SideBar'
+import { Divider } from '@mui/material'
 import './homeUser.scss'
 
 interface HomeUserLayoutProps {
@@ -15,6 +16,7 @@ const HomeUser: React.FC<HomeUserLayoutProps> = ({ children }) => {
         <div className="logo flex p-4 rounded items-center justify-center">
           <img src="/images/logo/1-landscape.png" alt="logo" />
         </div>
+        <Divider />
         <div className="p-4 pr-0 h-full w-full flex flex-col gap-2">
           {SIDEBAR_OPETATION.map((item, index) => {
             return (
@@ -30,7 +32,7 @@ const HomeUser: React.FC<HomeUserLayoutProps> = ({ children }) => {
                       : 'w-full text-[16px] rounded-xl mr-4 hover:bg-gray-200 transition py-3 px-6 flex items-center justify-start gap-4'
                   }`}
                 >
-                  {/* {item.icon} */}
+                  {item.icon}
                   <span>{item.name}</span>
                 </Link>
               </div>
