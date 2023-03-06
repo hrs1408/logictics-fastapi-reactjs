@@ -1,5 +1,9 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi_pagination import Page, Params, paginate
+from sqlalchemy import or_
+
 from config import get_db
 from models import Invoice, User, Status, UserType
 from repository.invoice_repository import InvoiceRepository
@@ -17,9 +21,35 @@ invoice = APIRouter(
 
 
 @invoice.get('/', response_model=Page[InvoiceSchema])
-def get_all_invoice(params: Params = Depends(), db=Depends(get_db)):
-    invoices = InvoiceRepository.find_all(db, Invoice)
-    return paginate(invoices, params)
+def get_all_invoice(params: Params = Depends(), is_full: bool = False, search: Optional[str] = None,
+                    db=Depends(get_db)):
+    if search is not None:
+        db_invoice = db.query(Invoice).filter(or_(
+            Invoice.sender_full_name.like(f"%{search}%"),
+            Invoice.sender_address.like(f"%{search}%"),
+            Invoice.sender_ward.like(f"%{search}%"),
+            Invoice.sender_phone.like(f"%{search}%"),
+            Invoice.sender_district.like(f"%{search}%"),
+            Invoice.sender_province.like(f"%{search}%"),
+            Invoice.receiver_full_name.like(f"%{search}%"),
+            Invoice.receiver_address.like(f"%{search}%"),
+            Invoice.receiver_ward.like(f"%{search}%"),
+            Invoice.receiver_phone.like(f"%{search}%"),
+            Invoice.receiver_district.like(f"%{search}%"),
+            Invoice.receiver_province.like(f"%{search}%"),
+            Invoice.kind_of_goods.like(f"%{search}%"),
+            Invoice.payments.like(f"%{search}%"),
+            Invoice.transport_equipment.like(f"%{search}%"),
+            Invoice.status.like(f"%{search}%"),
+            Invoice.shipping_type.like(f"%{search}%"),
+        )).all()
+    else:
+        db_invoice = db.query(Invoice).all()
+
+    if is_full is True:
+        params.size = len(db_invoice)
+
+    return paginate(db_invoice, params)
 
 
 @invoice.put('/{invoice_id}/change-status', response_model=ResponseSchema[InvoiceSchema])

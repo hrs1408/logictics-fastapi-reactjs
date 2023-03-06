@@ -1,5 +1,8 @@
+from typing import Optional
+
 from fastapi import Depends, HTTPException, APIRouter, status
 from fastapi_pagination import Page, Params, paginate
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from config import get_db
 from models import User, UserInternalInformation
@@ -17,14 +20,21 @@ users = APIRouter(
 
 
 @users.get("/users", response_model=Page[UserSchemas])
-def get_all_user(params: Params = Depends(), db: Session = Depends(get_db)):
-    list_user = UserRepository.find_all(db, User)
-    return paginate(list_user, params)
+def get_all_user(params: Params = Depends(), is_full: bool = False, search: Optional[str] = None,
+                 db: Session = Depends(get_db)):
+    if search is not None:
+        db_user = db.query(User).filter(User.email.like(f"%{search}%")).all()
+    else:
+        db_user = db.query(User).all()
+
+    if is_full is True:
+        params.size = len(db_user)
+    return paginate(db_user, params)
 
 
 @users.get("/users/{user_id}")
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
-    db_user = UserRepository.find_by_id(db, user_id=user_id)
+    db_user = UserRepository.find_by_id(db, User, user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user

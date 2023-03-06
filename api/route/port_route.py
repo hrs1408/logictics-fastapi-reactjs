@@ -1,5 +1,8 @@
+from typing import Optional
+
 from fastapi import Depends, HTTPException, APIRouter, status
-from fastapi_pagination import Params, paginate, Page
+from fastapi_pagination import paginate, Page, Params
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from config import get_db
 from models import Port, User, UserType
@@ -19,8 +22,16 @@ ports = APIRouter(
 
 
 @ports.get("/", response_model=Page[PortSchema])
-def get_all(params: Params = Depends(), db: Session = Depends(get_db)):
-    db_ports = PortRepository.find_all(db, Port)
+def get_all(params: Params = Depends(), is_full: bool = False, search: Optional[str] = None,
+            db: Session = Depends(get_db)):
+    if search is not None:
+        db_ports = db.query(Port).filter(or_(Port.name.like(f"%{search}%", Port.code == search))).all()
+    else:
+        db_ports = db.query(Port).all()
+
+    if is_full is True:
+        params.size = len(db_ports)
+
     return paginate(db_ports, params)
 
 
