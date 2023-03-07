@@ -5,9 +5,14 @@ import { IoSettingsOutline } from 'react-icons/io5'
 
 export const SIDEBAR_OPETATION = [
     {
-      name: "Tra Cứu vận đơn",
+      name: "Tổng quan",
       icon: <AiOutlineUser />,
-      path: "/searchproduct",
+      path: "/dashboard",
+    },
+    {
+      name: "Tra cứu vận đơn",
+      icon: <AiOutlineUser />,
+      path: "/searchorder",
     },
     {
       name: "Điểm lấy hàng",
