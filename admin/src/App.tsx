@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './style/App.css'
+import './style/App.scss'
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'

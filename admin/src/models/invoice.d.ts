@@ -76,3 +76,15 @@ type Meta = {
   error?: boolean
   message?: string
 }
+
+type InvoiceTableType = {
+  id: number
+  senderFullName: string
+  senderProvince: string
+  receiverFullName: string
+  receiverProvince: string
+  payment: string
+  cod: string
+
+  status: string
+}

@@ -8,6 +8,8 @@ import Settings from '../pages/Settings'
 import Users from '../pages/Users'
 import CreateBill from '../pages/CreateBill'
 import ScanBill from '../pages/ScanBill'
+import Ports from '../pages/Ports'
+import Invoices from '../pages/Invoice'
 
 const routes = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const routes = createBrowserRouter([
       {
         path: '/users',
         element: <Users />,
+      },
+      {
+        path: 'ports',
+        element: <Ports />,
+      },
+      {
+        path: '/invoices',
+        element: <Invoices />,
       },
       {
         path: '/create-bill-of-lading',
