@@ -3,28 +3,37 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field, root_validator, validator, constr
 
+from models import UserType
+
 
 class UserCreateSchema(BaseModel):
     email: EmailStr
-    full_name: str = Field(max_length=40)
-    password: str = Field(min_length=6)
+    full_name: str
+    password: str
     confirm_password: str
-    phone: constr(regex=r'^0\d{3}[- ]?\d{3}[- ]?\d{4}$')
+    phone: str
     address: str
 
     @root_validator()
     def verify_password_match(cls, values):
         password = values.get("password")
+        if len(password) <= 6:
+            raise ValueError("Mật khẩu phải lớn hơn 6 ký tự")
         confirm_password = values.get("confirm_password")
-
         if password != confirm_password:
-            raise ValueError("Re-enter incorrect password")
+            raise ValueError("Nhập lại mật khẩu chưa chính xác")
         return values
 
-    @validator('phone')
-    def normalize_phone_number(cls, v):
-        """Xóa tất cả các khoảng trắng và dấu gạch ngang trong số điện thoại."""
-        return v.replace(' ', '').replace('-', '')
+
+class UserInternalCreateSchema(BaseModel):
+    full_name: str = Field(max_length=40)
+    password: str = Field(min_length=6)
+    work_address: str
+    position: str
+    email: EmailStr
+    password: str
+    phone: str
+    type_user: UserType
 
 
 class UserInformationBase(BaseModel):
@@ -38,7 +47,7 @@ class UserInformationCreate(UserInformationBase):
     pass
 
 
-class UserInformation(UserInformationBase):
+class UserInformationSchema(UserInformationBase):
     id: int
     user_id: int
 
@@ -97,8 +106,13 @@ class UserSchemas(BaseModel):
     email: str
     # is_active: bool
     type_user: Optional[str]
-    user_information: Optional[UserInformation]
+    user_information: Optional[UserInformationSchema]
     user_internal_information: Optional[UserInternalInfor]
 
     class Config:
         orm_mode = True
+
+
+class UserInternalResponseSchema(BaseModel):
+    user: UserSchemas
+    access_token: str

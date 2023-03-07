@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, root_validator
 
@@ -115,3 +115,12 @@ class InvoiceSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ChangeStatusObjectSchema(BaseModel):
+    invoice_id: int
+    status: Status
+
+
+class ChangeStatusSchema(BaseModel):
+    invoices: List[ChangeStatusObjectSchema]

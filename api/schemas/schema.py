@@ -1,5 +1,6 @@
 from typing import Dict, Optional, TypeVar, Generic, Any
 
+from fastapi_pagination.bases import AbstractParams, RawParams
 from fastapi_responseschema import AbstractResponseSchema, SchemaAPIRoute
 from pydantic import BaseModel, Field
 
@@ -47,3 +48,16 @@ class ResponseSchema(AbstractResponseSchema[T], Generic[T]):
 # Create an APIRoute
 class Route(SchemaAPIRoute):
     response_schema = ResponseSchema
+
+
+class Params(BaseModel, AbstractParams):
+    size: Optional[int] = 10
+    page: Optional[int] = 1
+    is_full: bool = False
+    search: Optional[str]
+
+    def to_raw_params(self) -> RawParams:
+        return RawParams(
+            limit=self.size,
+            offset=self.size * self.page,
+        )

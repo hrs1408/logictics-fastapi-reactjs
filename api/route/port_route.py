@@ -1,5 +1,8 @@
+from typing import Optional
+
 from fastapi import Depends, HTTPException, APIRouter, status
-from fastapi_pagination import Params, paginate, Page
+from fastapi_pagination import paginate, Page, Params
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from config import get_db
 from models import Port, User, UserType
@@ -19,12 +22,20 @@ ports = APIRouter(
 
 
 @ports.get("/", response_model=Page[PortSchema])
-def get_all(params: Params = Depends(), db: Session = Depends(get_db)):
-    db_ports = PortRepository.find_all(db, Port)
+def get_all(params: Params = Depends(), is_full: bool = False, search: Optional[str] = None,
+            db: Session = Depends(get_db)):
+    if search is not None:
+        db_ports = db.query(Port).filter(or_(Port.name.like(f"%{search}%", Port.code == search))).all()
+    else:
+        db_ports = db.query(Port).all()
+
+    if is_full is True:
+        params.size = len(db_ports)
+
     return paginate(db_ports, params)
 
 
-@ports.post("/")
+@ports.post("/", response_model=ResponseSchema[PortSchema])
 def create_new_port(port: PortCreate, db: Session = Depends(get_db), sub: int = Depends(get_current_user)):
     user = UserRepository.find_by_id(db, User, sub)
     if user.type_user != UserType.ADMIN:
@@ -79,11 +90,11 @@ def update_port(port_id: int, port: PortCreate, db: Session = Depends(get_db)):
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 
 
-@ports.delete("/{port_id}")
+@ports.delete("/{port_id}", response_model=ResponseSchema)
 def delete_port(port_id: int, db: Session = Depends(get_db)):
     db_port = PortRepository.find_by_id_port(db, port_id)
     if db_port is None:
         raise HTTPException(status_code=404, detail="Port not found")
 
     PortRepository.delete(db, db_port)
-    return ResponseSchema.from_api_route(status_code=status.HTTP_204_NO_CONTENT)
+    return ResponseSchema.from_api_route(status_code=status.HTTP_204_NO_CONTENT, data=None)

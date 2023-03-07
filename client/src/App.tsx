@@ -1,11 +1,42 @@
+import React, { useState } from 'react'
 import { RouterProvider } from "react-router-dom";
-import "./App.css";
 import { routes } from "./routes";
-
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
+import { MutationCache, QueryClient, QueryClientProvider } from 'react-query'
+// import toast, { Toaster } from 'react-hot-toast'
+import "./App.css";
 function App() {
+  const mutationCache = new MutationCache({
+    onError: error => {
+      // ;(error as ErrorResponse)?.data?.map(
+      //   item =>
+      //     item &&
+      //     item.loc &&
+      //     toast.error(
+      //       `${S(item.loc[1].toString()).capitalize() + ' ' + item.msg}`
+      //     )
+      // )
+    },
+  })
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        mutationCache,
+        defaultOptions: {
+          queries: {
+            refetchOnMount: false,
+          },
+        },
+      })
+  )
   return (
     <>
-      <RouterProvider router={routes} />
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <RouterProvider router={routes} />
+        </Provider>
+      </QueryClientProvider>
     </>
   );
 }
