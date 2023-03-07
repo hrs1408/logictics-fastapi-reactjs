@@ -10,10 +10,10 @@ import PayPoints from "../PageUser/PayPoints";
 import SearchOrder from "../PageUser/SearchOrder";
 
 export const routes = createBrowserRouter([
-    // {
-    //     path: "/",
-    //     element: <Home />
-    // },
+    {
+        path: "/",
+        element: <Home />
+    },
     {
         path: "/",
         element: <PageUser />

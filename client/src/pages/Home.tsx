@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import Banner from "../components/Banner";
-import Carousel from "../components/Carousel";
 import Coutdown from "../components/Coutdown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -10,11 +9,12 @@ import Informationabout from "../components/InformationAbout";
 import ListDelivery from "../components/ListDelivery";
 import Login from "../components/Auth";
 import HomeUser from "../Layout/HomeUser";
+import Carousel from "../components/Carousel";
 
 const Home: FC = () => {
   return (
     <div>
-      {/* <Header />
+      <Header />
       <Carousel />
       <ListDelivery />
       <Banner />
@@ -22,7 +22,7 @@ const Home: FC = () => {
       <Coutdown />
       <Iframe />
       <Hotline />
-      <Footer /> */}
+      <Footer />
       {/* <HomeUser /> */}
     </div>
   );
