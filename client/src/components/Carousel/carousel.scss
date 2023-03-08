@@ -105,18 +105,18 @@
                 .order-process-detail-list {
                     margin-left: 20px;
                     position: relative;
-                    
+
                     &::after {
                         content: "";
                         position: absolute;
                         width: 1px;
-                        height: 75%;
+                        height: 100%;
                         top: 7px;
                         left: 128px;
                         border-radius: 2px;
                         background: #B5BBC6;
                     }
-                    
+
                     .detail-list-item {
                         display: flex;
                         position: relative;
@@ -136,12 +136,22 @@
                                 height: 8px;
                                 top: 6px;
                                 border-radius: 50%;
-                                background: #1CC461;
-                                box-shadow: #1bc4614d 0 0 0 2px;
-                                border: 0 none;
+                                background-color: #B5BBC6;
+                                box-shadow: #B5BBC6 0 0 0 2px;
+                                border: none;
                                 left: 125px;
                             }
 
+                            &.active {
+                                &::before {
+                                    background: #1CC461;
+                                    box-shadow: #1bc4614d 0 0 0 2px;
+                                }
+
+                                .item-text-box {
+                                    font-weight: 700;
+                                }
+                            }
                         }
                     }
                 }

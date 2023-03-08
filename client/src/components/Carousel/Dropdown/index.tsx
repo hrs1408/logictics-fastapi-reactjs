@@ -14,7 +14,7 @@ const Dropdown = ({ open, onClose, invoiceId }: IDropdown) => {
     getVoyageByInovice({ invoiceId })
   );
 
-  console.log(data)
+  console.log(data);
   return (
     <>
       {open && (
@@ -36,13 +36,16 @@ const Dropdown = ({ open, onClose, invoiceId }: IDropdown) => {
             </div>
             <div className="order-status">
               <ul className="order-process-detail-list text-[14px] ">
-                {data?.data.map((item: VoyageType) => {
+                {data?.data.map((item: VoyageType, index: number) => {
+                    console.log(index == 0);
                   return (
                     <li key={item.id} className="detail-list-item">
                       <div className="item-date text-[#303844] ">
                         2022-10-13 <br /> 11:30:31
                       </div>
-                      <div className="item-desc">
+                      <div
+                        className={`item-desc ${index === 0 ? "active" : ""}`}
+                      >
                         <div className="item-text-box text-[#303844]">
                           Đơn hàng đã giao đến {item.port.name}
                         </div>
