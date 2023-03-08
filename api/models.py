@@ -141,6 +141,7 @@ class User(Base):
     user_information = relationship("UserInformation", back_populates="user", uselist=False)
     user_internal_information = relationship("UserInternalInformation", back_populates="user", uselist=False)
     shippers = relationship("Voyage", back_populates="shipper")
+    user_delivery_address = relationship("UserDeliveryAddress", back_populates="user")
 
 
 class UserInformation(Base):
@@ -166,4 +167,18 @@ class UserInternalInformation(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="user_internal_information")
+    created_at = Column(String(255), default=datetime.datetime.utcnow())
+
+
+class UserDeliveryAddress(Base):
+    __tablename__ = "user_delivery_address"
+
+    id = Column(Integer, primary_key=True, index=True)
+    province = Column(String(255), nullable=True)
+    district = Column(String(255), nullable=True)
+    ward = Column(String(255), nullable=True)
+    address = Column(String(255), nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    user = relationship("User", back_populates="user_delivery_address")
     created_at = Column(String(255), default=datetime.datetime.utcnow())
