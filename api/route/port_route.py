@@ -50,7 +50,7 @@ def create_new_port(port: PortCreate, db: Session = Depends(get_db), sub: int = 
     if port_code_exist is not None:
         raise HTTPException(status_code=400, detail="Port code already exist")
 
-    port_new = Port(name=port.name, code=port.code)
+    port_new = Port(**port.dict())
     db_port = PortRepository.insert(db, port_new)
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 

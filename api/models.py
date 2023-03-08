@@ -1,3 +1,6 @@
+import datetime
+import uuid
+
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Table
 from sqlalchemy.orm import relationship, Mapper
 
@@ -45,6 +48,7 @@ class Port(Base):
     name = Column(String(255))
     code = Column(String(255))
     voyages = relationship("Voyage", back_populates="port")
+    created_at = Column(String(255), default=datetime.datetime.utcnow())
 
 
 class Voyage(Base):
@@ -54,17 +58,20 @@ class Voyage(Base):
     port_id = Column(Integer, ForeignKey("ports.id"))
     port = relationship("Port", back_populates="voyages")
 
-    invoice_id = Column(Integer, ForeignKey("invoices.id"))
+    invoice_id = Column(String(255), ForeignKey("invoices.id"))
     invoice = relationship("Invoice", back_populates="voyages")
+
+    delivered = Column(Boolean, default=False, nullable=True)
 
     # Người ship
     shipper_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     shipper = relationship("User", back_populates="shippers")
+    created_at = Column(String(255), default=datetime.datetime.utcnow())
 
 
 class Invoice(Base):
     __tablename__ = "invoices"
-    id = Column(Integer, primary_key=True)
+    id = Column(String(255), default=str(uuid.uuid4()), primary_key=True)
 
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User", backref="invoices")
@@ -117,6 +124,7 @@ class Invoice(Base):
     # Yêu cầu khác
     requirement_other = Column(String(255), nullable=True)
     status = Column(String(255), nullable=True, default=Status.PENDING)
+    created_at = Column(String(255), default=datetime.datetime.utcnow(), nullable=True)
 
 
 class User(Base):
@@ -146,6 +154,7 @@ class UserInformation(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="user_information")
+    created_at = Column(String(255), default=datetime.datetime.utcnow())
 
 
 class UserInternalInformation(Base):
@@ -157,3 +166,4 @@ class UserInternalInformation(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="user_internal_information")
+    created_at = Column(String(255), default=datetime.datetime.utcnow())

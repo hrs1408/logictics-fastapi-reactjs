@@ -14,5 +14,5 @@ class VoyageRepository(BaseRepository):
         return db.query(Voyage).filter(Voyage.port_id == port_id and Voyage.invoice_id == invoice_id).first()
 
     @staticmethod
-    def find_by_invoice(db: Session, invoice_id: int):
+    def find_by_invoice(db: Session, invoice_id: str):
         return db.query(Voyage).filter(Voyage.invoice_id == invoice_id).order_by(desc(Voyage.id)).all()

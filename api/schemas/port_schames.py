@@ -12,6 +12,7 @@ class PortCreate(PortBase):
 
 class PortSchema(PortBase):
     id: int
+    created_at: str
 
     class Config:
         orm_mode = True

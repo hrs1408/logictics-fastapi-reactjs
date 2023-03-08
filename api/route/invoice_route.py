@@ -53,7 +53,7 @@ def get_all_invoice(params: Params = Depends(), is_full: bool = False, search: O
 
 
 @invoice.put('/{invoice_id}/change-status', response_model=ResponseSchema[InvoiceSchema])
-def change_status_invoice(invoice_id: int, request: InvoiceChangeStatusSchema, db=Depends(get_db),
+def change_status_invoice(invoice_id: str, request: InvoiceChangeStatusSchema, db=Depends(get_db),
                           sub: int = Depends(get_current_user)):
     current_user: User | None = UserRepository.find_by_id(db, User, sub)
     if current_user is None:
@@ -62,7 +62,7 @@ def change_status_invoice(invoice_id: int, request: InvoiceChangeStatusSchema, d
     if current_user.type_user != UserType.ADMIN:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
 
-    db_invoice: Invoice | None = InvoiceRepository.find_by_id(db, Invoice, invoice_id)
+    db_invoice: Invoice | None = InvoiceRepository.find_by_id(db, invoice_id)
     if db_invoice is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice Not Found")
 
@@ -86,8 +86,8 @@ def create_invoice(request: CreateInvoiceSchema, db=Depends(get_db), sub: int = 
 
 
 @invoice.get('/{invoice_id}', response_model=ResponseSchema[InvoiceSchema])
-def find_by_id(invoice_id: int, db=Depends(get_db)):
-    db_invoice = InvoiceRepository.find_by_id(db, Invoice, invoice_id)
+def find_by_id(invoice_id: str, db=Depends(get_db)):
+    db_invoice = InvoiceRepository.find_by_id(db, invoice_id)
     if db_invoice is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice not found")
 
@@ -95,8 +95,8 @@ def find_by_id(invoice_id: int, db=Depends(get_db)):
 
 
 @invoice.delete('/{invoice_id}', response_model=ResponseSchema)
-def delete_by_id(invoice_id: int, db=Depends(get_db), sub: int = Depends(get_current_user)):
-    db_invoice = InvoiceRepository.find_by_id(db, Invoice, invoice_id)
+def delete_by_id(invoice_id: str, db=Depends(get_db), sub: int = Depends(get_current_user)):
+    db_invoice = InvoiceRepository.find_by_id(db, invoice_id)
 
     if db_invoice is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice not found")
