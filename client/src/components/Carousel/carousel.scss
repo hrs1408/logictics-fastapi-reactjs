@@ -104,7 +104,19 @@
             .order-status {
                 .order-process-detail-list {
                     margin-left: 20px;
-
+                    position: relative;
+                    
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 1px;
+                        height: 75%;
+                        top: 7px;
+                        left: 128px;
+                        border-radius: 2px;
+                        background: #B5BBC6;
+                    }
+                    
                     .detail-list-item {
                         display: flex;
                         position: relative;
@@ -120,33 +132,16 @@
                                 content: "";
                                 position: absolute;
                                 width: 8px;
+                                z-index: 1000;
                                 height: 8px;
-                                border: 2px solid #B5BBC6;
                                 top: 6px;
-                                left: -16px;
                                 border-radius: 50%;
-                                background: #FFF;
+                                background: #1CC461;
+                                box-shadow: #1bc4614d 0 0 0 2px;
+                                border: 0 none;
+                                left: 125px;
                             }
 
-                            &:last-child {
-                                &::before {
-                                    background: #1CC461;
-                                    box-shadow: #1bc4614d 0 0 0 2px;
-                                    border: 0 none;
-                                    left: 125px;
-                                }
-                            }
-
-                            &::after {
-                                content: "";
-                                position: absolute;
-                                width: 1px;
-                                height: 100%;
-                                top: 20px;
-                                left: 128px;
-                                border-radius: 2px;
-                                background: #B5BBC6;
-                            }
                         }
                     }
                 }

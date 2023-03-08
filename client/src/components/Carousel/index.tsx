@@ -1,16 +1,24 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { IoCloseOutline } from 'react-icons/io5'
+import { IoCloseOutline } from "react-icons/io5";
 import "./carousel.scss";
+import Dropdown from "./Dropdown";
+import { toast } from "react-hot-toast";
 
 const Carousel = () => {
   const [isActive, setIsActive] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [invoiceId, setInvoiceId] = useState("");
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!invoiceId) {
+      toast.error("Vui lòng nhập mã đơn hàng")
+      return;
+    };
+    setOpen(true)    
   };
 
   return (
@@ -32,7 +40,7 @@ const Carousel = () => {
             </div>
             <div className="bill-of-lading-item z-50">
               <span className="top-slide"></span>
-              <Link to={'/'}>
+              <Link to={"/"}>
                 <div className="box-cube active-box-cube">
                   <p className="text-[14px]">Tra cứu vận đơn</p>
                 </div>
@@ -40,7 +48,7 @@ const Carousel = () => {
             </div>
             <div className="bill-of-lading-item">
               <span className="top-slide"></span>
-              <Link to={'/'}>
+              <Link to={"/"}>
                 <div className="box-cube">
                   <p className="text-[14px]">Danh sách bưu cục</p>
                 </div>
@@ -48,89 +56,30 @@ const Carousel = () => {
             </div>
           </div>
           <div className="w-full mt-5">
-            <form className="mt-1">
+            <form className="mt-1" onSubmit={handleSubmit}>
               <div className="form-search">
                 <input
                   className="input-search "
                   type="text"
                   placeholder="Nhập mã vận đơn"
+                  value={invoiceId}
+                  onChange={(e) => setInvoiceId(e.target.value)}
                 />
               </div>
               <div className="">
-                <div typeof="submit" onClick={handleOpen} className="cursor-pointer btn-search flex items-center justify-center">
+                <button
+                  type="submit"
+                  className="cursor-pointer btn-search flex items-center justify-center"
+                >
                   Tra cứu
-                </div>
+                </button>
               </div>
-
             </form>
           </div>
-          {open ? (
-            <div className="relative">
-              <div className="search-order absolute min-w-[917px] rounded-[4px] p-[30px]">
-                <div className="flex justify-between ">
-                  <div className="text-[20px] font-bold mb-[24px] leading-[24px] text-[#303844] ">
-                    Mã Vận Đơn: <span className="ml-1">SPXVN02644717686A</span>
-                    <span className="text-[14px] font-thin bg-[#ecfff1] ml-2 text-[#1cc461] py-[4px] px-[8px] ">
-                      Đã giao hàng
-                    </span>
-                  </div>
-                  <span className="hover:bg-[#F5F6F9] hover:cursor-pointer w-[32px] h-[32px] rounded-[100%] flex items-center justify-center "
-                    onClick={handleOpen}>
-                    <IoCloseOutline className="text-[23px] opacity-50 " />
-                  </span>
-                </div>
-                <div className="order-status">
-                  <ul className="order-process-detail-list text-[14px] ">
-                    <li className="detail-list-item">
-                      <div className="item-date text-[#303844] ">2022-10-13 <br /> 11:30:31</div>
-                      <div className="item-desc">
-                        <div className="item-text-box text-[#303844]">
-                          [35-TTN Hue 02 LM Hub] Đơn hàng đã giao thành công choNguyễn  _Văn Hoàng
-                        </div>
-                      </div>
-                    </li>
-                    <li className="detail-list-item">
-                      <div className="item-date text-[#303844] ">2022-10-13 <br /> 11:30:31</div>
-                      <div className="item-desc">
-                        <div className="item-text-box text-[#303844]">
-                          [35-TTN Hue 02 LM Hub] Đơn hàng đã giao thành công choNguyễn  _Văn Hoàng
-                        </div>
-                      </div>
-                    </li>
-                    <li className="detail-list-item">
-                      <div className="item-date text-[#303844] ">2022-10-13 <br /> 11:30:31</div>
-                      <div className="item-desc">
-                        <div className="item-text-box text-[#303844]">
-                          [35-TTN Hue 02 LM Hub] Đơn hàng đã giao thành công choNguyễn  _Văn Hoàng
-                        </div>
-                      </div>
-                    </li>
-                    <li className="detail-list-item">
-                      <div className="item-date text-[#303844] ">2022-10-13 <br /> 11:30:31</div>
-                      <div className="item-desc">
-                        <div className="item-text-box text-[#303844]">
-                          [35-TTN Hue 02 LM Hub] Đơn hàng đã giao thành công choNguyễn  _Văn Hoàng
-                        </div>
-                      </div>
-                    </li>
-                    <li className="detail-list-item">
-                      <div className="item-date text-[#303844] ">2022-10-13 <br /> 11:30:31</div>
-                      <div className="item-desc">
-                        <div className="item-text-box text-[#303844]">
-                          [35-TTN Hue 02 LM Hub] Đơn hàng đã giao thành công choNguyễn  _Văn Hoàng
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ) : null}
+          <Dropdown open={open} onClose={() => setOpen(false)} invoiceId={invoiceId}/>
         </div>
       </div>
-
     </>
-
   );
 };
 

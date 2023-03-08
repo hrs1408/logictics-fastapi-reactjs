@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 
 export const CreateInvoice = (
   data: CreateInvoiceType
-): Promise<ResponseSuccessType<InvoiceCreateResponse>> => {
+): Promise<ResponseSuccessType<InvoiceType>> => {
   return axiosConfig.post(`/invoice`, data)
 }
 

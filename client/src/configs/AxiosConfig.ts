@@ -8,14 +8,14 @@ import {
 import {postRefreshTokenApi, saveToken} from '../services/AuthService';
 import {camelizeKeys} from 'humps';
 
-const instance = axios.create({
+const axiosConfig = axios.create({
     baseURL: BASE_API,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-instance.interceptors.request.use(async (config: any) => {
+axiosConfig.interceptors.request.use(async (config: any) => {
     const token = Cookies.get(TOKEN_KEY);
     const refreshToken = Cookies.get(REFRESH_TOKEN_KEY);
     if (
@@ -54,7 +54,7 @@ instance.interceptors.request.use(async (config: any) => {
     return config;
 });
 
-instance.interceptors.response.use(
+axiosConfig.interceptors.response.use(
     (response) => {
         if (
             response.data &&
@@ -91,7 +91,7 @@ instance.interceptors.response.use(
                     Authorization: `Bearer ${data.accessToken}`,
                 });
 
-                return instance(config);
+                return axiosConfig(config);
             } catch (e) {
                 window.location.href = '/login';
                 return Promise.reject(error);
@@ -106,4 +106,4 @@ instance.interceptors.response.use(
     }
 );
 
-export default instance;
+export default axiosConfig;
