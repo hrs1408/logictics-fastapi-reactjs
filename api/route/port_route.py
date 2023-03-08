@@ -82,7 +82,6 @@ def update_port(port_id: int, port: PortCreate, db: Session = Depends(get_db)):
     if db_port is None:
         raise HTTPException(status_code=404, detail="Port not found")
     db_port.name = port.name if port.name is not None else db_port.name
-    db_port.code = port.code if port.code is not None else db_port.code
     db_port = PortRepository.update(db, db_port)
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 
