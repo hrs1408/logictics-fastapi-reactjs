@@ -1,5 +1,9 @@
+import uuid
+from typing import Optional
+
 from fastapi import Depends, HTTPException, APIRouter, status
-from fastapi_pagination import Params, paginate, Page
+from fastapi_pagination import paginate, Page, Params
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from config import get_db
 from models import Port, User, UserType
@@ -19,8 +23,16 @@ ports = APIRouter(
 
 
 @ports.get("/", response_model=Page[PortSchema])
-def get_all(params: Params = Depends(), db: Session = Depends(get_db)):
-    db_ports = PortRepository.find_all(db, Port)
+def get_all(params: Params = Depends(), is_full: bool = False, search: Optional[str] = None,
+            db: Session = Depends(get_db)):
+    if search is not None:
+        db_ports = db.query(Port).filter(or_(Port.name.like(f"%{search}%", Port.code == search))).all()
+    else:
+        db_ports = db.query(Port).all()
+
+    if is_full is True:
+        params.size = len(db_ports)
+
     return paginate(db_ports, params)
 
 
@@ -31,15 +43,11 @@ def create_new_port(port: PortCreate, db: Session = Depends(get_db), sub: int = 
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
 
     port_name_exist = PortRepository.find_by_name(db, port.name)
-    port_code_exist = PortRepository.find_by_code(db, port.code)
 
     if port_name_exist is not None:
         raise HTTPException(status_code=400, detail="Port name already exist")
 
-    if port_code_exist is not None:
-        raise HTTPException(status_code=400, detail="Port code already exist")
-
-    port_new = Port(name=port.name, code=port.code)
+    port_new = Port(**port.dict(), code=str(uuid.uuid4()))
     db_port = PortRepository.insert(db, port_new)
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 
@@ -74,7 +82,6 @@ def update_port(port_id: int, port: PortCreate, db: Session = Depends(get_db)):
     if db_port is None:
         raise HTTPException(status_code=404, detail="Port not found")
     db_port.name = port.name if port.name is not None else db_port.name
-    db_port.code = port.code if port.code is not None else db_port.code
     db_port = PortRepository.update(db, db_port)
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 

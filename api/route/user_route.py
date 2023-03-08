@@ -1,17 +1,20 @@
 from datetime import timedelta
+from typing import Optional
 
 from fastapi import Depends, HTTPException, APIRouter, status
 from fastapi_pagination import Page, Params, paginate
-from passlib.context import CryptContext
 from sqlalchemy.orm import Session
+
 from config import get_db
 from models import User, UserInternalInformation, UserType, UserInformation
 from repository.jwt_repository import JWTBearer, JWTRepository
 from repository.user_repository import UserRepository, UserInternalInformationRepository, UserInfoRepository
+from route.auth_route import pwd_context
 from schemas.schema import ResponseSchema
-from schemas.user_schemas import UserInformationSchema, UserSchemas, UserInternalCreateSchema, UserInternalInfor, \
+from schemas.user_schemas import UserInformationCreate, UserInternalInformationCreate, UserInternalCreateSchema, \
     UserInternalResponseSchema
-from schemas.user_schemas import UserInformationCreate, UserInternalInformationCreate
+
+from schemas.user_schemas import UserSchemas
 from ultis.securty import get_current_user
 
 users = APIRouter(
@@ -19,24 +22,29 @@ users = APIRouter(
     dependencies=[Depends(JWTBearer())]
 )
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 @users.get("/users", response_model=Page[UserSchemas])
-def get_all_user(params: Params = Depends(), db: Session = Depends(get_db)):
-    list_user = UserRepository.find_all(db, User)
-    return paginate(list_user, params)
+def get_all_user(params: Params = Depends(), is_full: bool = False, search: Optional[str] = None,
+                 db: Session = Depends(get_db)):
+    if search is not None:
+        db_user = db.query(User).filter(User.email.like(f"%{search}%")).all()
+    else:
+        db_user = db.query(User).all()
+
+    if is_full is True:
+        params.size = len(db_user)
+    return paginate(db_user, params)
 
 
-@users.get("/users/{user_id}", response_model=ResponseSchema[UserSchemas])
+@users.get("/users/{user_id}")
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
-    db_user = UserRepository.find_by_id(db, User, id=user_id)
+    db_user = UserRepository.find_by_id(db, User, user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    return ResponseSchema.from_api_route(data=db_user, status_code=status.HTTP_200_OK)
+    return db_user
 
 
-@users.put("/users/information", response_model=ResponseSchema[UserInformationSchema])
+@users.put("/users/information")
 def put_user_information(user_information: UserInformationCreate, db: Session = Depends(get_db),
                          sub: int = Depends(get_current_user)):
     user = UserRepository.find_by_id(db, User, sub)
@@ -44,9 +52,9 @@ def put_user_information(user_information: UserInformationCreate, db: Session = 
         raise HTTPException(status_code=404, detail="User not found")
     user_info = UserInfoRepository.find_by_user_id(db, sub)
     if user_info is None:
-        user_info = UserInformationSchema(
-            fullname=user_information.fullname,
-            phone_number=user_information.phone_number,
+        user_info = UserInformation(
+            fullname=user_information.full_name,
+            phone_number=user_information.phone,
             address=user_information.address,
             user_id=user.id
         )
@@ -60,7 +68,7 @@ def put_user_information(user_information: UserInformationCreate, db: Session = 
     return ResponseSchema.from_api_route(data=user_info, status_code=status.HTTP_200_OK)
 
 
-@users.put("/users/internal_information", response_model=ResponseSchema[UserInternalInfor])
+@users.put("/users/internal_information")
 def put_user_inter_infor(user_create_internal: UserInternalInformationCreate,
                          db: Session = Depends(get_db), sub: int = Depends(get_current_user)):
     user = UserRepository.find_by_id(db, User, sub)
@@ -113,8 +121,9 @@ def add_user_internal(user_create_internal: UserInternalCreateSchema, db=Depends
 
     UserInfoRepository.insert(db, new_user_info)
 
-    access_token = JWTRepository.create_access_token(user=user,
+    access_token = JWTRepository.create_access_token(user=new_user,
                                                      expires_delta=timedelta(days=3652))  # 3652 ngày = 10 năm
     print(access_token)
-    return ResponseSchema.from_api_route(data=UserInternalResponseSchema(user=user, access_token=access_token.access_token),
-                                         status_code=200)
+    return ResponseSchema.from_api_route(
+        data=UserInternalResponseSchema(user=new_user, access_token=access_token.access_token),
+        status_code=200)

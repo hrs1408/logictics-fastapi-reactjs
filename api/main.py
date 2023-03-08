@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from route.auth_route import auth
 from route.invoice_route import invoice
 from route.port_route import ports
+from route.user_delivery_address_route import deliAddress
 from route.user_route import users
 import models
 from route.voyage_route import voyages
@@ -58,3 +59,4 @@ app.include_router(prefix="/api", router=users)
 app.include_router(prefix="/api", router=invoice)
 app.include_router(prefix="/api", router=ports)
 app.include_router(prefix="/api", router=voyages)
+app.include_router(prefix="/api", router=deliAddress)

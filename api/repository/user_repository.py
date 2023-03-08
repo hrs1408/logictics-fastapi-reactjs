@@ -16,7 +16,7 @@ class UserRepository(BaseRepository):
 class UserInfoRepository(BaseRepository):
 
     @staticmethod
-    def find_by_id(db: Session, user_id: int) -> User | None:
+    def find_by_id(db: Session, user_id: int):
         return db.query(User).filter(User.id == user_id).first()
 
 
