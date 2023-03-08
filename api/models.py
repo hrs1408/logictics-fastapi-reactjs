@@ -157,3 +157,16 @@ class UserInternalInformation(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="user_internal_information")
+
+
+class UserDeliveryAddress(Base):
+    __tablename__ = "user_delivery_address"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    address = Column(String(255), nullable=True)
+    province = Column(String(255), nullable=True)
+    district = Column(String(255), nullable=True)
+    ward = Column(String(255), nullable=True)
+
+    user = relationship("User", back_populates="user_delivery_address")
