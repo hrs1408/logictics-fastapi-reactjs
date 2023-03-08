@@ -1,3 +1,4 @@
+import uuid
 from typing import Optional
 
 from fastapi import Depends, HTTPException, APIRouter, status
@@ -42,15 +43,11 @@ def create_new_port(port: PortCreate, db: Session = Depends(get_db), sub: int = 
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
 
     port_name_exist = PortRepository.find_by_name(db, port.name)
-    port_code_exist = PortRepository.find_by_code(db, port.code)
 
     if port_name_exist is not None:
         raise HTTPException(status_code=400, detail="Port name already exist")
 
-    if port_code_exist is not None:
-        raise HTTPException(status_code=400, detail="Port code already exist")
-
-    port_new = Port(**port.dict())
+    port_new = Port(**port.dict(), code=str(uuid.uuid4()))
     db_port = PortRepository.insert(db, port_new)
     return ResponseSchema.from_api_route(data=db_port, status_code=status.HTTP_200_OK)
 

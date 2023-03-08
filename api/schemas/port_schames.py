@@ -6,8 +6,8 @@ class PortBase(BaseModel):
     code: str
 
 
-class PortCreate(PortBase):
-    pass
+class PortCreate(BaseModel):
+    name: str
 
 
 class PortSchema(PortBase):
