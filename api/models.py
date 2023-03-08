@@ -71,7 +71,7 @@ class Voyage(Base):
 
 class Invoice(Base):
     __tablename__ = "invoices"
-    id = Column(String(255), default=str(uuid.uuid4()), primary_key=True)
+    id = Column(String(255), primary_key=True)
 
     owner_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User", backref="invoices")

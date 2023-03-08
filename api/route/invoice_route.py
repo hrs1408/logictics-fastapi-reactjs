@@ -1,3 +1,4 @@
+import uuid
 from typing import Optional
 
 from fastapi import APIRouter, Depends, status, HTTPException
@@ -80,7 +81,7 @@ def get_by_user(params: Params = Depends(), db=Depends(get_db), sub: int = Depen
 
 @invoice.post("/", response_model=ResponseSchema[InvoiceSchema])
 def create_invoice(request: CreateInvoiceSchema, db=Depends(get_db), sub: int = Depends(get_current_user)):
-    db_invoice = Invoice(**request.dict(), owner_id=sub)
+    db_invoice = Invoice(**request.dict(), owner_id=sub, id=str(uuid.uuid4()))
     db_invoice = InvoiceRepository.insert(db, db_invoice)
     return ResponseSchema.from_api_route(data=db_invoice, status_code=status.HTTP_200_OK)
 
