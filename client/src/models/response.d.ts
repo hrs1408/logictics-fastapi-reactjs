@@ -1,8 +1,15 @@
+// type ResponseSuccessType<T> = Response & {
+//   message: string;
+//   data: T;
+//   items: T[];
+// };
+
 type ResponseSuccessType<T> = Response & {
-  message: string;
-  data: T;
-  items: T[];
-};
+  data: T
+  meta?: Meta
+  statusCode?: number
+}
+
 type Meta = {
   error?: boolean
   message?: string

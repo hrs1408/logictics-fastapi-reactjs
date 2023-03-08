@@ -8,22 +8,22 @@ import AuthProvider from "./context/AuthContext";
 import toast, { Toaster } from 'react-hot-toast'
 import "./App.css";
 function App() {
-  const mutationCache = new MutationCache({
-    onError: (error) => {
-      // ;(error as ErrorResponse)?.data?.map(
-      //   item =>
-      //     item &&
-      //     item.loc &&
-      //     toast.error(
-      //       `${S(item.loc[1].toString()).capitalize() + ' ' + item.msg}`
-      //     )
-      // )
-    },
-  });
+  // const mutationCache = new MutationCache({
+  //   onError: (error) => {
+  //     ;(error as ErrorResponse)?.data?.map(
+  //       item =>
+  //         item &&
+  //         item.loc &&
+  //         toast.error(
+  //           `${S(item.loc[1].toString()).capitalize() + ' ' + item.msg}`
+  //         )
+  //     )
+  //   },
+  // });
   const [queryClient] = useState(
     () =>
       new QueryClient({
-        mutationCache,
+        // mutationCache,
         defaultOptions: {
           queries: {
             refetchOnMount: false,
