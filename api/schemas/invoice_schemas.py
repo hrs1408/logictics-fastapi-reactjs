@@ -119,7 +119,7 @@ class InvoiceSchema(BaseModel):
 
 
 class ChangeStatusObjectSchema(BaseModel):
-    invoice_id: int
+    invoice_id: str
     status: Status
 
 

@@ -21,7 +21,7 @@ interface ILogin {
   changeTab: (tab: TabType) => void;
 }
 
-const Login = ({changeTab}: ILogin) => {
+const Login = ({ changeTab }: ILogin) => {
   const navigate = useNavigate();
   const {
     register,
@@ -37,7 +37,7 @@ const Login = ({changeTab}: ILogin) => {
       .then(async (res) => {
         saveToken(res.data);
         // await getMeForce();
-        navigate("/");
+        navigate("/dashboard");
         reset({
           email: "",
           password: "",
@@ -82,7 +82,7 @@ const Login = ({changeTab}: ILogin) => {
       </div>
       <div
         className={`tabs login-submit cursor-pointer flex items-center justify-center mt-2`}
-        onClick={() => changeTab('TabRegister')}
+        onClick={() => changeTab("TabRegister")}
       >
         TẠO TÀI KHOẢN
       </div>
