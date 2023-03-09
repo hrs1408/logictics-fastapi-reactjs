@@ -30,7 +30,7 @@ def create_voyage(request: VoyageCreateSchema, db=Depends(get_db)):
     if check_voyage is not None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice in this position have been created")
 
-    invoice = InvoiceRepository.find_by_id(db, Invoice, request.invoice_id)
+    invoice = InvoiceRepository.find_by_id(db, request.invoice_id)
     if invoice is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice Not Found")
     elif invoice.status != Status.ACCEPTED:
@@ -54,6 +54,6 @@ def create_voyage(request: VoyageCreateSchema, db=Depends(get_db)):
 
 
 @voyages.get('/get-by-invoice/{invoice_id}', response_model=ResponseSchema[List[VoyageSchema]])
-def get_by_invoice(invoice_id: int, db=Depends(get_db)):
+def get_by_invoice(invoice_id: str, db=Depends(get_db)):
     db_voyage = VoyageRepository.find_by_invoice(db, invoice_id)
     return ResponseSchema.from_api_route(data=db_voyage, status_code=200)
