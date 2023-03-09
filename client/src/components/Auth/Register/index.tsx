@@ -78,7 +78,6 @@ const Register = ({ changeTab }: IRegister) => {
       });
   };
 
-  console.log(error);
 
   return (
     <form onSubmit={handleSubmit(handleRegister)} className="p-[15px]">
