@@ -124,10 +124,12 @@
 
                         .item-date {
                             margin-right: 16px;
-                            width: 135px;
+                            width: 120px;
                         }
 
                         .item-desc {
+                            margin-left: 20px;
+
                             &::before {
                                 content: "";
                                 position: absolute;
