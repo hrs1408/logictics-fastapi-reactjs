@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { IoCloseOutline } from "react-icons/io5";
+// import { BsFillBoxFill } from "react-icons/bs";
 import "./carousel.scss";
 import Dropdown from "./Dropdown";
 import { toast } from "react-hot-toast";
@@ -15,10 +15,10 @@ const Carousel = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!invoiceId) {
-      toast.error("Vui lòng nhập mã đơn hàng")
+      toast.error("Vui lòng nhập mã đơn hàng");
       return;
-    };
-    setOpen(true)    
+    }
+    setOpen(true);
   };
 
   return (
@@ -39,7 +39,9 @@ const Carousel = () => {
               </Link>
             </div>
             <div className="bill-of-lading-item z-50">
-              <span className="top-slide"></span>
+              <span className="top-slide">
+                {/* <BsFillBoxFill /> */}
+              </span>
               <Link to={"/"}>
                 <div className="box-cube active-box-cube">
                   <p className="text-[14px]">Tra cứu vận đơn</p>
@@ -76,7 +78,11 @@ const Carousel = () => {
               </div>
             </form>
           </div>
-          <Dropdown open={open} onClose={() => setOpen(false)} invoiceId={invoiceId}/>
+          <Dropdown
+            open={open}
+            onClose={() => setOpen(false)}
+            invoiceId={invoiceId}
+          />
         </div>
       </div>
     </>

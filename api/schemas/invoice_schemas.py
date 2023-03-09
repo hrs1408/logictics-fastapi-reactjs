@@ -63,7 +63,7 @@ class InvoiceChangeStatusSchema(BaseModel):
 
 
 class InvoiceSchema(BaseModel):
-    id: int
+    id: str
 
     owner_id: str
     owner: UserSchemas
@@ -112,15 +112,18 @@ class InvoiceSchema(BaseModel):
     # Yêu cầu khác
     requirement_other: Optional[str]
     status: Status
+    created_at: str
 
     class Config:
         orm_mode = True
 
 
 class ChangeStatusObjectSchema(BaseModel):
-    invoice_id: int
+    invoice_id: str
     status: Status
 
 
 class ChangeStatusSchema(BaseModel):
     invoices: List[ChangeStatusObjectSchema]
+
+

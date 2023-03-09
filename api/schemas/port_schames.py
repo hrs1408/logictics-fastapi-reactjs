@@ -6,12 +6,13 @@ class PortBase(BaseModel):
     code: str
 
 
-class PortCreate(PortBase):
-    pass
+class PortCreate(BaseModel):
+    name: str
 
 
 class PortSchema(PortBase):
     id: int
+    created_at: str
 
     class Config:
         orm_mode = True

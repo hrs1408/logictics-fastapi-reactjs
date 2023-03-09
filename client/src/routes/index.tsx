@@ -5,9 +5,8 @@ import Home from "../pages/Home";
 import PageUser from "../pages/PageUser";
 import CreateOrder from "../PageUser/CreateOrder";
 import Dashboard from "../PageUser/Dashboard";
-import GetPoints from "../PageUser/GetPoints";
-import PayPoints from "../PageUser/PayPoints";
 import SearchOrder from "../PageUser/SearchOrder";
+import Address from "../PageUser/Address";
 
 export const routes = createBrowserRouter([
     {
@@ -27,12 +26,8 @@ export const routes = createBrowserRouter([
         element: <CreateOrder />
     },
     {
-        path: "/getpoint",
-        element: <GetPoints />
-    },
-    {
-        path: "/paypoint",
-        element: <PayPoints />
+        path: "/address",
+        element: <Address />
     },
     {
         path: "/searchorder",

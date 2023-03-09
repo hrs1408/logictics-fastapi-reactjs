@@ -15,14 +15,9 @@ export const SIDEBAR_OPETATION = [
       path: "/searchorder",
     },
     {
-      name: "Điểm lấy hàng",
+      name: "Sổ địa chỉ",
       icon: <AiOutlineUser />,
-      path: "/getpoint",
-    },
-    {
-      name: "Điểm trả hàng",
-      icon: <AiOutlineUser />,
-      path: "/paypoint",
+      path: "/address",
     },
     {
       name: "Tạo vận đơn",

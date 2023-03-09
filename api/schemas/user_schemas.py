@@ -116,3 +116,8 @@ class UserSchemas(BaseModel):
 class UserInternalResponseSchema(BaseModel):
     user: UserSchemas
     access_token: str
+
+    class Config:
+        orm_mode = True
+
+
