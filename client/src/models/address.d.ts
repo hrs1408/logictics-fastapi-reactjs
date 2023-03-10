@@ -1,6 +1,8 @@
 type AddressType = {
-    province: string,
-    district: string,
-    ward: string,
-    address: string
+  id: number
+  province: string
+  district: string
+  ward: string
+  address: string
+  createdAt: string
 }

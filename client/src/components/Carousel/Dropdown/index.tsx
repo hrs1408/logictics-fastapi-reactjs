@@ -1,20 +1,20 @@
-import React from "react";
-import { IoCloseOutline } from "react-icons/io5";
-import { useQuery } from "react-query";
-import { getVoyageByInovice } from "../../../services/VoyageService";
+import React from 'react'
+import { IoCloseOutline } from 'react-icons/io5'
+import { useQuery } from 'react-query'
+import { getVoyageByInovice } from '../../../services/VoyageService'
 
 interface IDropdown {
-  open: boolean;
-  onClose: () => void;
-  invoiceId: string;
+  open: boolean
+  onClose: () => void
+  invoiceId: string
 }
 
 const Dropdown = ({ open, onClose, invoiceId }: IDropdown) => {
-  const { data } = useQuery(["GET_VOYAGE_BY_INVOICE", invoiceId], () =>
+  const { data } = useQuery(['GET_VOYAGE_BY_INVOICE', invoiceId], () =>
     getVoyageByInovice({ invoiceId })
-  );
+  )
 
-  console.log(data);
+  console.log(data)
   return (
     <>
       {open && (
@@ -37,21 +37,21 @@ const Dropdown = ({ open, onClose, invoiceId }: IDropdown) => {
             <div className="order-status">
               <ul className="order-process-detail-list text-[14px] ">
                 {data?.data.map((item: VoyageType, index: number) => {
-                  console.log(index == 0);
+                  console.log(index == 0)
                   return (
                     <li key={item.id} className="detail-list-item">
                       <div className="item-date text-[#303844] ">
                         {item.port.createdAt}
                       </div>
                       <div
-                        className={`item-desc  ${index === 0 ? "active" : ""}`}
+                        className={`item-desc  ${index === 0 ? 'active' : ''}`}
                       >
                         <div className="item-text-box text-[#303844]">
                           Đơn hàng đã giao đến {item.port.name}
                         </div>
                       </div>
                     </li>
-                  );
+                  )
                 })}
               </ul>
             </div>
@@ -59,7 +59,7 @@ const Dropdown = ({ open, onClose, invoiceId }: IDropdown) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Dropdown;
+export default Dropdown

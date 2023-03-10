@@ -1,26 +1,27 @@
 .top-header-right {
-    position: relative;
-    margin-right: 15px;
+  position: relative;
+  margin-right: 15px;
 
+  &::before {
+    position: absolute;
+    right: -9px;
+    top: 0;
+    width: 1px;
+    height: 20px;
+    background: #000;
+    content: "";
+  }
+
+  &:last-child {
     &::before {
-        position: absolute;
-        right: -9px;
-        top: 0;
-        width: 1px;
-        height: 20px;
-        background: #000;
-        content: "";
+      height: 34px;
+      top: -8px;
     }
-
-    &:last-child {
-        &::before {
-            height: 34px;
-            top: -8px;
-        }
-    }
+  }
 }
+
 @media screen and (max-width: 1200px) {
-    .topheader {
-        display: none;
-    }
+  .topheader {
+    display: none;
+  }
 }

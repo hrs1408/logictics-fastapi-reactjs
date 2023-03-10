@@ -1,56 +1,58 @@
 .hotline-footer {
-    background: url(https://ntlogistics.vn/images/bg-hotline-footer.jpg) no-repeat center center;
-    background-size: cover;
+  background: url(https://ntlogistics.vn/images/bg-hotline-footer.jpg) no-repeat center center;
+  background-size: cover;
 
-    .location {
-        display: flex;
-        background-color: #fff;
-        height: 67px;
-        width: 250px;
-        align-items: center;
-        border-radius: 0.25rem;
-        font-size: 16px;
-        justify-content: center;
-        gap: 10px;
+  .location {
+    display: flex;
+    background-color: #fff;
+    height: 67px;
+    width: 250px;
+    align-items: center;
+    border-radius: 0.25rem;
+    font-size: 16px;
+    justify-content: center;
+    gap: 10px;
 
-        &:last-child {
+    &:last-child {
 
-            background-color: #FCD804;
-        }
-
-        &:hover {
-            color: #2e3553;
-            opacity: 0.8;
-        }
-
+      background-color: #FCD804;
     }
+
+    &:hover {
+      color: #2e3553;
+      opacity: 0.8;
+    }
+
+  }
 }
 
 @media screen and (max-width: 1024px) {
-    .hotline-footer {
-        .hotline {
-            font-size: 40px;
-        }
-
-        .text-nn {
-            font-size: 15px;
-        }
-     
+  .hotline-footer {
+    .hotline {
+      font-size: 40px;
     }
+
+    .text-nn {
+      font-size: 15px;
+    }
+
+  }
 }
 
 @media screen and (max-width: 700px) {
-    .hotline-footer {
-        .hotline {
-            font-size: 25px;
-        }
-        .button-location {
-            padding: 15px;
-            flex-wrap: wrap;
-            .location {
-                width: 100%;
-            }
-        }
+  .hotline-footer {
+    .hotline {
+      font-size: 25px;
     }
+
+    .button-location {
+      padding: 15px;
+      flex-wrap: wrap;
+
+      .location {
+        width: 100%;
+      }
+    }
+  }
 
 }

@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-import "./coutdown.scss";
+import React, { useEffect, useState } from 'react'
+import './coutdown.scss'
 // import { HiOutlineBuildingOffice2 } from 'react-icons/hi'
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { HiOutlineBuildingOffice2 } from 'react-icons/hi2'
+
 const Coutdown = () => {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(0)
 
   useEffect(() => {
     if (counter < 10000) {
       const interval = setInterval(() => {
-        setCounter(counter + 10);
-      }, 5);
+        setCounter(counter + 10)
+      }, 5)
       return () => {
-        clearInterval(interval);
-      };
+        clearInterval(interval)
+      }
     }
-  });
+  })
 
   return (
     <div className="container mx-auto">
@@ -61,7 +62,7 @@ const Coutdown = () => {
               <span className="text-[20px]">+</span>
               <span className="counter-number">{counter}</span>
               <span>
-                {" "}
+                {' '}
                 m<sup>2</sup>
               </span>
             </div>
@@ -126,7 +127,7 @@ const Coutdown = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Coutdown;
+export default Coutdown

@@ -29,8 +29,8 @@ type PostRefreshTokenType = {
 };
 
 type ResponseError = {
-    message: string;
-    data: DetailError[];
+  message: string;
+  data: DetailError[];
 };
 type ErrorResponse = {
   data?: Datum[]

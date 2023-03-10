@@ -28,7 +28,7 @@
 //     transportEquipment: 'MOTORBIKE' | 'CAR'
 //     requirementOther: string
 //   }
-  
+
 //   type InvoiceCreateResponse = {
 //     id?: number
 //     ownerId?: string
@@ -63,7 +63,7 @@
 //     requirementOther?: string
 //     status?: string
 //   }
-  
+
 //   type Owner = {
 //     id?: number
 //     email?: string
@@ -71,7 +71,7 @@
 //     userInformation?: null
 //     userInternalInformation?: null
 //   }
-  
+
 //   type Meta = {
 //     error?: boolean
 //     message?: string

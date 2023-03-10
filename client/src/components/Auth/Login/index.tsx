@@ -1,28 +1,28 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { AiOutlineUser } from "react-icons/ai";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { saveToken } from "../../../services/AuthService";
-import * as yup from "yup";
-import axiosConfig from "../../../configs/AxiosConfig";
-import { useNavigate } from "react-router-dom";
-import { TabType } from "..";
+import { yupResolver } from '@hookform/resolvers/yup'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { AiOutlineUser } from 'react-icons/ai'
+import { RiLockPasswordFill } from 'react-icons/ri'
+import { saveToken } from '../../../services/AuthService'
+import * as yup from 'yup'
+import axiosConfig from '../../../configs/AxiosConfig'
+import { useNavigate } from 'react-router-dom'
+import { TabType } from '..'
 
 const schema = yup.object().shape({
   email: yup
     .string()
-    .email("Email là trường bắt buộc")
-    .required("Email là trường bắt buộc"),
-  password: yup.string().required("Mật khẩu là trường bắt buộc"),
-});
+    .email('Email là trường bắt buộc')
+    .required('Email là trường bắt buộc'),
+  password: yup.string().required('Mật khẩu là trường bắt buộc'),
+})
 
 interface ILogin {
-  changeTab: (tab: TabType) => void;
+  changeTab: (tab: TabType) => void
 }
 
 const Login = ({ changeTab }: ILogin) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -30,23 +30,23 @@ const Login = ({ changeTab }: ILogin) => {
     formState: { errors },
   } = useForm<SignInType>({
     resolver: yupResolver(schema),
-  });
+  })
   const handleLogin = (data: SignInType) => {
     axiosConfig
-      .post("/auth/login", data)
-      .then(async (res) => {
-        saveToken(res.data);
+      .post('/auth/login', data)
+      .then(async res => {
+        saveToken(res.data)
         // await getMeForce();
-        navigate("/dashboard");
+        navigate('/dashboard')
         reset({
-          email: "",
-          password: "",
-        });
+          email: '',
+          password: '',
+        })
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   return (
     <form onSubmit={handleSubmit(handleLogin)} className="p-[15px] ">
@@ -54,20 +54,20 @@ const Login = ({ changeTab }: ILogin) => {
         <span className="input-icon">
           <AiOutlineUser />
         </span>
-        <input {...register("email")} placeholder="Email" type="email"></input>
+        <input {...register('email')} placeholder="Email" type="email"></input>
       </div>
-      <p className={"text-red-500 text-sm"}>{errors.email?.message}</p>
+      <p className={'text-red-500 text-sm'}>{errors.email?.message}</p>
       <div className="input-wrapper mt-6">
         <span className="input-icon">
           <RiLockPasswordFill />
         </span>
         <input
-          {...register("password")}
+          {...register('password')}
           placeholder="Nhập mật khẩu"
           type="password"
         ></input>
       </div>
-      <p className={"text-red-500 text-sm"}>{errors.password?.message}</p>
+      <p className={'text-red-500 text-sm'}>{errors.password?.message}</p>
       <div className="text-right mt-1">
         <a href="" className="forgot-password ">
           Quên mật khẩu?
@@ -82,12 +82,12 @@ const Login = ({ changeTab }: ILogin) => {
       </div>
       <div
         className={`tabs login-submit cursor-pointer flex items-center justify-center mt-2`}
-        onClick={() => changeTab("TabRegister")}
+        onClick={() => changeTab('TabRegister')}
       >
         TẠO TÀI KHOẢN
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

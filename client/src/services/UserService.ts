@@ -8,7 +8,9 @@ export const useUsers = () => {
   return useQuery(['GET_USERS'], getUsers)
 }
 
-export const createUser = (data: any): Promise<ResponseSuccessType<UserTypes>> =>
+export const createUser = (
+  data: any
+): Promise<ResponseSuccessType<UserTypes>> =>
   axiosConfig.post(`/users/add-user-internal`, data)
 
 export const useCreateUser = () => {
