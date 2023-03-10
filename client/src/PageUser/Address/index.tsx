@@ -13,6 +13,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import axiosConfig from "../../configs/AxiosConfig";
 import * as yup from "yup";
+import "./address.scss";
 
 const schema = object().shape({
   province: yup.string().required("Tỉnh là trường bắt buộc"),
@@ -20,7 +21,6 @@ const schema = object().shape({
   ward: yup.string().required("Phường/Xã Phố là trường bắt buộc"),
   address: yup.string().required("Địa chỉ là trường bắt buộc"),
 });
-
 
 const Address = () => {
   const { data: users, refetch: getUsersAgain } = useUsers();
@@ -99,17 +99,21 @@ const Address = () => {
           district: "",
           ward: "",
           address: "",
-        })
+        });
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
+  };
+
+  const handleModal = (id: number) => {
+    setOpen(!open)
   }
 
   return (
     <>
       <HomeUser>
-        <div className={"h-screen"}>
+        <div className={""}>
           <SearchBar />
           <div
             className={
@@ -127,22 +131,25 @@ const Address = () => {
             </button>
             <Modal
               open={open}
-              onClose={() => {
-                setOpen(!open);
-              }}
+              onClose={handleModal}
             >
               <div
                 className={
                   "w-1/2  p-8 bg-white rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 }
               >
-                <form onSubmit={handleSubmit(handleAddress)} >
+                <form onSubmit={handleSubmit(handleAddress)}>
                   <div className={"flex flex-col"}>
                     <p className={"text-2xl font-bold pb-5"}>Thêm Địa chỉ</p>
                     <div className={"w-full gap-4 mt-4"}>
                       <div className={"flex flex-col "}>
                         <p className={"text-[16px] font-bold pb-4"}>Tỉnh</p>
-                        <select {...register("province")} className="w-full px-4 py-3 mb-4 border rounded-md outline-none" value={provinceCode} onChange={handleProvinceChange}>
+                        <select
+                          {...register("province")}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          value={provinceCode}
+                          onChange={handleProvinceChange}
+                        >
                           <option value="">Chọn tỉnh/thành phố</option>
                           {provinces.map((province: any, index: number) => (
                             <option key={index} value={province.code}>
@@ -150,12 +157,20 @@ const Address = () => {
                             </option>
                           ))}
                         </select>
-                        <p className={"pl-1 text-red-500 text-sm"}>{errors.province?.message}</p>
-
+                        <p className={"pl-1 text-red-500 text-sm"}>
+                          {errors.province?.message}
+                        </p>
                       </div>
                       <div className={"flex flex-col "}>
-                        <p className={"text-[16px] font-bold pb-4"}>Huyện / Thành Phố</p>
-                        <select {...register("district")} className="w-full px-4 py-3 mb-4 border rounded-md outline-none" value={districtCode} onChange={handleDistrictChange}>
+                        <p className={"text-[16px] font-bold pb-4"}>
+                          Huyện / Thành Phố
+                        </p>
+                        <select
+                          {...register("district")}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          value={districtCode}
+                          onChange={handleDistrictChange}
+                        >
                           <option value="">Chọn quận/huyện</option>
                           {districts?.map((district: any, index: number) => (
                             <option key={index} value={district.code}>
@@ -163,11 +178,20 @@ const Address = () => {
                             </option>
                           ))}
                         </select>
-                        <p className={"pl-1 text-red-500 text-sm"}>{errors.district?.message}</p>
+                        <p className={"pl-1 text-red-500 text-sm"}>
+                          {errors.district?.message}
+                        </p>
                       </div>
                       <div className={"flex flex-col "}>
-                        <p className={"text-[16px] font-bold pb-4"}>Phường / Xã</p>
-                        <select {...register("ward")} className="w-full px-4 py-3 mb-4 border rounded-md outline-none" value={wardCode} onChange={handleWardChange}>
+                        <p className={"text-[16px] font-bold pb-4"}>
+                          Phường / Xã
+                        </p>
+                        <select
+                          {...register("ward")}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          value={wardCode}
+                          onChange={handleWardChange}
+                        >
                           <option value="">Chọn phường/xã</option>
                           {wards.map((ward: any, index: number) => (
                             <option key={index} value={ward.code}>
@@ -175,7 +199,9 @@ const Address = () => {
                             </option>
                           ))}
                         </select>
-                        <p className={"pl-1 text-red-500 text-sm"}>{errors.ward?.message}</p>
+                        <p className={"pl-1 text-red-500 text-sm"}>
+                          {errors.ward?.message}
+                        </p>
                       </div>
                       <div className="">
                         <p className={"text-[16px] font-bold pb-4"}>Địa chỉ</p>
@@ -185,7 +211,9 @@ const Address = () => {
                           type="text"
                         />
                       </div>
-                      <p className={"pl-1 text-red-500 text-sm"}>{errors.address?.message}</p>
+                      <p className={"pl-1 text-red-500 text-sm"}>
+                        {errors.address?.message}
+                      </p>
                     </div>
                     <div
                       className={
@@ -217,8 +245,53 @@ const Address = () => {
               </div>
             </Modal>
           </div>
-          <div className={"users-table mt-4"}>
-            <EnhancedUserTable listUser={users?.data ?? []} />
+          <div className={"mt-4"}>
+            {/* <EnhancedUserTable listUser={users?.data ?? []} /> */}
+            <div className="flex flex-col bg-white shadow rounded">
+              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                  <div className="overflow-hidden">
+                    <table className="min-w-full text-left text-sm font-light">
+                      <thead className="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                          <th scope="col" className="px-6 py-4">
+                            Tỉnh
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                            Huyện / Thành Phố
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                            Phường / Xã
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                            Địa chỉ
+                          </th>
+                          <th scope="col" className="px-6 py-4">
+                            Thao tác
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b dark:border-neutral-500">
+                          <td className="whitespace-nowrap px-6 py-4">Mark</td>
+                          <td className="whitespace-nowrap px-6 py-4">Otto</td>
+                          <td className="whitespace-nowrap px-6 py-4">@mdo</td>
+                          <td className="whitespace-nowrap px-6 py-4">@mdo</td>
+                          <td className="whitespace-nowrap px-6 py-4 flex gap-4">
+                            <button
+                            
+                            >
+                              Sửa
+                            </button>
+                            <button>Xóa</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </HomeUser>
