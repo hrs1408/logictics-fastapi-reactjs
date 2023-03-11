@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
@@ -15,11 +16,16 @@ import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Switch from '@mui/material/Switch'
 import { visuallyHidden } from '@mui/utils'
-import { BiEditAlt, BiFilter } from 'react-icons/bi'
-import { MdDeleteOutline } from 'react-icons/md'
+import { BiFilter } from 'react-icons/bi'
+import { MdDeleteOutline, MdEdit } from 'react-icons/md'
+import { useQueryClient } from 'react-query'
+import { Divider, ListItemText, Menu, MenuItem, MenuList } from '@mui/material'
+import {
+  useDeleteInvoice,
+  useUpdateStatusInvoices,
+} from '../../services/InvoiceService'
+import toast from 'react-hot-toast'
 
 interface Data {
   id: number
@@ -95,13 +101,13 @@ const headCells: readonly HeadCell[] = [
     id: 'senderProvince',
     numeric: false,
     disablePadding: false,
-    label: 'Tên người nhận',
+    label: 'Thành phố người nhận',
   },
   {
     id: 'receiverProvince',
     numeric: false,
     disablePadding: false,
-    label: 'Tên người nhận',
+    label: 'Thành phố người gửi',
   },
   {
     id: 'payment',
@@ -191,11 +197,39 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number
+  selected: readonly string[]
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props
+  const { numSelected, selected } = props
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const queryClient = useQueryClient()
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
+  const { mutateAsync: updateStatusInvoicesAsync } = useUpdateStatusInvoices()
+
+  const onChangeStatus = (status: Invoice['status']) => {
+    let data: InvoicesUpdateStatusPayload = {
+      invoices: selected.map(id => ({
+        invoiceId: id,
+        status,
+      })),
+    }
+    updateStatusInvoicesAsync(data)
+      .then(res => {
+        toast.success('Cập nhật thành công')
+      })
+      .finally(() => {
+        queryClient.invalidateQueries('GET_INVOICES')
+        setAnchorEl(null)
+      })
+  }
   return (
     <Toolbar
       sx={{
@@ -230,11 +264,39 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <MdDeleteOutline />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip title="Delete">
+            <IconButton>
+              <MdDeleteOutline />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Edit">
+            <>
+              <IconButton onClick={handleClick}>
+                <MdEdit />
+              </IconButton>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem onClick={e => onChangeStatus('ACCEPTED')}>
+                  ACCEPTED
+                </MenuItem>
+                <MenuItem onClick={e => onChangeStatus('REFUSE')}>
+                  REFUSE
+                </MenuItem>
+                <MenuItem onClick={e => onChangeStatus('PENDING')}>
+                  PENDING
+                </MenuItem>
+              </Menu>
+            </>
+          </Tooltip>
+        </>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
@@ -259,19 +321,25 @@ function createData(invoice: InvoiceTableType): Data {
   }
 }
 
-interface listInvoice {
+interface ListInvoice {
   listInvoice: InvoiceTableType[]
 }
 
-const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
+const EnhancedInvoiceTable: React.FC<ListInvoice> = ({ listInvoice }) => {
   const rows = listInvoice.map(invoice => createData(invoice))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('senderFullName')
   const [selected, setSelected] = React.useState<readonly string[]>([])
   const [page, setPage] = React.useState(0)
-  const [dense, setDense] = React.useState(false)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
-
+  const [contextMenuPayload, setContextMenuPayload] = useState<
+    ContextType<Data>
+  >({
+    x: 0,
+    y: 0,
+    close: true,
+    selectedItem: undefined,
+  })
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data
@@ -280,10 +348,9 @@ const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)
   }
-
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map(n => n.senderFullName)
+      const newSelected = rows.map(n => String(n.id))
       setSelected(newSelected)
       return
     }
@@ -321,32 +388,36 @@ const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
     setPage(0)
   }
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked)
-  }
-
   const isSelected = (name: string) => selected.indexOf(name) !== -1
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
-  const handleEdit = (id: number) => {
-    console.log(id)
-  }
-
-  const handleDelete = (id: number) => {
-    console.log(id)
-  }
-
+  useEffect(() => {
+    const closeContextMenu = () => {
+      setContextMenuPayload({
+        x: 0,
+        y: 0,
+        close: true,
+        selectedItem: undefined,
+      })
+    }
+    window.addEventListener('click', closeContextMenu)
+    return () => window.removeEventListener('click', closeContextMenu)
+  }, [])
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <ContextMenuTableComponent {...contextMenuPayload} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          selected={selected}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size={'medium'}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -360,22 +431,36 @@ const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.senderFullName)
+                  const isItemSelected = isSelected(String(row.id))
                   const labelId = `enhanced-table-checkbox-${index}`
-
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.senderFullName}
+                      key={row.id}
                       selected={isItemSelected}
+                      onContextMenu={(
+                        e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                      ) => {
+                        e.preventDefault()
+                        const selectedItem = rows.find(
+                          item => item.id === row.id
+                        )
+                        setContextMenuPayload({
+                          x: e.pageX,
+                          y: e.pageY,
+                          close: false,
+                          selectedItem: selectedItem,
+                        })
+                      }}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
                           color="primary"
                           checked={isItemSelected}
+                          onClick={event => handleClick(event, String(row.id))}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
@@ -386,9 +471,7 @@ const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
                         id={labelId}
                         scope="row"
                         padding="none"
-                        onClick={event =>
-                          handleClick(event, row.senderFullName)
-                        }
+                        onClick={event => handleClick(event, String(row.id))}
                       >
                         {row.senderFullName}
                       </TableCell>
@@ -404,7 +487,7 @@ const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -423,12 +506,83 @@ const EnhancedInvoiceTable: React.FC<listInvoice> = ({ listInvoice }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Thu nhỏ"
-      />
     </Box>
   )
 }
 
 export default EnhancedInvoiceTable
+
+const ContextMenuTableComponent = ({
+  x,
+  y,
+  close,
+  selectedItem,
+}: ContextType<Data>) => {
+  const queryClient = useQueryClient()
+
+  const [open, setOpen] = React.useState(false)
+
+  const { mutateAsync: updateStatusInvoicesAsync } = useUpdateStatusInvoices()
+  const { mutateAsync: deleteInvoicesAsync } = useDeleteInvoice()
+
+  const onChangeStatus = (status: Invoice['status']) => {
+    let data: InvoicesUpdateStatusPayload = {
+      invoices: [
+        {
+          invoiceId: String(selectedItem?.id),
+          status,
+        },
+      ],
+    }
+    updateStatusInvoicesAsync(data)
+      .then(res => {
+        toast.success('Cập nhật thành công')
+      })
+      .finally(() => {
+        queryClient.invalidateQueries('GET_INVOICES')
+      })
+  }
+  const onDelete = () => {
+    deleteInvoicesAsync(String(selectedItem?.id))
+      .then(res => {
+        toast.success('Xóa thành công')
+      })
+      .finally(() => {
+        queryClient.invalidateQueries('GET_INVOICES')
+      })
+  }
+
+  return (
+    <>
+      <div
+        style={{
+          position: 'absolute',
+          top: y,
+          left: x,
+          zIndex: 1000,
+          backgroundColor: 'white',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.2)',
+          display: close ? 'none' : 'block',
+        }}
+      >
+        <MenuList>
+          <MenuItem onClick={e => onDelete()}>
+            <ListItemText>Delete</ListItemText>
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={e => onChangeStatus('ACCEPTED')}>
+            <ListItemText>Change To ACCEPTED</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={e => onChangeStatus('REFUSE')}>
+            <ListItemText>Change To REFUSE</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={e => onChangeStatus('PENDING')}>
+            <ListItemText>Change To PENDING</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </div>
+    </>
+  )
+}

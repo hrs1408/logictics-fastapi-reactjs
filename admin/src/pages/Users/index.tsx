@@ -1,6 +1,6 @@
 import AdminLayout from '../../layouts/AdminLayout'
 import SearchBar from '../../components/SearchBar'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Modal } from '@mui/material'
 import Input from '../../components/Input'
 import EnhancedUserTable from '../../components/Table/users'
@@ -9,6 +9,8 @@ import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import toast from 'react-hot-toast'
 import { useCreateUser, useUsers } from '../../services/UserService'
+import { AuthContext } from '../../context/AuthContext'
+import _ from 'lodash'
 
 const CreateUserSchema = object().shape({
   fullName: string().required('Vui lòng nhập họ tên'),
@@ -21,11 +23,28 @@ const CreateUserSchema = object().shape({
 })
 
 const Users = () => {
-  const { data: users, refetch: getUsersAgain } = useUsers()
+  const [open, setOpen] = React.useState(false)
+  const [listUser, setListUser] = React.useState<UserType[]>([])
+
+  const { auth } = useContext(AuthContext) as AuthContextType
+
+  const { data: users, refetch: getUsersAgain } = useUsers({
+    search: '',
+    page: 1,
+    size: 10,
+    isFull: true,
+  })
 
   const { mutateAsync: createUserAsync } = useCreateUser()
 
-  const [open, setOpen] = React.useState(false)
+  useEffect(() => {
+    if (users?.data)
+      _.remove(users!.data, user => {
+        return String(user.id) === String(auth?.id)
+      })
+
+    setListUser(users?.data ?? [])
+  }, [users])
 
   const methods = useForm<CreateUserType>({
     resolver: yupResolver(CreateUserSchema),
@@ -171,7 +190,7 @@ const Users = () => {
           </Modal>
         </div>
         <div className={'users-table mt-4'}>
-          <EnhancedUserTable listUser={users?.data ?? []} />
+          <EnhancedUserTable listUser={listUser ?? []} />
         </div>
       </div>
     </AdminLayout>

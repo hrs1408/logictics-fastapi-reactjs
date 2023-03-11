@@ -31,3 +31,14 @@ type CreateUserType = {
   phone: string
   typeUser: 'ADMIN' | 'STAFF' | 'USER'
 }
+
+type UpdateUserType = {
+  fullname?: string
+  phoneNumber?: string
+  dateOfBirth?: string
+  address?: string
+}
+
+type UpdatePasswordType = {
+  newPassword: string
+}

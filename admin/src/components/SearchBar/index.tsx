@@ -13,14 +13,17 @@ import {
 import { AiOutlineUser } from 'react-icons/ai'
 import { IoSettingsOutline } from 'react-icons/io5'
 import { FiLogOut } from 'react-icons/fi'
-import React from 'react'
+import React, { useContext } from 'react'
+import { StoreContext, StoreContextType } from '../../context/StoreContext'
 
 const SearchBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const { state, setState } = useContext(StoreContext) as StoreContextType
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -36,6 +39,10 @@ const SearchBar = () => {
               type="text"
               placeholder={'Search...'}
               className="rounded-md px-4 py-2 w-full outline-none"
+              value={state.searchKey}
+              onChange={e => {
+                setState({ ...state, searchKey: e.target.value })
+              }}
             />
           </div>
         </div>

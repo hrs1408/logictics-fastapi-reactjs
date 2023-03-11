@@ -29,10 +29,10 @@ type CreateInvoiceType = {
   requirementOther: string
 }
 
-type InvoiceCreateResponse = {
+type InvoiceType = {
   id?: number
   ownerId?: string
-  owner?: Owner
+  owner?: OwnerType
   senderFullName?: string
   senderPhone?: string
   senderAddress?: string
@@ -64,7 +64,7 @@ type InvoiceCreateResponse = {
   status?: string
 }
 
-type Owner = {
+type OwnerType = {
   id?: number
   email?: string
   typeUser?: string
@@ -72,7 +72,7 @@ type Owner = {
   userInternalInformation?: null
 }
 
-type Meta = {
+type MetaType = {
   error?: boolean
   message?: string
 }
@@ -87,4 +87,13 @@ type InvoiceTableType = {
   cod: string
 
   status: string
+}
+
+type InvoicesUpdateStatusPayload = {
+  invoices: Invoice[]
+}
+
+type Invoice = {
+  invoiceId: string
+  status: 'ACCEPTED' | 'REFUSE' | 'PENDING'
 }
