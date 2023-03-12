@@ -30,7 +30,7 @@ type CreateInvoiceType = {
 }
 
 type InvoiceCreateResponse = {
-  id?: number
+  id?: string
   ownerId?: string
   owner?: Owner
   senderFullName?: string
