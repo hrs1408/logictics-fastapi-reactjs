@@ -42,3 +42,8 @@ type UpdateUserType = {
 type UpdatePasswordType = {
   newPassword: string
 }
+
+type UserCreatedResponse = {
+  accessToken: string
+  user: UserType
+}

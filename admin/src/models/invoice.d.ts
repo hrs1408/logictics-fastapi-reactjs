@@ -30,7 +30,7 @@ type CreateInvoiceType = {
 }
 
 type InvoiceType = {
-  id?: number
+  id?: string
   ownerId?: string
   owner?: OwnerType
   senderFullName?: string
