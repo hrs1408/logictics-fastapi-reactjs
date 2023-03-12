@@ -2,8 +2,16 @@ import AdminLayout from '../../layouts/AdminLayout'
 import SearchBar from '../../components/SearchBar'
 import React from 'react'
 import EnhancedInvoiceTable from '../../components/Table/invoices'
+import { useGetAllInvoices } from '../../services/InvoiceService'
 
 const Invoices = () => {
+  const { data: invoices } = useGetAllInvoices({
+    search: '',
+    page: 1,
+    size: 10,
+    isFull: true,
+  })
+
   return (
     <AdminLayout>
       <div className={'h-screen'}>
@@ -22,7 +30,11 @@ const Invoices = () => {
           </button>
         </div>
         <div className={'users-table mt-4'}>
-          <EnhancedInvoiceTable listInvoice={[]} />
+          <EnhancedInvoiceTable
+            listInvoice={
+              (invoices?.data as unknown as InvoiceTableType[]) ?? []
+            }
+          />
         </div>
       </div>
     </AdminLayout>

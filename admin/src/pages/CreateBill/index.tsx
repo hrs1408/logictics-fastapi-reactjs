@@ -107,9 +107,7 @@ export type AddressPeople = {
 const CreateBill = () => {
   const { data: provinces } = useProvince()
   const [openModal, setOpenModal] = React.useState(false)
-  const [invoice, setInvoice] = React.useState<InvoiceCreateResponse>(
-    {} as InvoiceCreateResponse
-  )
+  const [invoice, setInvoice] = React.useState<InvoiceType>({} as InvoiceType)
   const { mutateAsync: createInvoiceAsync } = useCreateInvoice()
 
   const [senderProvince, setSenderProvince] = React.useState<AddressPeople>({})

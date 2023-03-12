@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
@@ -18,10 +19,30 @@ import Tooltip from '@mui/material/Tooltip'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import { visuallyHidden } from '@mui/utils'
-import { BiEditAlt, BiFilter } from 'react-icons/bi'
+import { BiFilter } from 'react-icons/bi'
 import { MdDeleteOutline } from 'react-icons/md'
+import {
+  Divider,
+  LinearProgress,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  Modal,
+} from '@mui/material'
+import { FormProvider, useForm } from 'react-hook-form'
+import Input from '../Input'
+import {
+  useDeletePort,
+  useGetPortById,
+  useUpdatePort,
+} from '../../services/PortService'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { CreatePortSchema } from '../../pages/Ports'
+import toast from 'react-hot-toast'
+import { useQueryClient } from 'react-query'
 
 interface Data {
+  id: string
   name: string
   code: string
 }
@@ -212,6 +233,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 function createData(port: PortType): Data {
   return {
+    id: port.id,
     name: port.name,
     code: port.code,
   }
@@ -219,9 +241,13 @@ function createData(port: PortType): Data {
 
 interface listPort {
   listPort: PortType[]
+  isLoading?: boolean
 }
 
-const EnhancedPortTable: React.FC<listPort> = ({ listPort }) => {
+const EnhancedPortTable: React.FC<listPort> = ({
+  listPort,
+  isLoading = false,
+}) => {
   const rows = listPort.map(port => createData(port))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
@@ -229,7 +255,16 @@ const EnhancedPortTable: React.FC<listPort> = ({ listPort }) => {
   const [page, setPage] = React.useState(0)
   const [dense, setDense] = React.useState(false)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const [contextMenuPayload, setContextMenuPayload] = useState<
+    ContextType<Data>
+  >({
+    x: 0,
+    y: 0,
+    close: true,
+    selectedItem: undefined,
+  })
 
+  // region Handle
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data
@@ -288,18 +323,26 @@ const EnhancedPortTable: React.FC<listPort> = ({ listPort }) => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
-  const handleEdit = (id: number) => {
-    console.log(id)
-  }
-
-  const handleDelete = (id: number) => {
-    console.log(id)
-  }
+  useEffect(() => {
+    const closeContextMenu = () => {
+      setContextMenuPayload({
+        x: 0,
+        y: 0,
+        close: true,
+        selectedItem: undefined,
+      })
+    }
+    window.addEventListener('click', closeContextMenu)
+    return () => window.removeEventListener('click', closeContextMenu)
+  }, [])
+  // endregion
 
   return (
     <Box sx={{ width: '100%' }}>
+      <ContextMenuTableComponent {...contextMenuPayload} />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
+        {isLoading && <LinearProgress />}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -327,8 +370,23 @@ const EnhancedPortTable: React.FC<listPort> = ({ listPort }) => {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
+                      onContextMenu={(
+                        e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                      ) => {
+                        e.preventDefault()
+                        const selectedItem = rows.find(
+                          item => item.id === row.id
+                        )
+
+                        setContextMenuPayload({
+                          x: e.pageX,
+                          y: e.pageY,
+                          close: false,
+                          selectedItem: selectedItem,
+                        })
+                      }}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
@@ -374,12 +432,154 @@ const EnhancedPortTable: React.FC<listPort> = ({ listPort }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Thu nhỏ"
-      />
     </Box>
   )
 }
 
 export default EnhancedPortTable
+
+const ContextMenuTableComponent = ({
+  x,
+  y,
+  close,
+  selectedItem,
+}: ContextType<Data>) => {
+  const queryClient = useQueryClient()
+
+  const [open, setOpen] = useState(false)
+
+  const methods = useForm<CreatePortType>({
+    resolver: yupResolver(CreatePortSchema),
+  })
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = methods
+
+  const { mutateAsync: updatePortAsync } = useUpdatePort()
+  const { mutateAsync: deletePortAsync } = useDeletePort()
+  const { data: port } = useGetPortById(selectedItem?.id)
+
+  useEffect(() => {
+    if (port) {
+      setValue('name', port?.data?.name)
+    }
+  }, [port])
+
+  const onUpdate = async (data: CreatePortType) => {
+    updatePortAsync({ ...data, id: port?.data!.id! }).then(res => {
+      toast.success('Cập nhật thành công')
+      queryClient.invalidateQueries('GET_PORTS')
+      setOpen(!open)
+    })
+  }
+
+  const onDelete = () => {
+    deletePortAsync(port?.data!.id!).then(res => {
+      toast.success('Xóa thành công')
+      queryClient.invalidateQueries('GET_PORTS')
+    })
+  }
+
+  return (
+    <>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(!open)
+        }}
+      >
+        <div
+          className={
+            'w-1/2  p-8 bg-white rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+          }
+        >
+          <FormProvider {...methods}>
+            <div className="flex w-full">
+              {Object.keys(errors).length > 0 && (
+                <div className="p-4 rounded shadow bg-red-400 text-white my-4 w-full">
+                  {Object.keys(errors).length > 0 && (
+                    <div>
+                      <ul>
+                        {Object.entries(errors).map(([name, error]) => (
+                          <li key={name}>{error.message}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            <form onSubmit={handleSubmit(onUpdate)}>
+              <div className={'flex flex-col'}>
+                <p className={'text-2xl font-bold'}>Thêm kho hàng</p>
+                <div className={'w-full grid grid-cols-1 gap-4 mt-4'}>
+                  <Input label={'Tên kho hàng'} type={'text'} name={'name'} />
+                </div>
+                <div
+                  className={'flex items-center mt-8 gap-2 justify-end w-full'}
+                >
+                  <button
+                    className={
+                      'bg-yellow-400 px-4 py-2 rounded shadow hover:opacity-80 transition'
+                    }
+                    type={'submit'}
+                  >
+                    Thêm
+                  </button>
+                  <button
+                    className={
+                      'bg-gray-400 px-4 py-2 rounded shadow hover:opacity-80 transition'
+                    }
+                    type="reset"
+                    onClick={() => {
+                      setOpen(!open)
+                    }}
+                  >
+                    Hủy bỏ
+                  </button>
+                </div>
+              </div>
+            </form>
+          </FormProvider>
+        </div>
+      </Modal>
+      <div
+        style={{
+          position: 'absolute',
+          top: y,
+          left: x,
+          zIndex: 1000,
+          backgroundColor: 'white',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.2)',
+          display: close ? 'none' : 'block',
+        }}
+      >
+        <MenuList>
+          <MenuItem
+            onClick={e => {
+              setOpen(true)
+            }}
+          >
+            <ListItemText>Edit</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={e => onDelete()}>
+            <ListItemText>Delete</ListItemText>
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={e => {
+              navigator.clipboard.writeText(port?.data?.code!)
+            }}
+          >
+            <ListItemText>Copy mã kho hàng</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </div>
+    </>
+  )
+}
