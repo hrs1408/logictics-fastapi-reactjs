@@ -10,7 +10,7 @@ from models import Invoice, User, Status, UserType
 from repository.invoice_repository import InvoiceRepository
 from repository.jwt_repository import JWTBearer
 from repository.user_repository import UserRepository
-from schemas.invoice_schemas import InvoiceSchema, CreateInvoiceSchema, InvoiceChangeStatusSchema
+from schemas.invoice_schemas import InvoiceSchema, CreateInvoiceSchema, InvoiceChangeStatusSchema, ChangeStatusSchema
 from schemas.schema import ResponseSchema
 from ultis.securty import get_current_user
 
@@ -108,3 +108,25 @@ def delete_by_id(invoice_id: str, db=Depends(get_db), sub: int = Depends(get_cur
     InvoiceRepository.delete(db, db_invoice)
 
     return ResponseSchema.from_api_route(status_code=status.HTTP_204_NO_CONTENT, data=None)
+
+
+@invoice.put('/change-status')
+def change_status_invoice(schemas: ChangeStatusSchema, db=Depends(get_db), sub: int = Depends(get_current_user)):
+    current_user: User | None = UserRepository.find_by_id(db, User, sub)
+    if current_user is None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+
+    if current_user.type_user != UserType.ADMIN:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+
+    if len(schemas.invoices) <= 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not found")
+
+    for item in schemas.invoices:
+        db_invoice = InvoiceRepository.find_by_id(db, item.invoice_id)
+        if db_invoice is None:
+            continue
+        db_invoice.status = item.status
+        InvoiceRepository.update(db, db_invoice)
+
+    return ResponseSchema.from_api_route(data=None, status_code=status.HTTP_204_NO_CONTENT)
