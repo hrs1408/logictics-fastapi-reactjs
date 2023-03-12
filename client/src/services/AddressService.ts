@@ -28,8 +28,8 @@ export const useDeleteAddress = () => {
 const getOneAddress = (
   address_id: number
 ): Promise<ResponseSuccessType<AddressType>> =>
-  axiosConfig.put(`/delivery-address/${address_id}`)
+  axiosConfig.get(`/delivery-address/${address_id}`)
 
-export const useOneAddress = () => {
-  return useMutation(['GET_ONE_ADDRESS'], getOneAddress)
+export const useOneAddress = (address_id: number) => {
+  return useQuery(['GET_ONE_ADDRESS'], () => getOneAddress(address_id))
 }

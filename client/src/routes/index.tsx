@@ -6,6 +6,7 @@ import User from '../pages/User'
 import CreateOrder from '../PageUser/CreateOrder'
 import Dashboard from '../PageUser/Dashboard'
 import SearchOrder from '../PageUser/SearchOrder'
+import AddressComponents from '../PageUser/Address'
 import Address from '../PageUser/Address'
 
 export const routes = createBrowserRouter([
@@ -25,9 +26,10 @@ export const routes = createBrowserRouter([
     path: '/createorder',
     element: <CreateOrder />,
   },
+
   {
     path: '/address',
-    element: <Address />,
+    element: <AddressComponents />,
   },
   {
     path: '/searchorder',

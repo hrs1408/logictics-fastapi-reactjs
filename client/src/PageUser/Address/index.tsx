@@ -5,7 +5,7 @@ import { Modal } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
-import { object } from 'yup'
+import { number, object } from 'yup'
 import SearchBar from '../SearchBar'
 import './address.scss'
 import {
@@ -16,6 +16,7 @@ import {
 } from '../../services/AddressService'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import Address from '../../components/Table/address'
 
 const schema = object().shape({
   province: yup.string().required('Tỉnh là trường bắt buộc'),
@@ -23,22 +24,29 @@ const schema = object().shape({
   ward: yup.string().required('Phường/Xã Phố là trường bắt buộc'),
   address: yup.string().required('Địa chỉ là trường bắt buộc'),
 })
+type AddressProps = {
+  address_id: number
+}
 
 const AddressComponents = () => {
-  const { data: address } = useAddress()
+  const { data: dataAddress } = useAddress()
   const { mutateAsync: createAddressAsync, isLoading: isAddressCreating } =
     useCreateAddress()
   const { mutateAsync: deleteAddressAsync } = useDeleteAddress()
+  const [acresID, setAcresID] = useState(0)
+  const { data: getOneAddress } = useOneAddress(acresID)
 
-  const { mutateAsync: getOneAddress } = useOneAddress()
+  // const { mutateAsync: getOneAddress } = useOneAddress()
 
   const [open, setOpen] = React.useState(false)
-  const [provinces, setProvinces] = useState([])
+  const [openModal, setOpenModal] = React.useState(false)
+  const [province, setProvinces] = useState<string[]>([])
   const [districts, setDistricts] = useState([])
   const [wards, setWards] = useState([])
   const [provinceCode, setProvinceCode] = useState('')
   const [districtCode, setDistrictCode] = useState('')
   const [wardCode, setWardCode] = useState('')
+  const [address, setAddress] = useState([])
 
   const navigate = useNavigate()
 
@@ -58,6 +66,14 @@ const AddressComponents = () => {
     handleSubmit,
     reset,
     formState: { errors },
+  } = useForm<AddressType>({
+    resolver: yupResolver(schema),
+  })
+
+  const {
+    register: fromUpdate,
+    formState: err,
+    setValue,
   } = useForm<AddressType>({
     resolver: yupResolver(schema),
   })
@@ -118,9 +134,17 @@ const AddressComponents = () => {
         console.log(err)
       })
   }
-  const handleModal = (id: number) => {
-    setOpen(!open)
-    console.log(id)
+  const handleAddressId = (id: number) => {
+    setAcresID(id)
+    setOpenModal(!openModal)
+    if (getOneAddress) {
+      const address = getOneAddress?.data
+      setValue('province', address?.province)
+      setValue('district', address?.district)
+      setValue('ward', address?.ward)
+      setValue('address', address?.address)
+      // console.log(address?.province)
+    }
   }
 
   return (
@@ -161,7 +185,7 @@ const AddressComponents = () => {
                           onChange={handleProvinceChange}
                         >
                           <option value="">Chọn tỉnh/thành phố</option>
-                          {provinces.map((province: any, index: number) => (
+                          {province.map((province: any, index: number) => (
                             <option key={index} value={province.code}>
                               {province.name}
                             </option>
@@ -255,6 +279,115 @@ const AddressComponents = () => {
                 </form>
               </div>
             </Modal>
+            <Modal open={openModal} onClose={() => setOpenModal(false)}>
+              <div
+                className={
+                  'w-1/2  p-8 bg-white rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+                }
+              >
+                <form>
+                  <div className={'flex flex-col'}>
+                    <p className={'text-2xl font-bold pb-5'}>ssss</p>
+                    <div className={'w-full gap-4 mt-4'}>
+                      <div className={'flex flex-col '}>
+                        <p className={'text-[16px] font-bold pb-4'}>Tỉnh</p>
+                        <select
+                          {...fromUpdate('province')}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          onChange={handleProvinceChange}
+                        >
+                          <option value="">Chọn tỉnh/thành phố</option>
+                          {province.map((province: any, index: number) => (
+                            <option key={index} value={province.code}>
+                              {province.name}
+                            </option>
+                          ))}
+                        </select>
+                        <p className={'pl-1 text-red-500 text-sm'}>
+                          {errors.province?.message}
+                        </p>
+                      </div>
+                      <div className={'flex flex-col '}>
+                        <p className={'text-[16px] font-bold pb-4'}>
+                          Huyện / Thành Phố
+                        </p>
+                        <select
+                          {...fromUpdate('district')}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          onChange={handleDistrictChange}
+                        >
+                          <option value="">Chọn quận/huyện</option>
+                          {districts?.map((district: any, index: number) => (
+                            <option key={index} value={district.code}>
+                              {district.name}
+                            </option>
+                          ))}
+                        </select>
+                        <p className={'pl-1 text-red-500 text-sm'}>
+                          {errors.district?.message}
+                        </p>
+                      </div>
+                      <div className={'flex flex-col '}>
+                        <p className={'text-[16px] font-bold pb-4'}>
+                          Phường / Xã
+                        </p>
+                        <select
+                          {...fromUpdate('ward')}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          onChange={handleWardChange}
+                        >
+                          <option value="">Chọn phường/xã</option>
+                          {wards.map((ward: any, index: number) => (
+                            <option key={index} value={ward.code}>
+                              {ward.name}
+                            </option>
+                          ))}
+                        </select>
+                        <p className={'pl-1 text-red-500 text-sm'}>
+                          {errors.ward?.message}
+                        </p>
+                      </div>
+                      <div className="">
+                        <p className={'text-[16px] font-bold pb-4'}>Địa chỉ</p>
+                        <input
+                          {...fromUpdate('address')}
+                          className="w-full px-4 py-3 mb-4 border rounded-md outline-none"
+                          type="text"
+                        />
+                      </div>
+                      <p className={'pl-1 text-red-500 text-sm'}>
+                        {errors.address?.message}
+                      </p>
+                    </div>
+                    <div
+                      className={
+                        'flex items-center mt-8 gap-2 justify-end w-full'
+                      }
+                    >
+                      <button
+                        className={
+                          'bg-yellow-400 px-4 py-2 rounded shadow hover:opacity-80 transition'
+                        }
+                        type={'submit'}
+                      >
+                        Thêm
+                      </button>
+                      <button
+                        className={
+                          'bg-gray-400 px-4 py-2 rounded shadow hover:opacity-80 transition'
+                        }
+                        type="reset"
+                        onClick={() => {
+                          setOpen(!openModal)
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </Modal>
           </div>
           <div className={'mt-4'}>
             {/* <EnhancedUserTable listUser={users?.data ?? []} /> */}
@@ -283,7 +416,7 @@ const AddressComponents = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {address?.data?.map((item, index: number) => {
+                        {dataAddress?.data?.map((item, index: number) => {
                           return (
                             <tr
                               key={index}
@@ -302,7 +435,9 @@ const AddressComponents = () => {
                                 {item.address}
                               </td>
                               <td className="whitespace-nowrap px-6 py-4 flex gap-4">
-                                <button onClick={() => handleModal(item.id)}>
+                                <button
+                                  onClick={() => handleAddressId(item.id)}
+                                >
                                   Sửa
                                 </button>
                                 <button
