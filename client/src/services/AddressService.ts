@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from 'react-query'
 import axiosConfig from '../configs/AxiosConfig'
+import { number } from 'yup'
 
 const getAddress = (): Promise<ResponseSuccessType<AddressType[]>> =>
   axiosConfig.get(`/delivery-address`)
@@ -31,5 +32,22 @@ const getOneAddress = (
   axiosConfig.get(`/delivery-address/${address_id}`)
 
 export const useOneAddress = (address_id: number) => {
-  return useQuery(['GET_ONE_ADDRESS'], () => getOneAddress(address_id))
+  return useQuery(
+    ['GET_ONE_ADDRESS', address_id],
+    () => getOneAddress(address_id),
+    {
+      enabled: !!address_id,
+    }
+  )
+}
+
+const updateAddress = (
+  address_id: number
+): Promise<ResponseSuccessType<AddressType>> =>
+  axiosConfig.put(`/delivery-address/${address_id}`)
+
+export const useUpdateAddress = (address_id: number) => {
+  return useQuery(['UPDATE_ADDRESS', address_id], () =>
+    updateAddress(address_id)
+  )
 }

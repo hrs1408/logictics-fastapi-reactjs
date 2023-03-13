@@ -13,6 +13,7 @@ import {
   useCreateAddress,
   useDeleteAddress,
   useOneAddress,
+  useUpdateAddress,
 } from '../../services/AddressService'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -24,9 +25,6 @@ const schema = object().shape({
   ward: yup.string().required('Phường/Xã Phố là trường bắt buộc'),
   address: yup.string().required('Địa chỉ là trường bắt buộc'),
 })
-type AddressProps = {
-  address_id: number
-}
 
 const AddressComponents = () => {
   const { data: dataAddress } = useAddress()
@@ -36,8 +34,6 @@ const AddressComponents = () => {
   const [acresID, setAcresID] = useState(0)
   const { data: getOneAddress } = useOneAddress(acresID)
 
-  // const { mutateAsync: getOneAddress } = useOneAddress()
-
   const [open, setOpen] = React.useState(false)
   const [openModal, setOpenModal] = React.useState(false)
   const [province, setProvinces] = useState<string[]>([])
@@ -46,7 +42,6 @@ const AddressComponents = () => {
   const [provinceCode, setProvinceCode] = useState('')
   const [districtCode, setDistrictCode] = useState('')
   const [wardCode, setWardCode] = useState('')
-  const [address, setAddress] = useState([])
 
   const navigate = useNavigate()
 
@@ -137,15 +132,19 @@ const AddressComponents = () => {
   const handleAddressId = (id: number) => {
     setAcresID(id)
     setOpenModal(!openModal)
-    if (getOneAddress) {
-      const address = getOneAddress?.data
-      setValue('province', address?.province)
-      setValue('district', address?.district)
-      setValue('ward', address?.ward)
-      setValue('address', address?.address)
-      // console.log(address?.province)
-    }
   }
+
+  useEffect(() => {
+    if (acresID && getOneAddress && getOneAddress.data) {
+      const address = getOneAddress.data
+      setValue('province', address.province)
+      setValue('district', address.district)
+      setValue('ward', address.ward)
+      setValue('address', address.address)
+    }
+  }, [getOneAddress])
+
+  const handleUpdate = () => {}
 
   return (
     <>
@@ -272,7 +271,7 @@ const AddressComponents = () => {
                           setOpen(!open)
                         }}
                       >
-                        Cancel
+                        Trở về
                       </button>
                     </div>
                   </div>
@@ -287,7 +286,9 @@ const AddressComponents = () => {
               >
                 <form>
                   <div className={'flex flex-col'}>
-                    <p className={'text-2xl font-bold pb-5'}>ssss</p>
+                    <p className={'text-2xl font-bold pb-5'}>
+                      Chỉnh sửa địa chỉ
+                    </p>
                     <div className={'w-full gap-4 mt-4'}>
                       <div className={'flex flex-col '}>
                         <p className={'text-[16px] font-bold pb-4'}>Tỉnh</p>
@@ -370,7 +371,7 @@ const AddressComponents = () => {
                         }
                         type={'submit'}
                       >
-                        Thêm
+                        Sửa
                       </button>
                       <button
                         className={
@@ -378,10 +379,10 @@ const AddressComponents = () => {
                         }
                         type="reset"
                         onClick={() => {
-                          setOpen(!openModal)
+                          setOpenModal(!openModal)
                         }}
                       >
-                        Cancel
+                        Trở về
                       </button>
                     </div>
                   </div>

@@ -21,12 +21,16 @@ const Dropdown = ({ open, onClose, invoiceId }: IDropdown) => {
         <div className="relative">
           <div className="search-order w-full absolute  rounded-[4px] p-[30px]">
             <div className="flex justify-between ">
-              <div className="text-[20px] font-bold mb-[24px] leading-[24px] text-[#303844] ">
-                Mã Vận Đơn: <span className="ml-1">{invoiceId}</span>
-                {/* <span className="text-[14px] font-thin bg-[#ecfff1] ml-2 text-[#1cc461] py-[4px] px-[8px] ">
+              {!invoiceId ? (
+                <div className={'bg-white'}>Mã vận đơn không đúng</div>
+              ) : (
+                <div className="text-[20px] font-bold mb-[24px] leading-[24px] text-[#303844] ">
+                  Mã Vận Đơn: <span className="ml-1">{invoiceId}</span>
+                  {/* <span className="text-[14px] font-thin bg-[#ecfff1] ml-2 text-[#1cc461] py-[4px] px-[8px] ">
                   Đã giao hàng
                 </span> */}
-              </div>
+                </div>
+              )}
               <button
                 onClick={onClose}
                 className="hover:bg-[#F5F6F9] hover:cursor-pointer w-[32px] h-[32px] rounded-[100%] flex items-center justify-center "
