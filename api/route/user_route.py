@@ -12,7 +12,7 @@ from repository.user_repository import UserRepository, UserInternalInformationRe
 from route.auth_route import pwd_context
 from schemas.schema import ResponseSchema
 from schemas.user_schemas import UserInformationCreate, UserInternalInformationCreate, UserInternalCreateSchema, \
-    UserInternalResponseSchema
+    UserInternalResponseSchema, UserInternalInfor, UserInformationSchema
 
 from schemas.user_schemas import UserSchemas
 from ultis.securty import get_current_user
@@ -36,7 +36,7 @@ def get_all_user(params: Params = Depends(), is_full: bool = False, search: Opti
     return paginate(db_user, params)
 
 
-@users.get("/users/{user_id}")
+@users.get("/users/{user_id}", response_model=(ResponseSchema[UserSchemas]))
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     db_user = UserRepository.find_by_id(db, User, user_id)
     if db_user is None:
@@ -44,7 +44,7 @@ def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@users.put("/users/information")
+@users.put("/users/information", response_model=ResponseSchema[UserInformationSchema])
 def put_user_information(user_information: UserInformationCreate, db: Session = Depends(get_db),
                          sub: int = Depends(get_current_user)):
     user = UserRepository.find_by_id(db, User, sub)
@@ -68,7 +68,7 @@ def put_user_information(user_information: UserInformationCreate, db: Session = 
     return ResponseSchema.from_api_route(data=user_info, status_code=status.HTTP_200_OK)
 
 
-@users.put("/users/internal_information")
+@users.put("/users/internal_information", response_model=ResponseSchema[UserInternalInfor])
 def put_user_inter_infor(user_create_internal: UserInternalInformationCreate,
                          db: Session = Depends(get_db), sub: int = Depends(get_current_user)):
     user = UserRepository.find_by_id(db, User, sub)
