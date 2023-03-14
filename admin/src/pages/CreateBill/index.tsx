@@ -18,6 +18,9 @@ import QRCode from 'qrcode.react'
 import { faker } from '@faker-js/faker'
 import { NumericFormat } from 'react-number-format'
 import { AiOutlineClose, AiOutlinePrinter } from 'react-icons/ai'
+import jspdf from 'jspdf'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 // region Types
 let CreateInvoiceSchema = object().shape({
@@ -109,7 +112,6 @@ const CreateBill = () => {
   const [openModal, setOpenModal] = React.useState(false)
   const [invoice, setInvoice] = React.useState<InvoiceType>({} as InvoiceType)
   const { mutateAsync: createInvoiceAsync } = useCreateInvoice()
-
   const [senderProvince, setSenderProvince] = React.useState<AddressPeople>({})
 
   const [receiverProvince, setReceiverProvince] = React.useState<AddressPeople>(
@@ -149,7 +151,16 @@ const CreateBill = () => {
     })
   }
 
-  // @ts-ignore
+  const handlePrintInvoice = () => {
+    const printContents = document.querySelector('#print-invoice')
+    html2canvas(printContents as HTMLDivElement).then(canvas => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', [230, 210])
+      pdf.addImage(imgData, 'PNG', 5, 10, 200, 180)
+      pdf.save('invoice.pdf')
+    })
+  }
+
   return (
     <AdminLayout>
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
@@ -168,6 +179,7 @@ const CreateBill = () => {
                   className={
                     'px-2 py-2 bg-yellow-400 rounded hover:opacity-80 transition flex items-center gap-2'
                   }
+                  onClick={handlePrintInvoice}
                 >
                   <AiOutlinePrinter /> In vận đơn
                 </button>
@@ -179,147 +191,158 @@ const CreateBill = () => {
                 </button>
               </div>
             </div>
-            <div className={'grid grid-cols-3 w-full justify-between'}>
-              <div className={'flex flex-col gap-4 col-span-2'}>
-                <img
-                  src="/images/logo/1-landscape.png"
-                  alt="logo"
-                  width={200}
-                />
-                <p className={'font-bold text-sm mt-4 ml-1'}>
-                  Mã vận đơn: {invoice.id}
-                </p>
-                <div className={'p-4 rounded border'}>
-                  <p className={'font-bold text-sm'}>Thông tin người gửi</p>
-                  <p className={'text-sm'}>
-                    Tên: {invoice.senderFullName || ''}
-                  </p>
-                  <p className={'text-sm'}>
-                    Số điện thoại: {invoice.senderPhone || ''}
-                  </p>
-                  <p className={'text-sm'}>
-                    Địa chỉ: {invoice.senderAddress || ''}
-                  </p>
-                </div>
-                <div className={'p-4 rounded border'}>
-                  <p className={'font-bold text-sm'}>Thông tin người nhận</p>
-                  <p className={'text-sm'}>
-                    Tên: {invoice.receiverFullName || ''}
-                  </p>
-                  <p className={'text-sm'}>
-                    Số điện thoại: {invoice.receiverPhone || ''}
-                  </p>
-                  <p className={'text-sm'}>
-                    Địa chỉ: {invoice.receiverAddress}
-                  </p>
-                </div>
-              </div>
-              <div className={'col-span-1'}>
-                <QRCode
-                  id="qrcode"
-                  value={invoice.id || ''}
-                  size={290}
-                  level={'H'}
-                  includeMargin={true}
-                />
-              </div>
-            </div>
-            <div className={'mt-4 flex gap-4 w-full'}>
-              <div className={'p-4 rounded border w-full'}>
-                <p className={'font-bold text-sm'}>Thông tin hàng hóa</p>
-                <p className={'text-sm'}>
-                  Loại hàng hóa: {invoice.kindOfGoods || ''}
-                </p>
-                <p className={'text-sm'}>
-                  Nội dung hàng hóa: {invoice.goodsContent || ''}
-                </p>
-                <p className={'text-sm flex items-center gap-2'}>
-                  <span>Giá trị hàng hóa:</span>
-                  <NumericFormat
-                    value={parseInt(invoice.price || '0')}
-                    thousandsGroupStyle="thousand"
-                    thousandSeparator=","
-                    displayType={'text'}
-                    suffix={' VND'}
+            <div id={'print-invoice'}>
+              <div className={'grid grid-cols-3 w-full justify-between'}>
+                <div className={'flex flex-col gap-4 col-span-2'}>
+                  <img
+                    src="/images/logo/1-landscape.png"
+                    alt="logo"
+                    width={200}
                   />
-                </p>
-                <p className={'text-sm'}>
-                  Trọng lượng: {invoice.weight || ''} kg
-                </p>
-                <p className={'text-sm'}>Dài: {invoice.length || ''} cm</p>
-                <p className={'text-sm'}>Rộng: {invoice.width || ''} cm</p>
-                <p className={'text-sm'}>Cao: {invoice.height || ''} cm</p>
-                <p className={'text-sm'}>
-                  Cho xem hàng:{' '}
-                  {invoice.isShowGoods ? 'Được xem hàng' : 'Không cho xem hàng'}
-                </p>
+                  <p className={'font-bold text-sm mt-4 ml-1'}>
+                    Mã vận đơn: {invoice.id}
+                  </p>
+                  <div className={'p-4 rounded border'}>
+                    <p className={'font-bold text-sm'}>Thông tin người gửi</p>
+                    <p className={'text-sm'}>
+                      Tên: {invoice.senderFullName || ''}
+                    </p>
+                    <p className={'text-sm'}>
+                      Số điện thoại: {invoice.senderPhone || ''}
+                    </p>
+                    <p className={'text-sm'}>
+                      Địa chỉ: {invoice.senderAddress || ''}
+                    </p>
+                  </div>
+                  <div className={'p-4 rounded border'}>
+                    <p className={'font-bold text-sm'}>Thông tin người nhận</p>
+                    <p className={'text-sm'}>
+                      Tên: {invoice.receiverFullName || ''}
+                    </p>
+                    <p className={'text-sm'}>
+                      Số điện thoại: {invoice.receiverPhone || ''}
+                    </p>
+                    <p className={'text-sm'}>
+                      Địa chỉ: {invoice.receiverAddress}
+                    </p>
+                  </div>
+                </div>
+                <div className={'col-span-1'}>
+                  <QRCode
+                    id="qrcode"
+                    value={invoice.id || ''}
+                    size={290}
+                    style={{ margin: '120px 0 0 0', width: '100%' }}
+                    level={'H'}
+                    includeMargin={true}
+                  />
+                </div>
               </div>
-              <div className={'p-4 rounded border w-full'}>
-                <p className={'font-bold text-sm'}>Thông tin vận chuyển</p>
-                <p className={'text-sm'}>
-                  Hình thức thanh toán:{' '}
-                  {invoice.payments === 'PAYMENT_SENDER'
-                    ? 'Người gửi trả'
-                    : 'Người nhận trả'}
-                </p>
-                <p className={'text-sm'}>
-                  Hình thức vận chuyển: {invoice.shippingType || ''}
-                </p>
-                <p className={'text-sm'}>
-                  Phương tiện vận chuyển:{' '}
-                  {invoice.transportEquipment === 'MOTORBIKE'
-                    ? 'Xe máy'
-                    : 'Ô tô'}
-                </p>
-                <p className={'text-sm'}>
-                  Yêu cầu khác: {invoice.requirementOther || ''}
-                </p>
-              </div>
-            </div>
-            <div className={'mt-4 flex gap-4 w-full'}>
-              <div
-                className={
-                  'p-4 rounded border w-full flex items-center justify-between'
-                }
-              >
-                <div>
-                  <p
-                    className={'text-md mt-3 font-bold flex items-center gap-4'}
-                  >
-                    <span>Phí vận chuyển:</span>
+              <div className={'mt-4 flex gap-4 w-full'}>
+                <div className={'p-4 rounded border w-full'}>
+                  <p className={'font-bold text-sm'}>Thông tin hàng hóa</p>
+                  <p className={'text-sm'}>
+                    Loại hàng hóa: {invoice.kindOfGoods || ''}
+                  </p>
+                  <p className={'text-sm'}>
+                    Nội dung hàng hóa: {invoice.goodsContent || ''}
+                  </p>
+                  <p className={'text-sm flex items-center gap-2'}>
+                    <span>Giá trị hàng hóa:</span>
                     <NumericFormat
-                      value={30000}
+                      value={parseInt(invoice.price || '0')}
                       thousandsGroupStyle="thousand"
                       thousandSeparator=","
                       displayType={'text'}
                       suffix={' VND'}
                     />
                   </p>
-                  <p
-                    className={'text-md mt-3 font-bold flex items-center gap-4'}
-                  >
-                    <span>Tổng tiền thu hộ:</span>
-                    <NumericFormat
-                      value={parseInt(invoice.cod || '0')}
-                      thousandsGroupStyle="thousand"
-                      thousandSeparator=","
-                      displayType={'text'}
-                      suffix={' VND'}
-                    />
+                  <p className={'text-sm'}>
+                    Trọng lượng: {invoice.weight || ''} kg
+                  </p>
+                  <p className={'text-sm'}>Dài: {invoice.length || ''} cm</p>
+                  <p className={'text-sm'}>Rộng: {invoice.width || ''} cm</p>
+                  <p className={'text-sm'}>Cao: {invoice.height || ''} cm</p>
+                  <p className={'text-sm'}>
+                    Cho xem hàng:{' '}
+                    {invoice.isShowGoods
+                      ? 'Được xem hàng'
+                      : 'Không cho xem hàng'}
                   </p>
                 </div>
-                <p
-                  className={'text-2xl font-bold mt-2 flex items-center gap-4'}
+                <div className={'p-4 rounded border w-full'}>
+                  <p className={'font-bold text-sm'}>Thông tin vận chuyển</p>
+                  <p className={'text-sm'}>
+                    Hình thức thanh toán:{' '}
+                    {invoice.payments === 'PAYMENT_SENDER'
+                      ? 'Người gửi trả'
+                      : 'Người nhận trả'}
+                  </p>
+                  <p className={'text-sm'}>
+                    Hình thức vận chuyển: {invoice.shippingType || ''}
+                  </p>
+                  <p className={'text-sm'}>
+                    Phương tiện vận chuyển:{' '}
+                    {invoice.transportEquipment === 'MOTORBIKE'
+                      ? 'Xe máy'
+                      : 'Ô tô'}
+                  </p>
+                  <p className={'text-sm'}>
+                    Yêu cầu khác: {invoice.requirementOther || ''}
+                  </p>
+                </div>
+              </div>
+              <div className={'mt-4 flex gap-4 w-full'}>
+                <div
+                  className={
+                    'p-4 rounded border w-full flex items-center justify-between'
+                  }
                 >
-                  <span>Tổng tiền:</span>
-                  <NumericFormat
-                    value={parseInt(invoice.cod || '0') + 30000 || ''}
-                    thousandsGroupStyle="thousand"
-                    thousandSeparator=","
-                    displayType={'text'}
-                    suffix={' VND'}
-                  />
-                </p>
+                  <div>
+                    <p
+                      className={
+                        'text-md mt-3 font-bold flex items-center gap-4'
+                      }
+                    >
+                      <span>Phí vận chuyển:</span>
+                      <NumericFormat
+                        value={30000}
+                        thousandsGroupStyle="thousand"
+                        thousandSeparator=","
+                        displayType={'text'}
+                        suffix={' VND'}
+                      />
+                    </p>
+                    <p
+                      className={
+                        'text-md mt-3 font-bold flex items-center gap-4'
+                      }
+                    >
+                      <span>Tổng tiền thu hộ:</span>
+                      <NumericFormat
+                        value={parseInt(invoice.cod || '0')}
+                        thousandsGroupStyle="thousand"
+                        thousandSeparator=","
+                        displayType={'text'}
+                        suffix={' VND'}
+                      />
+                    </p>
+                  </div>
+                  <p
+                    className={
+                      'text-2xl font-bold mt-2 flex items-center gap-4'
+                    }
+                  >
+                    <span>Tổng tiền:</span>
+                    <NumericFormat
+                      value={parseInt(invoice.cod || '0') + 30000 || ''}
+                      thousandsGroupStyle="thousand"
+                      thousandSeparator=","
+                      displayType={'text'}
+                      suffix={' VND'}
+                    />
+                  </p>
+                </div>
               </div>
             </div>
           </div>

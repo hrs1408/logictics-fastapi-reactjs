@@ -13,6 +13,8 @@ import { AuthContext } from '../../context/AuthContext'
 import _ from 'lodash'
 import { AiOutlineClose, AiOutlinePrinter } from 'react-icons/ai'
 import QRCode from 'qrcode.react'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 const CreateUserSchema = object().shape({
   fullName: string().required('Vui lòng nhập họ tên'),
@@ -80,6 +82,15 @@ const Users = () => {
         void getUsersAgain()
       })
   }
+  const handlePrintUserCard = () => {
+    const printContents = document.querySelector('#print-card')
+    html2canvas(printContents as HTMLDivElement).then(canvas => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('l', 'mm', [260, 180])
+      pdf.addImage(imgData, 'PNG', 5, 5, 250, 170)
+      pdf.save('user-card.pdf')
+    })
+  }
 
   return (
     <AdminLayout>
@@ -96,6 +107,7 @@ const Users = () => {
                 className={
                   'px-2 py-2 bg-yellow-400 rounded hover:opacity-80 transition flex items-center gap-2'
                 }
+                onClick={handlePrintUserCard}
               >
                 <AiOutlinePrinter /> In thẻ
               </button>
@@ -107,7 +119,10 @@ const Users = () => {
               </button>
             </div>
           </div>
-          <div className={'mt-4 p-6 rounded-md bg-yellow-400'}>
+          <div
+            className={'mt-4 p-6 rounded-md bg-yellow-400'}
+            id={'print-card'}
+          >
             <div
               className={
                 'p-2 bg-white rounded flex items-center justify-between'
