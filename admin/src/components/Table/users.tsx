@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
@@ -15,13 +16,19 @@ import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Switch from '@mui/material/Switch'
 import { visuallyHidden } from '@mui/utils'
-import { BiEditAlt, BiFilter } from 'react-icons/bi'
+import { BiFilter } from 'react-icons/bi'
 import { MdDeleteOutline } from 'react-icons/md'
+import { Divider, ListItemText, MenuItem, MenuList, Modal } from '@mui/material'
+import { FormProvider, useForm } from 'react-hook-form'
+import Input from '../Input'
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
+import toast from 'react-hot-toast'
+import { object, string } from 'yup'
+import { useCreateUser, useUserById } from '../../services/UserService'
 
 interface Data {
+  id: number
   position: string
   type_user: string
   work_address: string
@@ -151,7 +158,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={'left'}
+            align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -233,6 +240,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 function createData(user: UserType): Data {
   return {
+    id: user.id as number,
     fullname: user.userInformation?.fullname,
     position: user.userInternalInformation?.position,
     work_address: user.userInternalInformation?.workAddress,
@@ -245,15 +253,21 @@ interface listUser {
   listUser: UserType[]
 }
 
-const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
+const EnhancedTable: React.FC<listUser> = ({ listUser }) => {
   const rows = listUser.map(user => createData(user))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('position')
   const [selected, setSelected] = React.useState<readonly string[]>([])
   const [page, setPage] = React.useState(0)
-  const [dense, setDense] = React.useState(false)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
-
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+  const [contextMenuPayload, setContextMenuPayload] = useState<
+    ContextType<Data>
+  >({
+    x: 0,
+    y: 0,
+    close: true,
+    selectedItem: undefined,
+  })
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data
@@ -303,32 +317,36 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
     setPage(0)
   }
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked)
-  }
-
   const isSelected = (name: string) => selected.indexOf(name) !== -1
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
-  const handleEdit = (id: number) => {
-    console.log(id)
-  }
+  useEffect(() => {
+    const closeContextMenu = () => {
+      setContextMenuPayload({
+        x: 0,
+        y: 0,
+        close: true,
+        selectedItem: undefined,
+      })
+    }
 
-  const handleDelete = (id: number) => {
-    console.log(id)
-  }
+    window.addEventListener('click', closeContextMenu)
+
+    return () => window.removeEventListener('click', closeContextMenu)
+  }, [])
 
   return (
     <Box sx={{ width: '100%' }}>
+      <ContextMenuTableComponent {...contextMenuPayload} />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size={'medium'}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -348,10 +366,25 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
                   return (
                     <TableRow
                       hover
+                      onContextMenu={(
+                        e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                      ) => {
+                        e.preventDefault()
+                        const selectedItem = rows.find(
+                          item => item.email === row.email
+                        )
+                        setContextMenuPayload({
+                          x: e.pageX,
+                          y: e.pageY,
+                          close: false,
+                          selectedItem,
+                        })
+                      }}
+                      onClick={event => handleClick(event, String(row.id))}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.email}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -368,21 +401,22 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
                         id={labelId}
                         scope="row"
                         padding="none"
-                        onClick={event => handleClick(event, row.email)}
                       >
                         {row.email}
                       </TableCell>
-                      <TableCell align="left">{row.fullname}</TableCell>
-                      <TableCell align="left">{row.work_address}</TableCell>
-                      <TableCell align="left">{row.type_user}</TableCell>
-                      <TableCell align="left">{row.position}</TableCell>
+                      <TableCell align="right">{row.fullname}</TableCell>
+                      <TableCell align="right">{row.work_address}</TableCell>
+                      <TableCell align="right">{row.type_user}</TableCell>
+                      <TableCell align="right">
+                        {row.position || 'Nhân viên'}
+                      </TableCell>
                     </TableRow>
                   )
                 })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -401,12 +435,185 @@ const EnhancedUserTable: React.FC<listUser> = ({ listUser }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Thu nhỏ"
-      />
     </Box>
   )
 }
 
-export default EnhancedUserTable
+export default EnhancedTable
+
+const CreateUserSchema = object().shape({
+  fullName: string().required('Vui lòng nhập họ tên'),
+  password: string().required('Vui lòng nhập mật khẩu'),
+  workAddress: string().required('Vui lòng nhập địa chỉ'),
+  position: string().default(''),
+  email: string().required('Vui lòng nhập email'),
+  phone: string().required('Vui lòng nhập số điện thoại'),
+  typeUser: string().required('Vui lòng chọn quyền'),
+})
+
+const ContextMenuTableComponent = ({
+  x,
+  y,
+  close,
+  selectedItem,
+}: ContextType<Data>) => {
+  const [open, setOpen] = React.useState(false)
+
+  const { data: user } = useUserById(Number(selectedItem?.id))
+
+  const { mutateAsync: createUserAsync } = useCreateUser()
+
+  const methods = useForm<CreateUserType>({
+    resolver: yupResolver(CreateUserSchema),
+    defaultValues: {
+      typeUser: 'USER',
+    },
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = methods
+
+  const onSubmit = (data: CreateUserType) => {
+    createUserAsync(data)
+      .then(() => {
+        toast.success('User Created')
+        reset()
+        setTimeout(() => {
+          setOpen(!open)
+        }, 1000)
+      })
+      .finally(() => {})
+  }
+
+  return (
+    <>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(!open)
+        }}
+      >
+        <div
+          className={
+            'w-1/2  p-8 bg-white rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+          }
+        >
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="flex w-full">
+                {Object.keys(errors).length > 0 && (
+                  <div className="p-4 rounded shadow bg-red-400 text-white my-4 w-full">
+                    {Object.keys(errors).length > 0 && (
+                      <div>
+                        <ul>
+                          {Object.entries(errors).map(([name, error]) => (
+                            <li key={name}>{error.message}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              <div className={'flex flex-col'}>
+                <p className={'text-2xl font-bold'}>Update User</p>
+                <div className={'w-full grid grid-cols-2 gap-4 mt-4'}>
+                  <Input label={'Full name'} type={'text'} name="fullName" />
+                  <Input label={'Phone number'} type={'text'} name="phone" />
+                  <Input label={'Email'} type={'text'} name="email" />
+                  <Input label={'Password'} type={'password'} name="password" />
+                  <div className={'flex flex-col '}>
+                    <label className={'font-bold'}>Role</label>
+                    <select
+                      {...register('typeUser')}
+                      className={
+                        'w-full px-4 py-3 mt-2 border rounded-md outline-none'
+                      }
+                    >
+                      <option value="ADMIN">Admin</option>
+                      <option value="USER">User</option>
+                      <option value="STAFF">Staff</option>
+                    </select>
+                  </div>
+                  <Input label={'Address'} type={'text'} name="workAddress" />
+                </div>
+                <div
+                  className={'flex items-center mt-8 gap-2 justify-end w-full'}
+                >
+                  <button
+                    className={
+                      'bg-yellow-400 px-4 py-2 rounded shadow hover:opacity-80 transition'
+                    }
+                    type={'submit'}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className={
+                      'bg-gray-400 px-4 py-2 rounded shadow hover:opacity-80 transition'
+                    }
+                    type="reset"
+                    onClick={() => {
+                      setOpen(!open)
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </FormProvider>
+        </div>
+      </Modal>
+      <div
+        style={{
+          position: 'absolute',
+          top: y,
+          left: x,
+          zIndex: 1000,
+          backgroundColor: 'white',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.2)',
+          display: close ? 'none' : 'block',
+        }}
+      >
+        <MenuList>
+          <MenuItem
+            onClick={e => {
+              setOpen(true)
+            }}
+          >
+            <ListItemText>Edit</ListItemText>
+          </MenuItem>
+          <MenuItem
+            onClick={e => {
+              console.log(e)
+            }}
+          >
+            <ListItemText>Delete</ListItemText>
+          </MenuItem>
+          <MenuItem
+            onClick={e => {
+              console.log(e)
+            }}
+          >
+            <ListItemText>Change Password</ListItemText>
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={e => {
+              console.log(e)
+            }}
+          >
+            <ListItemText>Copy Id</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </div>
+    </>
+  )
+}

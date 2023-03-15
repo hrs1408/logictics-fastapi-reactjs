@@ -8,6 +8,7 @@ import { MutationCache, QueryClient, QueryClientProvider } from 'react-query'
 import AuthProvider from './context/AuthContext'
 import toast, { Toaster } from 'react-hot-toast'
 import S from 'string'
+import StoreProvider from './context/StoreContext'
 
 function App() {
   // region React Query Config
@@ -31,6 +32,7 @@ function App() {
         defaultOptions: {
           queries: {
             refetchOnMount: false,
+            refetchOnWindowFocus: false,
           },
         },
       })
@@ -42,22 +44,12 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <Provider store={store}>
-            <RouterProvider router={routes} />
-            {/*<ToastContainer*/}
-            {/*  position="top-right"*/}
-            {/*  autoClose={5000}*/}
-            {/*  hideProgressBar={false}*/}
-            {/*  newestOnTop={false}*/}
-            {/*  closeOnClick*/}
-            {/*  rtl={false}*/}
-            {/*  pauseOnFocusLoss*/}
-            {/*  draggable*/}
-            {/*  pauseOnHover*/}
-            {/*  theme="light"*/}
-            {/*/>*/}
-            <Toaster position="bottom-right" reverseOrder={true} />
-          </Provider>
+          <StoreProvider>
+            <Provider store={store}>
+              <RouterProvider router={routes} />
+              <Toaster position="bottom-right" reverseOrder={true} />
+            </Provider>
+          </StoreProvider>
         </AuthProvider>
       </QueryClientProvider>
     </>

@@ -30,16 +30,13 @@ export const saveToken = ({
   refreshToken,
   tokenType,
 }: TokenResponseType) => {
-  Cookies.set(TOKEN_KEY, accessToken, {
-    expires: Number(tokenExpiresMinutes) / 1440 - 1 / 86400,
-  })
-  Cookies.set(REFRESH_TOKEN_KEY, refreshToken, {
-    expires: Number(refreshTokenExpiresMinutes) / 1440 - 1 / 86400,
-  })
+  Cookies.set(TOKEN_KEY, accessToken)
+  Cookies.set(REFRESH_TOKEN_KEY, refreshToken)
   localStorage.setItem(TOKEN_KEY, accessToken)
 }
 
 export const removeToken = () => {
   Cookies.remove(TOKEN_KEY)
   Cookies.remove(REFRESH_TOKEN_KEY)
+  localStorage.removeItem(TOKEN_KEY)
 }

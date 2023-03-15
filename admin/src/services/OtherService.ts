@@ -9,5 +9,5 @@ export const getProvince = (): Promise<Province[]> =>
     .then(res => res.data)
 
 export const useProvince = () => {
-  return useQuery(['GET_PROVINCE'], getProvince)
+  return useQuery(['GET_PROVINCES'], getProvince)
 }
