@@ -6,3 +6,10 @@ type AddressType = {
   address: string
   createdAt: string
 }
+
+type AddressCreateType = {
+  province: string
+  district: string
+  ward: string
+  address: string
+}

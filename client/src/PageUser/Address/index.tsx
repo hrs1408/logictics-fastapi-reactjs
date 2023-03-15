@@ -15,9 +15,10 @@ import {
   useOneAddress,
   useUpdateAddress,
 } from '../../services/AddressService'
-import axios from 'axios'
+import axios, { toFormData } from 'axios'
 import toast from 'react-hot-toast'
 import Address from '../../components/Table/address'
+import address from '../../components/Table/address'
 
 const schema = object().shape({
   province: yup.string().required('Tỉnh là trường bắt buộc'),
@@ -33,6 +34,8 @@ const AddressComponents = () => {
   const { mutateAsync: deleteAddressAsync } = useDeleteAddress()
   const [acresID, setAcresID] = useState(0)
   const { data: getOneAddress } = useOneAddress(acresID)
+
+  const { mutateAsync: updateAddressAsync } = useUpdateAddress()
 
   const [open, setOpen] = React.useState(false)
   const [openModal, setOpenModal] = React.useState(false)
@@ -68,6 +71,7 @@ const AddressComponents = () => {
   const {
     register: fromUpdate,
     formState: err,
+    handleSubmit: handleUpdate,
     setValue,
   } = useForm<AddressType>({
     resolver: yupResolver(schema),
@@ -123,6 +127,7 @@ const AddressComponents = () => {
       .then(res => {
         navigate('/address')
         window.location.reload()
+        setOpen(false)
         toast.success('Xóa địa chỉ thành công')
       })
       .catch(err => {
@@ -144,7 +149,18 @@ const AddressComponents = () => {
     }
   }, [getOneAddress])
 
-  const handleUpdate = () => {}
+  const handleUpdateAddress = async (data: any) => {
+    // console.log(data)
+    try {
+      const response = await updateAddressAsync({
+        id: acresID,
+        data,
+      })
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -284,7 +300,7 @@ const AddressComponents = () => {
                   'w-1/2  p-8 bg-white rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                 }
               >
-                <form>
+                <form onSubmit={handleUpdate(handleUpdateAddress)}>
                   <div className={'flex flex-col'}>
                     <p className={'text-2xl font-bold pb-5'}>
                       Chỉnh sửa địa chỉ

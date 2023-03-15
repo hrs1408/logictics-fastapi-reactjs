@@ -41,13 +41,15 @@ export const useOneAddress = (address_id: number) => {
   )
 }
 
-const updateAddress = (
-  address_id: number
-): Promise<ResponseSuccessType<AddressType>> =>
-  axiosConfig.put(`/delivery-address/${address_id}`)
+const updateAddress = ({
+  data,
+  id,
+}: {
+  data: AddressCreateType
+  id: number
+}): Promise<ResponseSuccessType<AddressType>> =>
+  axiosConfig.put(`/delivery-address/${id}`, data)
 
-export const useUpdateAddress = (address_id: number) => {
-  return useQuery(['UPDATE_ADDRESS', address_id], () =>
-    updateAddress(address_id)
-  )
+export const useUpdateAddress = () => {
+  return useMutation(['UPDATE_ADDRESS'], updateAddress)
 }
