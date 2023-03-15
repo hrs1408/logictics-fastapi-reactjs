@@ -28,17 +28,17 @@ def create_voyage(request: VoyageCreateSchema, db=Depends(get_db)):
     check_voyage = VoyageRepository.is_exist(db, request.port_id, request.invoice_id)
 
     if check_voyage is not None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice in this position have been created")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Đơn hàng đã đi qua kho này")
 
     invoice = InvoiceRepository.find_by_id(db, request.invoice_id)
     if invoice is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invoice Not Found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Đơn hàng không tồn tại")
     elif invoice.status != Status.ACCEPTED:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invoice in the waiting state")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Đơn hàng chờ xác nhận")
 
     port = PortRepository.find_by_id(db, Port, request.port_id)
     if port is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Port Not Found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Kho không tồn tại")
     db_voyage = Voyage(
         port_id=port.id,
         invoice_id=invoice.id

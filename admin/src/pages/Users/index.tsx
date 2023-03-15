@@ -38,7 +38,7 @@ const Users = () => {
     search: '',
     page: 1,
     size: 10,
-    isFull: true,
+    is_full: true,
   })
 
   const { mutateAsync: createUserAsync } = useCreateUser()

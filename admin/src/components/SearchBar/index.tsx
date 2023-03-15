@@ -15,10 +15,15 @@ import { IoSettingsOutline } from 'react-icons/io5'
 import { FiLogOut } from 'react-icons/fi'
 import React, { useContext } from 'react'
 import { StoreContext, StoreContextType } from '../../context/StoreContext'
+import { AuthContext } from '../../context/AuthContext'
+import { removeToken } from '../../services/AuthService'
+import { useNavigate } from 'react-router-dom'
 
 const SearchBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const { state, setState } = useContext(StoreContext) as StoreContextType
+  const navigate = useNavigate()
+  const { auth, removeAuth } = useContext(AuthContext) as AuthContextType
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -52,7 +57,7 @@ const SearchBar = () => {
           <Typography
             sx={{ minWidth: 100, fontSize: '16px', fontWeight: 'bold' }}
           >
-            Nguyễn Phan Huy Hiếu
+            {auth?.email}
           </Typography>
           <Tooltip title="Account settings">
             <IconButton
@@ -105,7 +110,7 @@ const SearchBar = () => {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <div className={'flex items-center px-4 py-2'}>
-            <Avatar /> Nguyễn Phan Huy Hiếu
+            <Avatar /> {auth?.email}
           </div>
           <Divider />
           <MenuItem sx={{ borderRadius: '4px' }} onClick={handleClose}>
@@ -120,7 +125,15 @@ const SearchBar = () => {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <MenuItem sx={{ borderRadius: '4px' }} onClick={handleClose}>
+          <MenuItem
+            sx={{ borderRadius: '4px' }}
+            onClick={() => {
+              removeToken()
+              removeAuth()
+              navigate('/login')
+              handleClose()
+            }}
+          >
             <ListItemIcon>
               <FiLogOut />
             </ListItemIcon>

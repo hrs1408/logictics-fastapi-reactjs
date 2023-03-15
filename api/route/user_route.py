@@ -105,6 +105,7 @@ def add_user_internal(user_create_internal: UserInternalCreateSchema, db=Depends
     new_user = User()
     new_user.email = user_create_internal.email
     new_user.hashed_password = pwd_context.hash(user_create_internal.password)
+    new_user.type_user = user_create_internal.type_user
     new_user = UserRepository.insert(db, new_user)
 
     new_user_internal = UserInternalInformation()

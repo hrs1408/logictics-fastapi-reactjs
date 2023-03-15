@@ -38,4 +38,5 @@ export const saveToken = ({
 export const removeToken = () => {
   Cookies.remove(TOKEN_KEY)
   Cookies.remove(REFRESH_TOKEN_KEY)
+  localStorage.removeItem(TOKEN_KEY)
 }

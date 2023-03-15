@@ -15,14 +15,14 @@ export const getInvoices = ({
   page,
   size,
   search,
-  isFull,
+  is_full,
 }: QueryParamType): Promise<ResponseSuccessType<InvoiceType[]>> => {
   return axiosConfig.get(`/invoice`, {
     params: {
       page,
       size,
       search,
-      isFull,
+      is_full: is_full,
     },
   })
 }
@@ -31,11 +31,11 @@ export const useGetAllInvoices = ({
   page = 1,
   size = 10,
   search = '',
-  isFull = true,
+  is_full = true,
 }: QueryParamType) => {
   return useQuery(
-    ['GET_INVOICES', page, size, search, isFull],
-    () => getInvoices({ page, size, search, isFull }),
+    ['GET_INVOICES', page, size, search, is_full],
+    () => getInvoices({ page, size, search, is_full: is_full }),
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,

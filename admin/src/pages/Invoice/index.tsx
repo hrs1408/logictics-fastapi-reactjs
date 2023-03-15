@@ -7,9 +7,7 @@ import { useGetAllInvoices } from '../../services/InvoiceService'
 const Invoices = () => {
   const { data: invoices } = useGetAllInvoices({
     search: '',
-    page: 1,
-    size: 10,
-    isFull: true,
+    is_full: true,
   })
 
   return (

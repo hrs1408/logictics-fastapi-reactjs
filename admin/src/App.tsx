@@ -32,6 +32,7 @@ function App() {
         defaultOptions: {
           queries: {
             refetchOnMount: false,
+            refetchOnWindowFocus: false,
           },
         },
       })

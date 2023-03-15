@@ -13,9 +13,9 @@ export const getUsers = ({
     },
   })
 }
-export const useUsers = ({ page, size, search, isFull }: QueryParamType) => {
+export const useUsers = ({ page, size, search, is_full }: QueryParamType) => {
   return useQuery(['GET_USERS', search], () =>
-    getUsers({ page, size, search, isFull })
+    getUsers({ page, size, search, is_full })
   )
 }
 
