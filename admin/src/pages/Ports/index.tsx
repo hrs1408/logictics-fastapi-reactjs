@@ -26,7 +26,7 @@ const Ports = () => {
     isFetching: isPortFetching,
   } = useGetAllPorts({
     search: debounceSearch,
-    isFull: true,
+    is_full: true,
     page: 1,
     size: 100,
   })

@@ -7,6 +7,9 @@ import axiosConfig from '../../../configs/AxiosConfig'
 import { saveToken } from '../../../services/AuthService'
 import { AuthContext } from '../../../context/AuthContext'
 import React, { useContext } from 'react'
+import { QrScanner } from '@yudiel/react-qr-scanner'
+import { TOKEN_KEY } from '../../../constants/Enviroment'
+import Cookies from 'js-cookie'
 
 const schema = yup.object().shape({
   email: yup
@@ -26,6 +29,7 @@ const Login = () => {
   } = useForm<SignInType>({
     resolver: yupResolver(schema),
   })
+  let countScan = 0
 
   const handleLogin = (data: SignInType) => {
     axiosConfig
@@ -43,6 +47,14 @@ const Login = () => {
         console.log(err)
       })
   }
+  const onScan = async (data: string) => {
+    countScan++
+    if (countScan === 1) return
+    countScan = 0
+    Cookies.set(TOKEN_KEY, data)
+    await getMeForce()
+    navigate('/')
+  }
   return (
     <div className={'login-wrapper w-full h-screen'}>
       <div
@@ -51,6 +63,7 @@ const Login = () => {
         }
       >
         <p className={'text-[26px] font-bold text-center'}>LOGIN WORKSPACE</p>
+        <QrScanner scanDelay={2000} onDecode={onScan} onError={() => {}} />
         <p className={'text-[14px] text-center text-gray-500'}>
           Log in to the website you are working on
         </p>

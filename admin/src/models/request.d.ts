@@ -1,6 +1,6 @@
 type QueryParamType = {
   search?: string
-  isFull?: boolean
+  is_full?: boolean
   page?: number
   size?: number
 }

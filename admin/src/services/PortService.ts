@@ -5,14 +5,14 @@ export const getPorts = ({
   page,
   size,
   search,
-  isFull,
+  is_full,
 }: QueryParamType): Promise<ResponseSuccessType<PortType[]>> =>
   axiosConfig.get(`/ports`, {
     params: {
       page,
       size,
       search,
-      isFull,
+      is_full,
     },
   })
 
@@ -20,11 +20,11 @@ export const useGetAllPorts = ({
   page,
   size,
   search,
-  isFull,
+  is_full,
 }: QueryParamType) =>
   useQuery(
-    ['GET_PORTS', page, size, search, isFull],
-    () => getPorts({ page, size, search, isFull }),
+    ['GET_PORTS', page, size, search, is_full],
+    () => getPorts({ page, size, search, is_full }),
     {
       keepPreviousData: true,
       refetchOnMount: true,

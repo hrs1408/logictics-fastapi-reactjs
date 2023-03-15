@@ -49,6 +49,7 @@ def update_deli_address(address_id: int, deli_address: UserDeliveryAddressCreate
     db_deliAddress.district = deli_address.district if deli_address.district else db_deliAddress.district
     db_deliAddress.ward = deli_address.ward if deli_address.ward else db_deliAddress.ward
     db_deliAddress.address = deli_address.address if deli_address.address else db_deliAddress.address
+    db_deliAddress = UserDeliveryAddressRepository.update(db, db_deliAddress)
     return ResponseSchema.from_api_route(data=db_deliAddress, status_code=status.HTTP_200_OK)
 
 

@@ -331,7 +331,7 @@ const EnhancedInvoiceTable: React.FC<ListInvoice> = ({ listInvoice }) => {
   const [orderBy, setOrderBy] = React.useState<keyof Data>('senderFullName')
   const [selected, setSelected] = React.useState<readonly string[]>([])
   const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const [contextMenuPayload, setContextMenuPayload] = useState<
     ContextType<Data>
   >({
