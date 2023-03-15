@@ -76,7 +76,6 @@ const AddressComponents = () => {
   } = useForm<AddressType>({
     resolver: yupResolver(schema),
   })
-
   const handleProvinceChange = async (event: any) => {
     const provinceCode = event.target.value
     setProvinceCode(provinceCode)
@@ -92,7 +91,6 @@ const AddressComponents = () => {
       setWards([])
     }
   }
-
   const handleDistrictChange = async (event: any) => {
     const districtCode = event.target.value
     setDistrictCode(districtCode)
@@ -106,11 +104,9 @@ const AddressComponents = () => {
       setWards([])
     }
   }
-
   const handleWardChange = (event: any) => {
     setWardCode(event.target.value)
   }
-
   const handleAddress = async (data: AddressType) => {
     createAddressAsync(data)
       .then(res => {
@@ -138,7 +134,6 @@ const AddressComponents = () => {
     setAcresID(id)
     setOpenModal(!openModal)
   }
-
   useEffect(() => {
     if (acresID && getOneAddress && getOneAddress.data) {
       const address = getOneAddress.data
@@ -148,7 +143,6 @@ const AddressComponents = () => {
       setValue('address', address.address)
     }
   }, [getOneAddress])
-
   const handleUpdateAddress = async (data: any) => {
     // console.log(data)
     try {
@@ -156,6 +150,8 @@ const AddressComponents = () => {
         id: acresID,
         data,
       })
+      window.location.reload()
+      toast.success('Sửa thành công')
       console.log(response)
     } catch (error) {
       console.log(error)
