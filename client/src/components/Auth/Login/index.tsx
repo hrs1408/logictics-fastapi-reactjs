@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineUser } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
@@ -8,6 +8,9 @@ import * as yup from 'yup'
 import axiosConfig from '../../../configs/AxiosConfig'
 import { useNavigate } from 'react-router-dom'
 import { TabType } from '..'
+import toast from 'react-hot-toast'
+import { AuthContext } from '../../../context/AuthContext'
+
 
 const schema = yup.object().shape({
   email: yup
@@ -22,6 +25,8 @@ interface ILogin {
 }
 
 const Login = ({ changeTab }: ILogin) => {
+  const { getMeForce } = useContext(AuthContext) as AuthContextType
+
   const navigate = useNavigate()
   const {
     register,
@@ -36,7 +41,7 @@ const Login = ({ changeTab }: ILogin) => {
       .post('/auth/login', data)
       .then(async res => {
         saveToken(res.data)
-        // await getMeForce();
+        await getMeForce()
         navigate('/dashboard')
         reset({
           email: '',
@@ -46,6 +51,7 @@ const Login = ({ changeTab }: ILogin) => {
       .catch(err => {
         console.log(err)
       })
+    // toast.success('Đăng nhập thành công')
   }
 
   return (

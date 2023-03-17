@@ -13,17 +13,31 @@ import {
 import { AiOutlineUser } from 'react-icons/ai'
 import { IoSettingsOutline } from 'react-icons/io5'
 import { FiLogOut } from 'react-icons/fi'
-import React from 'react'
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { removeToken } from '../../services/AuthService'
+import { AuthContext } from '../../context/AuthContext'
 
 const SearchBar = () => {
+  const { auth, getMeForce } = useContext(AuthContext) as AuthContextType
+
+  console.log(auth, 'auth')
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
+  let navigate = useNavigate()
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const logout = () => {
+    localStorage.removeItem('TOKEN_KEY')
+    removeToken()
+    navigate('/login')
+  }
+
   return (
     <div className="search-bar w-full py-2 px-4 bg-white rounded-md shadow">
       <div className="flex items-center justify-between">
@@ -45,7 +59,7 @@ const SearchBar = () => {
           <Typography
             sx={{ minWidth: 100, fontSize: '16px', fontWeight: 'bold' }}
           >
-            Nguyễn Phan Huy Hiếu
+            {auth?.email}
           </Typography>
           <Tooltip title="Account settings">
             <IconButton
@@ -98,26 +112,27 @@ const SearchBar = () => {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <div className={'flex items-center px-4 py-2'}>
-            <Avatar /> Nguyễn Phan Huy Hiếu
+            <Avatar />
+            {auth?.email}
           </div>
           <Divider />
           <MenuItem sx={{ borderRadius: '4px' }} onClick={handleClose}>
             <ListItemIcon>
               <AiOutlineUser />
             </ListItemIcon>
-            My account
+            Tài khoản của tôi
           </MenuItem>
           <MenuItem sx={{ borderRadius: '4px' }} onClick={handleClose}>
             <ListItemIcon>
               <IoSettingsOutline />
             </ListItemIcon>
-            Settings
+            Cài đặt
           </MenuItem>
           <MenuItem sx={{ borderRadius: '4px' }} onClick={handleClose}>
             <ListItemIcon>
               <FiLogOut />
             </ListItemIcon>
-            Logout
+            <button onClick={logout}>Đăng xuất</button>
           </MenuItem>
         </Menu>
       </div>

@@ -7,7 +7,7 @@ import axiosConfig from '../../../configs/AxiosConfig'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
-
+import toast from 'react-hot-toast'
 interface IRegister {
   changeTab: (tab: TabType) => void
 }
@@ -65,6 +65,7 @@ const Register = ({ changeTab }: IRegister) => {
           password: '',
           address: '',
         })
+        toast.success('Đăng ký thành công')
       })
       .catch(err => {
         setError([])

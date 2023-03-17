@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { number, object } from 'yup'
 import SearchBar from '../SearchBar'
-import './address.scss'
 import {
   useAddress,
   useCreateAddress,
@@ -113,6 +112,7 @@ const AddressComponents = () => {
         navigate('/address')
         reset()
         toast.success('Tạo địa chỉ thành công')
+        setOpen(false)
       })
       .catch(err => {
         console.log(err)
@@ -150,9 +150,9 @@ const AddressComponents = () => {
         id: acresID,
         data,
       })
-      window.location.reload()
+      // window.location.reload()
+      setOpenModal(false)
       toast.success('Sửa thành công')
-      console.log(response)
     } catch (error) {
       console.log(error)
     }
