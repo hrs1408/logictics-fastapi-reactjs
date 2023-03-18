@@ -18,6 +18,7 @@ import axios, { toFormData } from 'axios'
 import toast from 'react-hot-toast'
 import Address from '../../components/Table/address'
 import address from '../../components/Table/address'
+import { useQueryClient } from 'react-query'
 
 const schema = object().shape({
   province: yup.string().required('Tỉnh là trường bắt buộc'),
@@ -46,6 +47,8 @@ const AddressComponents = () => {
   const [wardCode, setWardCode] = useState('')
 
   const navigate = useNavigate()
+
+  const queryClient = useQueryClient();
 
   const fetchProvinces = async () => {
     const response = await axios.get(
@@ -107,29 +110,30 @@ const AddressComponents = () => {
     setWardCode(event.target.value)
   }
   const handleAddress = async (data: AddressType) => {
-    createAddressAsync(data)
-      .then(res => {
-        navigate('/address')
-        reset()
-        toast.success('Tạo địa chỉ thành công')
-        setOpen(false)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+    try {
+      await createAddressAsync(data);
+      await queryClient.resetQueries(['GET_ADDRESS']);
+      reset();
+      navigate('/address');
+      setOpen(false);
+      toast.success('Tạo địa chỉ thành công');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleDeleteAddress = async (id: number) => {
-    deleteAddressAsync(id)
-      .then(res => {
-        navigate('/address')
-        window.location.reload()
-        setOpen(false)
-        toast.success('Xóa địa chỉ thành công')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    try {
+      await deleteAddressAsync(id);
+      navigate('/address');
+      await queryClient.resetQueries(['GET_ADDRESS']);
+      setOpen(false);
+      toast.success('Xóa địa chỉ thành công');
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   const handleAddressId = (id: number) => {
     setAcresID(id)
     setOpenModal(!openModal)
@@ -150,7 +154,7 @@ const AddressComponents = () => {
         id: acresID,
         data,
       })
-      // window.location.reload()
+      await queryClient.resetQueries(['GET_ADDRESS']);
       setOpenModal(false)
       toast.success('Sửa thành công')
     } catch (error) {
