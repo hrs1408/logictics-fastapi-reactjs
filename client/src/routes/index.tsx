@@ -8,6 +8,7 @@ import Dashboard from '../PageUser/Dashboard'
 import SearchOrder from '../PageUser/SearchOrder'
 import AddressComponents from '../PageUser/Address'
 import Address from '../PageUser/Address'
+import Order from '../PageUser/Order'
 
 export const routes = createBrowserRouter([
   {
@@ -38,5 +39,9 @@ export const routes = createBrowserRouter([
   {
     path: '/dashboard',
     element: <Dashboard />,
+  },
+  {
+    path: '/order',
+    element: <Order />,
   },
 ])

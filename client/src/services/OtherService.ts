@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { useQuery } from 'react-query'
-
+import { useMutation, useQuery } from 'react-query'
+import axiosConfig from '../configs/AxiosConfig'
 export const getProvince = (): Promise<Province[]> =>
   axios
     .get(
@@ -11,3 +11,12 @@ export const getProvince = (): Promise<Province[]> =>
 export const useProvince = () => {
   return useQuery(['GET_PROVINCE'], getProvince)
 }
+
+
+const getOrder = (): Promise<ResponseSuccessType<InvoiceType[]>> =>
+  axiosConfig.get(`/invoice/get-by-user`)
+
+export const useGetOrder = () => {
+  return useQuery(['GET_ORDER'], getOrder)
+}
+

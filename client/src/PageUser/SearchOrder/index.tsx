@@ -31,14 +31,14 @@ const SearchOrder = () => {
   }
 
   const handleScan = (data: any) => {
-    const data_request = {
-      invoice_id: data,
-      port_id: 2,
+    setInvoiceId(data)
+    if (!invoiceId) {
+      toast.error('Vui lòng nhập mã đơn hàng')
+      return
     }
-    if (data) {
-      axiosConfig.post('/voyages', data_request).then(r => console.log(r.data))
-    }
+    setOpen(true)
   }
+
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     if (!invoiceId) {
@@ -47,6 +47,8 @@ const SearchOrder = () => {
     }
     setOpen(true)
   }
+
+
 
   return (
     <>
