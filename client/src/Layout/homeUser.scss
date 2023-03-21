@@ -1,22 +1,22 @@
 .button-active {
-    margin-right: 0;
-    border-radius: 8px 0 0 8px;
-    background-color: #FCD804;
-    border-right: 3px solid black;
+  margin-right: 0;
+  border-radius: 8px 0 0 8px;
+  background-color: #FCD804;
+  border-right: 3px solid black;
 
-    &:hover {
-        background-color: #FCD804;
-    }
+  &:hover {
+    background-color: #FCD804;
+  }
 }
 
 .button-sidebar {
-    margin-right: 0;
-    border-radius: 8px 0 0 8px;
+  margin-right: 0;
+  border-radius: 8px 0 0 8px;
 
-    &:hover {
-        opacity: 80%;
-        background-color: #FCD804;
-        background-color: #FCD804;
-        border-right: 3px solid black;
-    }
+  &:hover {
+    opacity: 80%;
+    background-color: #FCD804;
+    background-color: #FCD804;
+    border-right: 3px solid black;
+  }
 }

@@ -1,10 +1,10 @@
-import React from "react";
-import { BsYoutube } from "react-icons/bs";
-import { FaFacebookF } from "react-icons/fa";
-import { SiZalo } from "react-icons/si";
-import { GrSend } from "react-icons/gr";
-import { Link } from "react-router-dom";
-import "./index.scss";
+import React from 'react'
+import { BsYoutube } from 'react-icons/bs'
+import { FaFacebookF } from 'react-icons/fa'
+import { SiZalo } from 'react-icons/si'
+import { GrSend } from 'react-icons/gr'
+import { Link } from 'react-router-dom'
+import './index.scss'
 
 const Footer = () => {
   return (
@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="container mx-auto grid grid-cols-12 mt-10 footer ">
         <div className="col-span-3">
           <div className="contact-footer">
-            <Link to={"/"}>
+            <Link to={'/'}>
               <img
                 className="w-[40%] pb-5"
                 src="https://ntlogistics.vn/images/img/logo-footer.png"
@@ -27,12 +27,12 @@ const Footer = () => {
               <b>Giờ làm việc:</b> 7:00 - 20:00
               <br />
               <b>Email:</b>
-              <Link to={"/"}>nhattin@ntlogistics.vn</Link>
+              <Link to={'/'}>nhattin@ntlogistics.vn</Link>
               <br />
               <b>Hotline:</b> <a href="tel:1900636688">1900 63 6688</a>
             </p>
             <div className="">
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <img
                   className="w-[185px]"
                   src="https://cdn.ntlogistics.vn/images/log_bct.jpg"
@@ -51,7 +51,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Giới thiệu
                   </Link>
@@ -59,7 +59,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Nhân sự NLT
                   </Link>
@@ -67,7 +67,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Mạng lưới bưu cuc
                   </Link>
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Tuyển dụng
                   </Link>
@@ -83,7 +83,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Tin tức
                   </Link>
@@ -98,7 +98,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Câu hỏi thường gặp
                   </Link>
@@ -106,7 +106,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Điều khoản website
                   </Link>
@@ -114,7 +114,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Chính sách bảo mật
                   </Link>
@@ -122,7 +122,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Liên hệ
                   </Link>
@@ -137,7 +137,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Khiếu nại & Đền bù
                   </Link>
@@ -145,7 +145,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Quy định gửi & nhận hàng
                   </Link>
@@ -153,7 +153,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Trách nhiệm các bên
                   </Link>
@@ -161,7 +161,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className="text-[14px] text-[#343a40] leading-[40px] tracking-[-0.02rem] hover:text-[#fcd804] "
-                    to={"/"}
+                    to={'/'}
                   >
                     Hàng hóa cấm gửi
                   </Link>
@@ -173,17 +173,17 @@ const Footer = () => {
         <div className="col-span-3">
           <div className="share-footer gap-3">
             <span className="ntl-zalo">
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <SiZalo className="text-[24px] text-[#fff] " />
               </Link>
             </span>
             <span className="ntl-zalo">
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <FaFacebookF className="text-[24px] text-[#fff] " />
               </Link>
             </span>
             <span className="ntl-zalo">
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <BsYoutube className="text-[24px] text-[#fff]" />
               </Link>
             </span>
@@ -195,13 +195,13 @@ const Footer = () => {
             </button>
           </form>
           <div className="share flex gap-4  mt-5">
-            <Link to={"/"}>
+            <Link to={'/'}>
               <img
                 src="https://ntlogistics.vn/style/images/appstore.png"
                 alt=""
               />
             </Link>
-            <Link to={"/"}>
+            <Link to={'/'}>
               <img
                 src="https://ntlogistics.vn/style/images/googleplay.png"
                 alt=""
@@ -217,7 +217,7 @@ const Footer = () => {
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

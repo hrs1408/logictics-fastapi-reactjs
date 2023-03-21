@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { RouterProvider } from "react-router-dom";
-import { routes } from "./routes";
-import { store } from "./redux/store";
-import { Provider } from "react-redux";
-import { MutationCache, QueryClient, QueryClientProvider } from "react-query";
-import AuthProvider from "./context/AuthContext";
+import React, { useState } from 'react'
+import { RouterProvider } from 'react-router-dom'
+import { routes } from './routes'
+import { store } from './redux/store'
+import { Provider } from 'react-redux'
+import { MutationCache, QueryClient, QueryClientProvider } from 'react-query'
+import AuthProvider from './context/AuthContext'
 import toast, { Toaster } from 'react-hot-toast'
-import "./App.css";
+import './App.css'
+
 function App() {
   // const mutationCache = new MutationCache({
   //   onError: (error) => {
@@ -30,7 +31,7 @@ function App() {
           },
         },
       })
-  );
+  )
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -42,7 +43,7 @@ function App() {
         </AuthProvider>
       </QueryClientProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

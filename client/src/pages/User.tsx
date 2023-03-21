@@ -1,55 +1,53 @@
-import React from "react";
-import { BiScan, BiSearch, BiX } from "react-icons/bi";
+import React from 'react'
+import { BiScan, BiSearch, BiX } from 'react-icons/bi'
 import { Modal } from '@mui/material'
 import {
   TbCashBanknote,
   TbCashBanknoteOff,
   TbFileInvoice,
-} from "react-icons/tb";
+} from 'react-icons/tb'
 import { faker } from '@faker-js/faker'
-import { NumericFormat } from "react-number-format";
-import { QrScanner } from "@yudiel/react-qr-scanner";
-import axiosConfig from "../configs/AxiosConfig";
-import SearchBar from "../PageUser/SearchBar";
-import HomeUser from "../Layout/HomeUser";
-import LineChart from "../PageUser/Chart/LineChart";
+import { NumericFormat } from 'react-number-format'
+import { QrScanner } from '@yudiel/react-qr-scanner'
+import axiosConfig from '../configs/AxiosConfig'
+import SearchBar from '../PageUser/SearchBar'
+import HomeUser from '../Layout/HomeUser'
+import LineChart from '../PageUser/Chart/LineChart'
 
-const PageUser = () => {
-  const [openQr, setOpenQr] = React.useState(false);
+const User = () => {
+  const [openQr, setOpenQr] = React.useState(false)
 
-  const handleOpenQr = () => setOpenQr(true);
-  const handleCloseQr = () => setOpenQr(false);
+  const handleOpenQr = () => setOpenQr(true)
+  const handleCloseQr = () => setOpenQr(false)
 
   const handleError = (error: any) => {
-    error ? console.log(error) : console.log("No error");
-  };
+    error ? console.log(error) : console.log('No error')
+  }
 
   const handleScan = (data: any) => {
     const data_request = {
       invoice_id: data,
       port_id: 2,
-    };
-    if (data) {
-      axiosConfig
-        .post("/voyages", data_request)
-        .then((r) => console.log(r.data));
     }
-  };
+    if (data) {
+      axiosConfig.post('/voyages', data_request).then(r => console.log(r.data))
+    }
+  }
 
   return (
     <HomeUser>
       <div className="home">
         <SearchBar />
         <div className="statistic mt-4 flex gap-4">
-          <div className={"w-[75%]"}>
-            <div className={"bg-white rounded shadow my-4 p-2"}>
+          <div className={'w-[75%]'}>
+            <div className={'bg-white rounded shadow my-4 p-2'}>
               <div className="input-search flex items-center gap-4">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
-                      placeholder={"Search invoice..."}
-                      className={"w-[500px] outline-none p-2 border rounded"}
+                      placeholder={'Search invoice...'}
+                      className={'w-[500px] outline-none p-2 border rounded'}
                     />
                     <button className="text-black bg-yellow-400 text-[20px] p-2 rounded-md hover:opacity-80 transition">
                       <BiSearch />
@@ -68,16 +66,16 @@ const PageUser = () => {
                     >
                       <div
                         className={
-                          "w-[500px] bg-white p-4 rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                          'w-[500px] bg-white p-4 rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
                         }
                       >
                         <button
                           onClick={handleCloseQr}
                           className={
-                            "ml-auto p-2 mb-2 rounded transition hover:bg-gray-100/80"
+                            'ml-auto p-2 mb-2 rounded transition hover:bg-gray-100/80'
                           }
                         >
-                          <BiX className={"text-[20px]"} />
+                          <BiX className={'text-[20px]'} />
                         </button>
                         <QrScanner
                           onDecode={handleScan}
@@ -90,7 +88,7 @@ const PageUser = () => {
                 <select
                   name=""
                   id=""
-                  className={"p-2 outline-none border rounded"}
+                  className={'p-2 outline-none border rounded'}
                 >
                   <option value="">All</option>
                   <option value="">7 days ago</option>
@@ -99,61 +97,61 @@ const PageUser = () => {
                 </select>
               </div>
             </div>
-            <div className={"grid grid-cols-3 gap-3"}>
+            <div className={'grid grid-cols-3 gap-3'}>
               <div className="statistic-item p-4 bg-white rounded shadow">
-                <div className={"flex items-center gap-4"}>
-                  <div className={"p-1 bg-[#EEFBE7] rounded"}>
-                    <TbFileInvoice className={"text-[#71DD37] text-xl"} />
+                <div className={'flex items-center gap-4'}>
+                  <div className={'p-1 bg-[#EEFBE7] rounded'}>
+                    <TbFileInvoice className={'text-[#71DD37] text-xl'} />
                   </div>
-                  <div className={"text-[16px] font-bold"}>
+                  <div className={'text-[16px] font-bold'}>
                     Total Invoice COD
                   </div>
                 </div>
                 <div>
-                  <div className={"text-[30px] font-bold text-center py-6"}>
+                  <div className={'text-[30px] font-bold text-center py-6'}>
                     <NumericFormat
                       value={faker.datatype.number({ min: 1000, max: 9999 })}
                       thousandsGroupStyle="thousand"
                       thousandSeparator=","
-                      displayType={"text"}
+                      displayType={'text'}
                     />
                   </div>
                 </div>
               </div>
               <div className="statistic-item p-4 bg-white rounded shadow">
-                <div className={"flex items-center gap-4"}>
-                  <div className={"p-1 bg-[#E0F7FC] rounded"}>
-                    <TbCashBanknote className={"text-[#03C3EC] text-xl"} />
+                <div className={'flex items-center gap-4'}>
+                  <div className={'p-1 bg-[#E0F7FC] rounded'}>
+                    <TbCashBanknote className={'text-[#03C3EC] text-xl'} />
                   </div>
-                  <div className={"text-[16px] font-bold"}>
+                  <div className={'text-[16px] font-bold'}>
                     Invoice Has Been Paid
                   </div>
                 </div>
                 <div>
-                  <div className={"text-[30px] font-bold text-center py-6"}>
+                  <div className={'text-[30px] font-bold text-center py-6'}>
                     <NumericFormat
                       value={faker.datatype.number({ min: 1000, max: 9999 })}
                       thousandsGroupStyle="thousand"
                       thousandSeparator=","
-                      displayType={"text"}
+                      displayType={'text'}
                     />
                   </div>
                 </div>
               </div>
               <div className="statistic-item p-4 bg-white rounded shadow">
-                <div className={"flex items-center gap-4"}>
-                  <div className={"p-1 bg-[#FFE7E3] rounded"}>
-                    <TbCashBanknoteOff className={"text-[#FF3E1D] text-xl"} />
+                <div className={'flex items-center gap-4'}>
+                  <div className={'p-1 bg-[#FFE7E3] rounded'}>
+                    <TbCashBanknoteOff className={'text-[#FF3E1D] text-xl'} />
                   </div>
-                  <div className={"text-[16px] font-bold"}>Unpaid Invoice</div>
+                  <div className={'text-[16px] font-bold'}>Unpaid Invoice</div>
                 </div>
                 <div>
-                  <div className={"text-[30px] font-bold text-center py-6"}>
+                  <div className={'text-[30px] font-bold text-center py-6'}>
                     <NumericFormat
                       value={faker.datatype.number({ min: 1000, max: 9999 })}
                       thousandsGroupStyle="thousand"
                       thousandSeparator=","
-                      displayType={"text"}
+                      displayType={'text'}
                     />
                   </div>
                 </div>
@@ -163,18 +161,18 @@ const PageUser = () => {
               <LineChart />
             </div>
           </div>
-          <div className={"w-[25%]"}>
+          <div className={'w-[25%]'}>
             <div
               className={
-                "bg-yellow-400 flex justify-between rounded shadow my-4 p-4 py-6"
+                'bg-yellow-400 flex justify-between rounded shadow my-4 p-4 py-6'
               }
             >
-              <img src="/images/cash.png" alt="" className={"w-[100px]"} />
+              <img src="/images/cash.png" alt="" className={'w-[100px]'} />
               <div>
-                <p className={"text-[18px] text-right font-bold"}>
+                <p className={'text-[18px] text-right font-bold'}>
                   Total collection (VND)
                 </p>
-                <p className={"flex justify-center gap-2 text-[26px]"}>
+                <p className={'flex justify-center gap-2 text-[26px]'}>
                   <span>
                     <NumericFormat
                       value={
@@ -182,8 +180,8 @@ const PageUser = () => {
                       }
                       thousandsGroupStyle="thousand"
                       thousandSeparator=","
-                      suffix={" VND"}
-                      displayType={"text"}
+                      suffix={' VND'}
+                      displayType={'text'}
                     />
                   </span>
                 </p>
@@ -191,15 +189,15 @@ const PageUser = () => {
             </div>
             <div
               className={
-                "bg-yellow-400 flex justify-between rounded shadow my-4 p-4 py-6"
+                'bg-yellow-400 flex justify-between rounded shadow my-4 p-4 py-6'
               }
             >
-              <img src="/images/shiping.png" alt="" className={"w-[100px]"} />
+              <img src="/images/shiping.png" alt="" className={'w-[100px]'} />
               <div>
-                <p className={"text-[18px] text-right font-bold"}>
+                <p className={'text-[18px] text-right font-bold'}>
                   Shipping fee (VND)
                 </p>
-                <p className={"flex justify-center gap-2 text-[26px]"}>
+                <p className={'flex justify-center gap-2 text-[26px]'}>
                   <span>
                     <NumericFormat
                       value={
@@ -207,16 +205,16 @@ const PageUser = () => {
                       }
                       thousandsGroupStyle="thousand"
                       thousandSeparator=","
-                      suffix={" VND"}
-                      displayType={"text"}
+                      suffix={' VND'}
+                      displayType={'text'}
                     />
                   </span>
                 </p>
               </div>
             </div>
             <div className="sum-cod">
-              <div className={"bg-white rounded shadow my-4 p-4 py-6"}>
-                <p className={"text-[18px] font-bold"}>
+              <div className={'bg-white rounded shadow my-4 p-4 py-6'}>
+                <p className={'text-[18px] font-bold'}>
                   Total COD Amount By Month
                 </p>
                 <div className="list my-4">
@@ -225,13 +223,13 @@ const PageUser = () => {
                     .map((item, index) => {
                       return (
                         <span
-                          className={"flex justify-between gap-3 py-2 w-full"}
+                          className={'flex justify-between gap-3 py-2 w-full'}
                           key={index}
                         >
-                          <span className={"font-bold text-left"}>
+                          <span className={'font-bold text-left'}>
                             {index + 1}.
                           </span>
-                          <span className={"text-right"}>
+                          <span className={'text-right'}>
                             <NumericFormat
                               value={
                                 faker.datatype.number({
@@ -241,12 +239,12 @@ const PageUser = () => {
                               }
                               thousandsGroupStyle="thousand"
                               thousandSeparator=","
-                              suffix={" VND"}
-                              displayType={"text"}
+                              suffix={' VND'}
+                              displayType={'text'}
                             />
                           </span>
                         </span>
-                      );
+                      )
                     })}
                 </div>
               </div>
@@ -255,7 +253,7 @@ const PageUser = () => {
         </div>
       </div>
     </HomeUser>
-  );
-};
+  )
+}
 
-export default PageUser;
+export default User

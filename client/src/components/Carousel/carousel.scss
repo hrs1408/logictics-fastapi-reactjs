@@ -1,246 +1,245 @@
 .carousel-inner {
-    position: relative;
+  position: relative;
 
-    .carousel-bg {
-        height: 700px;
-        width: 100%;
-        background-image: url("https://cdn.ntlogistics.vn/uploads/banners/2020/04/21/bg_home_top_1.jpg");
+  .carousel-bg {
+    height: 700px;
+    width: 100%;
+    background-image: url("https://cdn.ntlogistics.vn/uploads/banners/2020/04/21/bg_home_top_1.jpg");
+  }
+
+  .carousel-content {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .more-than-log {
+      text-align: center;
+      font-size: 40px;
+      color: #fff;
+      font-weight: bold;
     }
 
-    .carousel-content {
-        position: absolute;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+    .bill-of-lading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .more-than-log {
-            text-align: center;
-            font-size: 40px;
-            color: #fff;
-            font-weight: bold;
-        }
+      .bill-of-lading-item {
+        margin-right: -0.25rem;
 
-        .bill-of-lading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .bill-of-lading-item {
-                margin-right: -0.25rem;
-
-                .top-slide {
-                    height: 28px;
-                    background-color: #E5E5E5;
-                    position: relative;
-                    z-index: 1;
-                    width: 162px;
-                    display: block;
-
-                }
-
-                .box-cube {
-
-                    width: 158px;
-                    height: 120px;
-                    background-color: #fafafa;
-                    padding: 25px 15px;
-                    transition: .25s ease background-color, .25s ease height;
-                    text-align: center;
-                    margin: auto;
-
-                    &:hover {
-                        background-color: #FCD804;
-                    }
-
-                    &.active-box-cube {
-                        background-color: #FCD804;
-                        height: 140px;
-                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                    }
-                }
-            }
+        .top-slide {
+          height: 28px;
+          background-color: #E5E5E5;
+          position: relative;
+          z-index: 1;
+          width: 162px;
+          display: block;
 
         }
 
-        form {
-            display: flex;
-            gap: 10px;
+        .box-cube {
+          text-align: -webkit-center;
+          width: 158px;
+          height: 120px;
+          background-color: #fafafa;
+          padding: 25px 15px;
+          transition: .25s ease background-color, .25s ease height;
+          margin: auto;
 
-            .form-search {
-                .input-search {
-                    height: calc(2.5rem + 2px);
-                    outline: none;
-                    border-radius: 0;
-                    width: 766px;
-                    padding-left: 12px;
+          &:hover {
+            background-color: #FCD804;
+          }
 
-                    &:focus {
-                        outline: 0;
-                        -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-                        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
-                    }
-                }
-            }
-
-            .btn-search {
-
-                width: 140px;
-                height: 42px;
-                background-color: #fff;
-                font-weight: 500;
-
-                &:hover {
-                    opacity: 0.8;
-                }
-            }
+          &.active-box-cube {
+            background-color: #FCD804;
+            height: 140px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
         }
-
-        .search-order {
-            background: rgb(255, 255, 255);
-            box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
-            margin-top: 8px;
-            border-radius: 4px;
-
-            .order-status {
-                .order-process-detail-list {
-                    margin-left: 20px;
-                    position: relative;
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        width: 1px;
-                        height: 100%;
-                        top: 7px;
-                        left: 128px;
-                        border-radius: 2px;
-                        background: #B5BBC6;
-                    }
-
-                    .detail-list-item {
-                        display: flex;
-                        position: relative;
-                        margin-bottom: 20px;
-
-                        .item-date {
-                            margin-right: 16px;
-                            width: 120px;
-                        }
-
-                        .item-desc {
-                            margin-left: 20px;
-
-                            &::before {
-                                content: "";
-                                position: absolute;
-                                width: 8px;
-                                z-index: 1000;
-                                height: 8px;
-                                top: 6px;
-                                border-radius: 50%;
-                                background-color: #B5BBC6;
-                                box-shadow: #B5BBC6 0 0 0 2px;
-                                border: none;
-                                left: 125px;
-                            }
-
-                            &.active {
-                                &::before {
-                                    background: #1CC461;
-                                    box-shadow: #1bc4614d 0 0 0 2px;
-                                }
-
-                                .item-text-box {
-                                    font-weight: 700;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+      }
 
     }
+
+    form {
+      display: flex;
+      gap: 10px;
+
+      .form-search {
+        .input-search {
+          height: calc(2.5rem + 2px);
+          outline: none;
+          border-radius: 0;
+          width: 766px;
+          padding-left: 12px;
+
+          &:focus {
+            outline: 0;
+            -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+          }
+        }
+      }
+
+      .btn-search {
+
+        width: 140px;
+        height: 42px;
+        background-color: #fff;
+        font-weight: 500;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .search-order {
+      background: rgb(255, 255, 255);
+      box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+      margin-top: 8px;
+      border-radius: 4px;
+
+      .order-status {
+        .order-process-detail-list {
+          margin-left: 20px;
+          position: relative;
+
+          &::after {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: 7px;
+            left: 190px;
+            border-radius: 2px;
+            background: #B5BBC6;
+          }
+
+          .detail-list-item {
+            display: flex;
+            position: relative;
+            margin-bottom: 20px;
+
+            .item-date {
+              margin-right: 16px;
+              //width: 120px;
+            }
+
+            .item-desc {
+              margin-left: 20px;
+
+              &::before {
+                content: "";
+                position: absolute;
+                width: 8px;
+                z-index: 1000;
+                height: 8px;
+                top: 6px;
+                border-radius: 50%;
+                background-color: #B5BBC6;
+                box-shadow: #B5BBC6 0 0 0 2px;
+                border: none;
+                left: 187px;
+              }
+
+              &.active {
+                &::before {
+                  background: #1CC461;
+                  box-shadow: #1bc4614d 0 0 0 2px;
+                }
+
+                .item-text-box {
+                  font-weight: 700;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
 }
 
 @media screen and (max-width: 1024px) {
-    .carousel-inner {
-        .carousel-content {
-            form {
-                .form-search {
-                    .input-search {
-                        width: 600px;
-                    }
-                }
-            }
+  .carousel-inner {
+    .carousel-content {
+      form {
+        .form-search {
+          .input-search {
+            width: 600px;
+          }
         }
+      }
     }
+  }
 }
 
 @media screen and (max-width: 790px) {
-    .carousel-inner {
-        .carousel-content {
-            form {
-                .form-search {
-                    .input-search {
-                        width: 400px;
-                    }
-                }
-            }
+  .carousel-inner {
+    .carousel-content {
+      form {
+        .form-search {
+          .input-search {
+            width: 400px;
+          }
         }
+      }
     }
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .carousel-inner {
-        .carousel-content {
-            form {
-                gap: 0px;
+  .carousel-inner {
+    .carousel-content {
+      form {
+        gap: 0px;
 
-                .form-search {
-                    .input-search {
-                        width: 300px;
-                    }
-                }
-
-                .btn-search {
-                    background-color: #FCD804;
-                }
-            }
-
-            .bill-of-lading {
-                .bill-of-lading-item {
-                    .top-slide {
-                        width: 152px;
-                    }
-
-                    .box-cube {
-                        width: 148px;
-                    }
-                }
-            }
+        .form-search {
+          .input-search {
+            width: 300px;
+          }
         }
+
+        .btn-search {
+          background-color: #FCD804;
+        }
+      }
+
+      .bill-of-lading {
+        .bill-of-lading-item {
+          .top-slide {
+            width: 152px;
+          }
+
+          .box-cube {
+            width: 148px;
+          }
+        }
+      }
     }
+  }
 }
 
 @media screen and (max-width: 490px) {
-    .carousel-inner {
-        .carousel-content {
-            .bill-of-lading {
-                .bill-of-lading-item {
-                    .top-slide {
-                        width: 132px;
-                    }
+  .carousel-inner {
+    .carousel-content {
+      .bill-of-lading {
+        .bill-of-lading-item {
+          .top-slide {
+            width: 132px;
+          }
 
-                    .box-cube {
-                        width: 128px;
+          .box-cube {
+            width: 128px;
 
-                        p {
-                            font-size: 13px;
-                        }
-                    }
-                }
+            p {
+              font-size: 13px;
             }
+          }
         }
+      }
     }
+  }
 }

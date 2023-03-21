@@ -1,30 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AiOutlinePhone, AiOutlineUser } from "react-icons/ai";
-import axiosConfig from "../../configs/AxiosConfig";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState, useEffect, useContext } from 'react'
+import { AiOutlinePhone, AiOutlineUser } from 'react-icons/ai'
+import axiosConfig from '../../configs/AxiosConfig'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 import {
   RiLockPasswordFill,
   RiLoginCircleFill,
   RiLockPasswordLine,
-} from "react-icons/ri";
-import { MdEmail } from "react-icons/md";
-import "./auth.scss";
-import axios from "axios";
-import { saveToken } from "../../services/AuthService";
-import Login from "./Login";
-import Register from "./Register";
+} from 'react-icons/ri'
+import { MdEmail } from 'react-icons/md'
+import './auth.scss'
+import axios from 'axios'
+import { saveToken } from '../../services/AuthService'
+import Login from './Login'
+import Register from './Register'
 
-
-
-export type TabType = "TabLogin" | "TabRegister";
+export type TabType = 'TabLogin' | 'TabRegister'
 
 const Auth = () => {
-  const [tabActive, setTabActive] = useState<TabType>("TabLogin");
+  const [tabActive, setTabActive] = useState<TabType>('TabLogin')
 
   const onChangeTab = (tab: TabType) => {
-    setTabActive(tab);
-  };
+    setTabActive(tab)
+  }
 
   return (
     <>
@@ -34,9 +32,9 @@ const Auth = () => {
             <div className="bloc-tabs flex gap-1 ">
               <button
                 className={`tabs ${
-                  tabActive === "TabLogin" ? "active-tabs" : ""
+                  tabActive === 'TabLogin' ? 'active-tabs' : ''
                 }`}
-                onClick={() => onChangeTab("TabLogin")}
+                onClick={() => onChangeTab('TabLogin')}
               >
                 <div className="nav-list flex gap-2 items-center  w-full justify-center">
                   <RiLoginCircleFill className="mt-[1px] text-[18px]" />
@@ -45,9 +43,9 @@ const Auth = () => {
               </button>
               <button
                 className={`tabs ${
-                  tabActive === "TabRegister" ? "active-tabs" : ""
+                  tabActive === 'TabRegister' ? 'active-tabs' : ''
                 }`}
-                onClick={() => onChangeTab("TabRegister")}
+                onClick={() => onChangeTab('TabRegister')}
               >
                 <div className="nav-list flex gap-2 items-center text-center w-full justify-center ">
                   <MdEmail className="mt-1 text-[18px]" />
@@ -57,7 +55,7 @@ const Auth = () => {
             </div>
             <div className="content-tabs">
               <div className="content active-content">
-                {tabActive === "TabLogin" ? (
+                {tabActive === 'TabLogin' ? (
                   <Login changeTab={onChangeTab} />
                 ) : (
                   <Register changeTab={onChangeTab} />
@@ -68,7 +66,7 @@ const Auth = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Auth

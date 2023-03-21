@@ -1,6 +1,7 @@
-import React from "react";
-import "./topheader.scss"
-import {Link} from 'react-router-dom';
+import React from 'react'
+import './topheader.scss'
+import { Link } from 'react-router-dom'
+
 const TopHeader = () => {
   return (
     <>
@@ -16,20 +17,29 @@ const TopHeader = () => {
             </span>
           </div>
           <div className="col-span-6 text-right">
-            <Link to={'/'} className="top-header-right text-[14px] text-[#222]  ">
+            <Link
+              to={'/'}
+              className="top-header-right text-[14px] text-[#222]  "
+            >
               Giới thiệu về Nhất Tín Logistics
             </Link>
-            <Link to={'/login'} className="top-header-right text-[14px] text-[#222]  ">
+            <Link
+              to={'/login'}
+              className="top-header-right text-[14px] text-[#222]  "
+            >
               Đăng nhập
             </Link>
-            <Link to={'/'} className="top-header-right text-[14px] text-[#222]  ">
+            <Link
+              to={'/'}
+              className="top-header-right text-[14px] text-[#222]  "
+            >
               Đăng ký
             </Link>
           </div>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default TopHeader;
+export default TopHeader

@@ -1,23 +1,24 @@
 .icon-coutdown {
-    font-size: 60px;
-    display: flex;
-    justify-content: center;
+  font-size: 60px;
+  display: flex;
+  justify-content: center;
 }
 
 .count-tk {
-    .counter-number {
-        font-size: 48px;
-        line-height: 84px;
-    }
+  .counter-number {
+    font-size: 48px;
+    line-height: 84px;
+  }
 }
 
 @media screen and (max-width: 1024px) {
-    .coutdown {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .coutdown {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
+
 @media screen and (max-width: 600px) {
-    .coutdown {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+  .coutdown {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 }

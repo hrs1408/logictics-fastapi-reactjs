@@ -1,12 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./delivery.scss";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import './delivery.scss'
 import { GrPrevious } from 'react-icons/gr'
+
 const ListDelivery = () => {
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-8 delivery">
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -15,7 +16,7 @@ const ListDelivery = () => {
           </p>
           Chuyển phát Hỏa tốc
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -24,7 +25,7 @@ const ListDelivery = () => {
           </p>
           Chuyển phát Nhanh
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -33,7 +34,7 @@ const ListDelivery = () => {
           </p>
           Chuyển phát Tiết kiệm (MES)
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -42,7 +43,7 @@ const ListDelivery = () => {
           </p>
           Chuyển phát Đường bộ
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -51,7 +52,7 @@ const ListDelivery = () => {
           </p>
           Chuyển phát Thu hộ (COD)
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -60,7 +61,7 @@ const ListDelivery = () => {
           </p>
           Chuyển phát Quốc tế
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -69,7 +70,7 @@ const ListDelivery = () => {
           </p>
           Thuê xe Nguyên chuyến
         </Link>
-        <Link to={"/"} className="item-service text-center">
+        <Link to={'/'} className="item-service text-center">
           <p className=" h-[50px] flex justify-center">
             <img
               className="w-[55px]"
@@ -87,7 +88,7 @@ const ListDelivery = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ListDelivery;
+export default ListDelivery

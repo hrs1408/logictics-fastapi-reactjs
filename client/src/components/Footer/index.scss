@@ -1,92 +1,93 @@
-.contact-footer {}
+.contact-footer {
+}
 
 .panel-heading {
-    position: relative;
+  position: relative;
 
-    h2 {
-        font-size: 14px;
-        font-weight: 700;
-        z-index: 20;
+  h2 {
+    font-size: 14px;
+    font-weight: 700;
+    z-index: 20;
 
-        &::after {
-            content: '';
-            width: 89px;
-            height: 5px;
-            background: #FCD804;
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-        }
+    &::after {
+      content: '';
+      width: 89px;
+      height: 5px;
+      background: #FCD804;
+      position: absolute;
+      left: 0;
+      bottom: -5px;
     }
+  }
 
 }
 
 .ul-footer {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .share-footer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    .ntl-zalo {
-        &:first-child {
-            background-color: #0280c7;
-        }
-
-        padding: 5px;
-        background-color: #3b5998;
-        border-radius: 50%;
-
-        &:last-child {
-            background-color: red;
-        }
-
-        &:hover {
-            opacity: 0.5;
-        }
+  .ntl-zalo {
+    &:first-child {
+      background-color: #0280c7;
     }
+
+    padding: 5px;
+    background-color: #3b5998;
+    border-radius: 50%;
+
+    &:last-child {
+      background-color: red;
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 }
 
 .register-email {
-    position: relative;
+  position: relative;
 
-    input {
-        border: 1px solid #FCD804;
-        height: 44px;
-        padding-right: 44px;
-        width: 100%;
-        font-size: 14px;
-        padding-left: 10px;
-        outline: none;
-        border-radius: 4px;
+  input {
+    border: 1px solid #FCD804;
+    height: 44px;
+    padding-right: 44px;
+    width: 100%;
+    font-size: 14px;
+    padding-left: 10px;
+    outline: none;
+    border-radius: 4px;
 
-    }
+  }
 
 
-    .button-send {
-        position: absolute;
-        background: transparent;
-        border: 0px;
-        right: 10px;
-        transform: translate(-50%, -50%);
-        top: 50%;
-    }
+  .button-send {
+    position: absolute;
+    background: transparent;
+    border: 0px;
+    right: 10px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
 }
 
 @media screen and (max-width: 990px) {
-    .footer {
-        padding: 15px;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
+  .footer {
+    padding: 15px;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
 
-        .contact-footer {
-            width: 50%;
-        }
-
-        .share {
-
-            justify-content: center;
-        }
+    .contact-footer {
+      width: 50%;
     }
+
+    .share {
+
+      justify-content: center;
+    }
+  }
 
 }

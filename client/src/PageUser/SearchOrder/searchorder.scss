@@ -1,0 +1,64 @@
+.search-order {
+  background: rgb(255, 255, 255);
+  box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+  margin-top: 8px;
+  border-radius: 4px;
+
+  .order-status {
+    .order-process-detail-list {
+      margin-left: 20px;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top: 7px;
+        left: 190px;
+        border-radius: 2px;
+        background: #B5BBC6;
+      }
+
+      .detail-list-item {
+        display: flex;
+        position: relative;
+        margin-bottom: 20px;
+
+        .item-date {
+          margin-right: 16px;
+          //width: 120px;
+        }
+
+        .item-desc {
+          margin-left: 20px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            z-index: 1000;
+            height: 8px;
+            top: 6px;
+            border-radius: 50%;
+            background-color: #B5BBC6;
+            box-shadow: #B5BBC6 0 0 0 2px;
+            border: none;
+            left: 187px;
+          }
+
+          &.active {
+            &::before {
+              background: #1CC461;
+              box-shadow: #1bc4614d 0 0 0 2px;
+            }
+
+            .item-text-box {
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+  }
+}
