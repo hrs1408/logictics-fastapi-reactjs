@@ -6,7 +6,9 @@ import SearchBar from "../SearchBar";
 
 const Order = () => {
 
+    const [invoice, setInvoice] = React.useState<InvoiceType>({} as InvoiceType)
     const { data: dataOrder } = useGetOrder()
+
     console.log(dataOrder, 'xem thuwr');
 
     return (
@@ -19,7 +21,7 @@ const Order = () => {
                         'bg-yellow-400 px-4 py-2 rounded flex items-center gap-2'
                     }
                 >
-                    <GrPowerReset /> Reset
+                    <GrPowerReset  /> Reset
                 </button>
             </div>
             <div className={'mt-4'}>
@@ -32,25 +34,47 @@ const Order = () => {
                                     <thead className="border-b font-medium dark:border-neutral-500">
                                         <tr>
                                             <th scope="col" className="px-6 py-4">
-                                                Tên
+                                                Mã vận đơn
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                Mã vận đơn
+                                                Tên người gửi
+                                            </th>
+                                            <th scope="col" className="px-6 py-4">
+                                                Tên người nhận
+                                            </th>
+                                            <th scope="col" className="px-6 py-4">
+                                                Thành phố người nhận
+                                            </th>
+                                            <th scope="col" className="px-6 py-4">
+                                                Thành phố người gửi
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr
+                                        {dataOrder?.data?.map((item, index: number) => {
+                                            return (
+                                                <tr
 
-                                            className="border-b dark:border-neutral-500"
-                                        >
-                                            <td className="whitespace-nowrap px-6 py-4">
-                                                asd
-                                            </td>
-                                            <td className="whitespace-nowrap px-6 py-4">
-                                                asd
-                                            </td>
-                                        </tr>
+                                                    className="border-b dark:border-neutral-500"
+                                                >
+                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                        {item.id}
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                        {item.senderFullName}
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                        {item.receiverFullName}
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                        {item.receiverAddress}
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                        {item.senderAddress}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
