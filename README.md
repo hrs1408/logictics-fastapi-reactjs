@@ -12,3 +12,25 @@ cd api/
 ```
 docker-compose up -d --build
 ```
+
+RUN ADMIN:
+
+
+```
+cd admin/
+```
+
+```
+yarn start
+```
+
+RUN CLIENT:
+
+
+```
+cd client/
+```
+
+```
+yarn start
+```
