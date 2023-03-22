@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { useMutation, useQuery } from 'react-query'
 import axiosConfig from '../configs/AxiosConfig'
+
+
+
 export const getProvince = (): Promise<Province[]> =>
   axios
     .get(

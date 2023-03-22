@@ -115,6 +115,8 @@ const CreateOrder = () => {
     {}
   )
 
+  
+
   const [invoice, setInvoice] = React.useState<InvoiceType>({} as InvoiceType)
   // const [invoice, setInvoice] = React.useState<InvoiceType>({} as InvoiceType)
   const [openModal, setOpenModal] = React.useState(false)
@@ -145,7 +147,7 @@ const CreateOrder = () => {
     }).then((res) => {
       setInvoice(res.data)
       setOpenModal(true)
-      toast.success('Invoice Bill Created')
+      toast.success('Tạo vận đơn thành công')
       reset()
       setSenderProvince({})
       setReceiverProvince({})
