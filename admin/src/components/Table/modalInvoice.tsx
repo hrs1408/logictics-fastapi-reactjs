@@ -14,6 +14,9 @@ interface ModalInvoiceProps {
 }
 
 const ModalInvoice: React.FC<ModalInvoiceProps> = ({invoice, open, onClose}) => {
+
+    // console.log(invoice, 'xemthw');
+    
     const handlePrintInvoice = () => {
         const printContents = document.querySelector('#print-invoice')
         html2canvas(printContents as HTMLDivElement).then(canvas => {

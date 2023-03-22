@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { Tooltip } from "@mui/material";
+import { useState } from "react";
+import { AiFillEye } from "react-icons/ai";
 import { GrPowerReset } from "react-icons/gr";
 import HomeUser from "../../Layout/HomeUser";
 import { useGetOrder } from "../../services/OtherService";
 import SearchBar from "../SearchBar";
-import { NumericFormat } from "react-number-format";
-import QRCode from "qrcode.react";
-import { AiFillEye, AiOutlineClose, AiOutlinePrinter } from "react-icons/ai";
-import { Modal, Tooltip } from "@mui/material";
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
 import ModalOrder from "./ModalOrder";
 
 
@@ -28,6 +24,7 @@ const Order = () => {
         setInvoiceView(data)
         setOpen(true)
     }
+    
     const TextLimit = (data: any) => {
         const { text, limit } = data;
         if (text.length <= limit) {
