@@ -145,7 +145,7 @@ const CreateOrder = () => {
     }).then((res) => {
       setInvoice(res.data)
       setOpenModal(true)
-      toast.success('Invoice Bill Created')
+      toast.success('Tạo vận đơn thành công')
       reset()
       setSenderProvince({})
       setReceiverProvince({})

@@ -12,7 +12,6 @@ export const useProvince = () => {
   return useQuery(['GET_PROVINCE'], getProvince)
 }
 
-
 const getOrder = (): Promise<ResponseSuccessType<InvoiceType[]>> =>
   axiosConfig.get(`/invoice/get-by-user`)
 
