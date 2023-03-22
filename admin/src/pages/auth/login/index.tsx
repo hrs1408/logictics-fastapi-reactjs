@@ -63,7 +63,9 @@ const Login = () => {
         }
       >
         <p className={'text-[26px] font-bold text-center'}>LOGIN WORKSPACE</p>
-        <QrScanner scanDelay={2000} onDecode={onScan} onError={() => {}} />
+        <div className={'p-2 w-[250px] mx-auto'}>
+          <QrScanner scanDelay={2000} onDecode={onScan} onError={() => {}}  />
+        </div>
         <p className={'text-[14px] text-center text-gray-500'}>
           Log in to the website you are working on
         </p>
